@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quiz Administração Naval - Completo</title>
+<title>Administração Naval - Completo Oficial</title>
 
 <style>
 body{
@@ -19,7 +19,7 @@ body{
 
 .container{
     width:95%;
-    max-width:750px;
+    max-width:800px;
     text-align:center;
 }
 
@@ -33,13 +33,13 @@ body{
     background:#4da6ff;
     color:black;
     padding:12px;
-    margin:10px 0;
+    margin:8px 0;
     border-radius:8px;
     cursor:pointer;
     font-weight:bold;
 }
 
-.option:hover{ opacity:0.8; }
+.option:hover{opacity:0.85;}
 
 .correct{
     background:green !important;
@@ -58,14 +58,8 @@ button{
     border-radius:6px;
     cursor:pointer;
 }
-
-#progress{
-    margin-bottom:10px;
-    font-weight:bold;
-}
 </style>
 </head>
-
 <body>
 
 <div class="container">
@@ -82,13 +76,13 @@ button{
 
 const questions = [
 
-/* ===== 26 PRIMEIRAS ===== */
+/* ================= 26 QUESTÕES ORIGINAIS ================= */
 
-{q:"Documento utilizado para registro de dependentes junto à DPMM e CPesFN?",
-a:["Declaração de Dependente (DD)","Portaria","Ficha Militar","Termo"],correct:0},
+{q:"Documento utilizado para registro de dependentes junto à Diretoria do Pessoal Militar da Marinha (DPMM) e ao Comando do Pessoal de Fuzileiros Navais?",
+a:["Declaração de Dependente (DD)","Portaria Administrativa","Ficha Militar","Termo de Registro"],correct:0},
 
 {q:"Órgão de Direção Setorial relacionado à economia e administração naval?",
-a:["Secretaria-Geral da Marinha (SGM)","Comando Naval","Diretoria Militar","Conselho"],correct:0},
+a:["Secretaria-Geral da Marinha (SGM)","Comando Naval","Diretoria Militar","Conselho Administrativo"],correct:0},
 
 {q:"Documento que registra anexação à Sindicância?",
 a:["Juntada","Autuação","IPM","Portaria"],correct:0},
@@ -96,130 +90,160 @@ a:["Juntada","Autuação","IPM","Portaria"],correct:0},
 {q:"Termo inicial da Sindicância?",
 a:["Autuação","Juntada","Relatório","Depoimento"],correct:0},
 
-{q:"Promoção baseada no conjunto de qualidades?",
-a:["Promoção por merecimento","Automática","Especial","Administrativa"],correct:0},
+{q:"Promoção baseada no conjunto de qualidades e atributos que distinguem a praça?",
+a:["Promoção por merecimento","Promoção automática","Promoção especial","Promoção administrativa"],correct:0},
 
 {q:"Promoção baseada na precedência hierárquica?",
-a:["Promoção por antiguidade","Bravura","Post-mortem","Especial"],correct:0},
+a:["Promoção por antiguidade","Promoção por bravura","Promoção post-mortem","Promoção especial"],correct:0},
 
-{q:"Promoção por ato de coragem?",
-a:["Promoção por bravura","Antiguidade","Tempo","Administrativa"],correct:0},
+{q:"Promoção que resulta de ato incomum de coragem e audácia?",
+a:["Promoção por bravura","Promoção por antiguidade","Promoção por tempo","Promoção administrativa"],correct:0},
 
-{q:"Promoção após falecimento?",
-a:["Promoção post-mortem","Honorária","Administrativa","Automática"],correct:0},
+{q:"Promoção concedida após falecimento em serviço?",
+a:["Promoção post-mortem","Promoção honorária","Promoção administrativa","Promoção automática"],correct:0},
 
-{q:"Procedimento administrativo sumário preliminar?",
-a:["Sindicância","IPM","Conselho","Auditoria"],correct:0},
+{q:"Procedimento administrativo sumário de apuração preliminar?",
+a:["Sindicância","IPM","Conselho de Disciplina","Auditoria"],correct:0},
 
-{q:"Procedimento para apuração de crimes militares?",
+{q:"Procedimento destinado à apuração de crimes militares?",
 a:["Inquérito Policial Militar (IPM)","Sindicância","Processo Civil","Portaria"],correct:0},
 
-{q:"Estágio de complementação prática?",
-a:["Estágio de Aplicação","Curso Especial","Treinamento","Inicial"],correct:0},
+{q:"Estágio realizado após cursos com duração de um ano?",
+a:["Estágio de Aplicação","Estágio Inicial","Estágio Extra","Estágio Especial"],correct:0},
 
-{q:"Quem designa o escrivão se não houver designação?",
-a:["Encarregado da Sindicância","Comandante","Juiz","Secretário"],correct:0},
-
-{q:"Crime por ausência superior a 8 dias?",
+{q:"Crime caracterizado por ausência superior a oito dias?",
 a:["Deserção","Indisciplina","Contravenção","Abandono"],correct:0},
 
 {q:"Promoção após reconhecimento de direito não efetivado?",
-a:["Ressarcimento de preterição","Especial","Automática","Administrativa"],correct:0},
+a:["Promoção em ressarcimento de preterição","Promoção especial","Promoção automática","Promoção administrativa"],correct:0},
 
-{q:"Documento de compromisso do escrivão?",
+{q:"Documento que formaliza o compromisso legal do escrivão?",
 a:["Termo de Compromisso","Portaria","Autuação","Juntada"],correct:0},
 
 {q:"Conceito de Contravenção Disciplinar?",
-a:["Ação ou omissão contrária aos deveres que não seja crime","Crime militar","Falta leve","Advertência"],correct:0},
+a:["Ação ou omissão contrária às obrigações militares que não constitua crime","Crime militar","Advertência formal","Suspensão administrativa"],correct:0},
 
-{q:"Principal missão da Guarda a Presos?",
-a:["Manter controle e custódia","Julgar","Aplicar pena","Interrogar"],correct:0},
+{q:"Principal missão da guarda a presos?",
+a:["Manter controle e custódia","Aplicar pena","Julgar o preso","Interrogar o preso"],correct:0},
 
-{q:"Compromissos de tempo de serviço são:",
+{q:"Compromissos de tempo de serviço são classificados como:",
 a:["Inicial, prorrogações e cursos","Apenas inicial","Apenas cursos","Apenas prorrogação"],correct:0},
 
-{q:"Não se deve usar Bandeira Nacional como:",
-a:["Reposteiro ou pano de boca","Símbolo","Honra","Cerimônia"],correct:0},
-
-{q:"Circunstância atenuante disciplinar?",
-a:["Bons antecedentes militares","Reincidência","Deserção","Crime"],correct:0},
-
-{q:"Quando pode tocar no preso?",
-a:["Legítima defesa ou evitar fuga","Sempre","Nunca","Por ordem verbal"],correct:0},
-
-{q:"Dever das Praças?",
-a:["Cumprir instruções e executar serviço","Recusar ordens","Evitar exercícios","Dispensar tarefas"],correct:0},
-
-{q:"Promoção por merecimento significa:",
-a:["Conjunto de qualidades avaliadas","Tempo de serviço","Ordem judicial","Antiguidade"],correct:0},
-
-{q:"Promoção por antiguidade significa:",
-a:["Precedência hierárquica","Coragem","Falecimento","Curso"],correct:0},
-
-{q:"Promoção por bravura significa:",
-a:["Ato incomum de coragem","Tempo","Antiguidade","Curso"],correct:0},
-
-{q:"Promoção post-mortem ocorre:",
-a:["Após falecimento em serviço","Por tempo","Por curso","Administrativa"],correct:0},
-
-/* ===== 17 DO PDF ===== */
-
-{q:"São deveres das Praças, EXCETO:",
-a:["Cumprir instruções","Executar manutenção","Tomar parte em exercícios","Participar de cultura física"],correct:3},
-
-{q:"Qual NÃO é considerada Licença?",
-a:["Licença para curso pessoal","Licença à adotante","Licença paternidade","Licença saúde familiar"],correct:0},
-
-{q:"Documento correto para registro de dependente:",
-a:["Declaração de Dependente (RD)","DBA","RBI","DBI"],correct:0},
+{q:"Não se deve usar a Bandeira Nacional como:",
+a:["Reposteiro ou pano de boca","Símbolo oficial","Elemento de honra","Cerimônia pública"],correct:0},
 
 {q:"Circunstância atenuante disciplinar:",
-a:["Legítima defesa","Risco à OM","Rigor não autorizado","Reincidência"],correct:0},
+a:["Bons antecedentes militares","Reincidência","Crime militar","Deserção"],correct:0},
 
-{q:"Qual NÃO caracteriza deserção?",
-a:["Evadir-se da prisão","Ausentar-se por mais de 8 dias","Não retornar de férias","Não retornar de licença"],correct:0},
+{q:"Quando pode tocar no preso?",
+a:["Em legítima defesa ou para evitar fuga","Sempre","Nunca","Somente por ordem verbal"],correct:0},
 
-{q:"Procedimento sumário preliminar é:",
-a:["Sindicância","IPM","Processo Civil","Auditoria"],correct:0},
+{q:"Dever das Praças:",
+a:["Cumprir instruções e executar o serviço","Recusar ordens","Evitar exercícios","Dispensar tarefas"],correct:0},
 
-{q:"Órgão de assistência direta do Ministério da Defesa:",
-a:["Assessoria Especial Militar","Hospital FFAA","ESG","Programa Calha Norte"],correct:0},
+/* ================= 17 DO PDF — TEXTO LITERAL ================= */
 
-{q:"Estágio de um ano após cursos:",
-a:["Estágio de Aplicação","Inicial","Especialização","Aperfeiçoamento"],correct:0},
+{q:"São deveres específicos de todas as Praças da Marinha, EXCETO?",
+a:[
+"Cumprir as instruções que tiverem para o serviço.",
+"Executar tarefas necessárias à manutenção.",
+"Tomar parte nas mostras, fainas e exercícios.",
+"Participar dos exercícios de cultura física e desportos."
+],correct:3},
 
-{q:"Procedimento que apura crimes militares:",
-a:["IPM","Sindicância","Processo Civil","Auditoria"],correct:0},
+{q:"Qual das alternativas abaixo NÃO é considerada Licença?",
+a:[
+"Licença para frequentar curso de formação pessoal (LECEP).",
+"Licença à adotante (LA).",
+"Licença paternidade (LP).",
+"Licença para tratamento de saúde de pessoa da família (LTSPE)."
+],correct:0},
 
-{q:"Compromissos são classificados em:",
-a:["Inicial, prorrogação e cursos","Somente inicial","Somente cursos","Somente prorrogação"],correct:0},
+{q:"Qual é o documento utilizado para registro de dependentes segundo o PDF?",
+a:[
+"Declaração de Dependente (RD).",
+"Declaração de Beneficiário Anual (DBA).",
+"Declaração de Beneficiário Inicial (DBI).",
+"Declaração de Dependente Inicial (RBI)."
+],correct:0},
 
-{q:"Termo inicial da Sindicância:",
-a:["Autuação","Juntada","Relatório","Depoimento"],correct:0},
+{q:"Qual é uma circunstância atenuante da contravenção disciplinar?",
+a:[
+"Legítima defesa própria ou de outrem.",
+"Ter sido cometida estando em risco a OM.",
+"Rigor não autorizado.",
+"Reincidência."
+],correct:0},
 
-{q:"Conceito de Contravenção Disciplinar:",
-a:["Ação ou omissão que não seja crime","Crime","Advertência","Suspensão"],correct:0},
+{q:"Qual NÃO caracteriza Crime de Deserção?",
+a:[
+"Evadir-se do poder de escolta.",
+"Ausentar-se por mais de oito dias.",
+"Não se apresentar findo prazo de férias.",
+"Não se apresentar após cassação de licença."
+],correct:0},
 
-{q:"Procedimento que apura crimes militares e autoria:",
-a:["IPM","Sindicância","Auditoria","Processo Civil"],correct:0},
+{q:"Procedimento administrativo sumário preparatório de mera apuração preliminar?",
+a:[
+"Sindicância.",
+"Inquérito Policial Militar.",
+"Processo Administrativo.",
+"Auto de Prisão em Flagrante."
+],correct:0},
 
-{q:"Compromisso voluntário de permanecer no SAM é:",
-a:["Compromisso de tempo de serviço","Promoção","Licença","Transferência"],correct:0},
+{q:"Órgão de assistência direta e imediata do Ministério da Defesa?",
+a:[
+"Assessoria Especial Militar.",
+"Hospital das Forças Armadas.",
+"Escola Superior de Guerra.",
+"Departamento Calha Norte."
+],correct:0},
 
-{q:"Parte de deserção será lavrada após:",
-a:["8 dias de ausência","5 dias","3 dias","10 dias úteis"],correct:0},
+{q:"Termo inicial da Sindicância subscrito pelo escrivão?",
+a:[
+"Autuação.",
+"Relatório.",
+"Despacho.",
+"Juntada."
+],correct:0},
+
+{q:"Procedimento que apura fatos que possam constituir crimes militares?",
+a:[
+"Inquérito Policial Militar (IPM).",
+"Sindicância.",
+"Auditoria Militar.",
+"Processo Civil."
+],correct:0},
+
+{q:"Compromissos de tempo de serviço são classificados como:",
+a:[
+"Compromisso inicial; prorrogações; cursos ou estágios.",
+"Apenas inicial.",
+"Apenas cursos.",
+"Apenas prorrogação."
+],correct:0},
 
 {q:"Escrivão designado na ausência é chamado:",
-a:["Escrivão ad hoc","Oficial auxiliar","Secretário","Relator"],correct:0},
+a:[
+"Escrivão ad hoc.",
+"Oficial Auxiliar.",
+"Relator.",
+"Secretário."
+],correct:0},
 
-{q:"Ofendido na sindicância é ouvido em:",
-a:["Termo de Inquirição","Relatório","Auto","Despacho"],correct:0}
+{q:"O ofendido na sindicância é ouvido em:",
+a:[
+"Termo de Inquirição.",
+"Relatório.",
+"Auto.",
+"Despacho."
+],correct:0}
 
 ];
 
-let shuffled = [];
-let current = 0;
-let score = 0;
+let shuffled=[];
+let current=0;
+let score=0;
 
 function shuffle(array){
 for(let i=array.length-1;i>0;i--){
@@ -237,15 +261,12 @@ show();
 }
 
 function show(){
-document.getElementById("progress").innerText=
-"Questão "+(current+1)+" de "+shuffled.length;
-
+document.getElementById("progress").innerText="Questão "+(current+1)+" de "+shuffled.length;
 let q=shuffled[current];
 document.getElementById("question").innerText=q.q;
 
 let optDiv=document.getElementById("options");
 optDiv.innerHTML="";
-
 let answers=[...q.a];
 shuffle(answers);
 
@@ -267,9 +288,7 @@ el.classList.add("correct");
 score++;
 }else{
 el.classList.add("wrong");
-opts.forEach(o=>{
-if(o.innerText===cor){o.classList.add("correct");}
-});
+opts.forEach(o=>{if(o.innerText===cor){o.classList.add("correct");}});
 }
 
 document.getElementById("nextBtn").style.display="inline-block";
@@ -277,11 +296,6 @@ document.getElementById("nextBtn").style.display="inline-block";
 
 function nextQuestion(){
 current++;
-
-if(current%10===0){
-alert("Pontuação parcial: "+score+" de "+current);
-}
-
 if(current<shuffled.length){
 document.getElementById("nextBtn").style.display="none";
 show();
@@ -291,8 +305,7 @@ document.getElementById("question").innerText="SIMULADO FINALIZADO";
 document.getElementById("options").innerHTML="";
 document.getElementById("progress").innerText="";
 document.getElementById("result").innerText=
-"Resultado: "+score+" de "+shuffled.length+
-" | Aproveitamento: "+percent+"%";
+"Resultado: "+score+" de "+shuffled.length+" | "+percent+"%";
 document.getElementById("nextBtn").style.display="none";
 }
 }
