@@ -7,6 +7,7 @@
 <style>
     body { font-family: 'Segoe UI', sans-serif; background:#0b1e3d; margin:0; color:white; padding-bottom: 160px; overflow-x: hidden; }
     
+    /* BRASÃO NO TOPO - TAMANHO AUMENTADO */
     .header-banner { 
         width: 100%; 
         height: 220px; 
@@ -30,7 +31,15 @@
 
     #progress { font-size: 10px; color: #4da6ff; margin-bottom: 5px; font-weight: bold; }
     #question-header { margin: 0; color: #ffcc00; font-size: 13px; text-decoration: underline; font-weight: bold; }
-    #question-text { margin: 8px 0; font-size: 12px; line-height: 1.3; text-align: left; white-space: pre-wrap; }
+    
+    /* ORGANIZAÇÃO DO TEXTO DA PERGUNTA */
+    #question-text { 
+        margin: 8px 0; 
+        font-size: 12px; 
+        line-height: 1.4; 
+        text-align: left; 
+        white-space: pre-wrap; 
+    }
 
     .option { 
         background: #4da6ff; 
@@ -75,6 +84,7 @@
     #feedback-area { background: #071426; padding: 10px; margin-top: 10px; border-left: 4px solid #ffcc00; text-align: left; font-size: 11px; }
     .res-oficial { color: #ffcc00; font-weight: bold; white-space: pre-wrap; display: block; margin-top: 5px; }
 
+    /* BARRA DE GABARITO COM QUADRADOS GRANDES (75px) */
     .footer-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #071426; border-top: 2px solid #1c437a; padding: 10px 0; z-index: 100; }
     .nav-title { font-size: 11px; text-align: center; color: #4da6ff; margin-bottom: 8px; font-weight: bold; text-transform: uppercase; }
     .scroll-wrapper { display: flex; overflow-x: auto; padding: 0 12px; gap: 10px; }
@@ -116,24 +126,28 @@
 
 <script>
 const questions = [
-    // PDF 1 - ADM NAVAL
-    [span_0](start_span){id:"P1-01", q:"São deveres específicos de todas as Praças da Marinha, EXCETO?[span_0](end_span)[span_1](start_span)", a:["(A) Cumprir as instruções que tiverem para o serviço, executando-as e fazendo com que sejam bem executadas por seus subordinados.[span_1](end_span)[span_2](start_span)","(B) Executar as tarefas necessárias à manutenção e operação dos equipamentos e à conservação de compartimentos de suas OM.[span_2](end_span)[span_3](start_span)","(C) Tomar parte nas mostras, fainas e exercícios, ocupando para isto o posto que lhes for designado.[span_3](end_span)[span_4](start_span)","(D) Desempenhar em serviço, no porto ou em viagem, as tarefas que lhes forem determinadas.[span_4](end_span)[span_5](start_span)","(E) Participar dos exercícios de cultura física e desportos.[span_5](end_span)"], correct:1, type:"mc"},
-    [span_6](start_span){id:"P1-02", q:"Qual das alternativas abaixo não é considerada uma Licença?[span_6](end_span)[span_7](start_span)", a:["(A) Licença para acompanhar conjuge ou companheiro(a) (LAC).","(B) Licença à adotante (LA).","(C) Licença para tratamento de saúde de pessoa da família (LTSPE).[span_7](end_span)[span_8](start_span)","(D) Licença para frequentar curso de formação pessoal (LECEP).","(E) Licença paternidade (LP).[span_8](end_span)"], correct:3, type:"mc"},
-    [span_9](start_span){id:"P1-03", q:"Qual é o documento utilizado para registro de dependentes junto à Diretoria do Pessoal Militar da Marinha (DPMM) e ao Comando do Pessoal de Fuzileiros Navais (CPesFN)?[span_9](end_span)[span_10](start_span)", answer:"Declaração de Dependente (DD).[span_10](end_span)", type:"text"},
-    [span_11](start_span){id:"P1-04", q:"Qual das alternativas abaixo é uma circunstância atenuante da contravenção disciplinar?[span_11](end_span)[span_12](start_span)", a:["(A) Tratamento em serviço ordinário com rigor não autorizado pelos regulamentos militares.[span_12](end_span)[span_13](start_span)","(B) Ter sido cometida estando em risco a segurança da Organização Militar.[span_13](end_span)[span_14](start_span)","(C) Legítima defesa, própria ou de outrem.","(D) Força maior ou caso fortuito plenamente comprovado.[span_14](end_span)","(E) Prestação anterior de serviços relevantes não reconhecidos."], correct:0, type:"mc"},
-    [span_15](start_span){id:"P1-05", q:"Qual da alternativa abaixo não é um Requisito Básico para a Matricula em Curso?[span_15](end_span)[span_16](start_span)", a:["(A) Estar apta em inspeção de saúde.[span_16](end_span)[span_17](start_span)","(B) Ter nota de AMS igual ou superior a sete (7,00).","(C) Ter sido selecionada para o curso ou estágio.[span_17](end_span)[span_18](start_span)","(D) Ter sido aprovada no último JAE anual.","(E) Estar definitivamente impedida de acesso, conforme estabelecido no RPPM.[span_18](end_span)"], correct:4, type:"mc"},
-    [span_19](start_span){id:"P1-06", q:"Qual das Hipóteses não caracteriza como Crime de Deserção?[span_19](end_span)[span_20](start_span)", a:["(A) Ausentar-se da unidade por mais de oito dias sem licença.[span_20](end_span)[span_21](start_span)","(B) Tendo cumprido pena, deixar de se apresentar dentro do prazo de oito dias.[span_21](end_span)[span_22](start_span)","(C) Não se apresentar no lugar designado, findo o prazo de trânsito ou férias.[span_22](end_span)[span_23](start_span)","(D) Deixar de se apresentar à autoridade competente após licença cassada.[span_23](end_span)[span_24](start_span)","(E) Evadir-se do poder de escolta ou de recinto de prisão.[span_24](end_span)"], correct:2, type:"mc"},
-    [span_25](start_span){id:"P1-07", q:"Procedimento administrativo sumário com objetivo de mera apuração preliminar de ocorrências anômalas?[span_25](end_span)[span_26](start_span)", answer:"Sindicância.[span_26](end_span)", type:"text"},
-    [span_27](start_span){id:"P1-08", q:"Qual Órgão é um Órgão de Assistência direta e imediata do Ministério da Defesa?[span_27](end_span)[span_28](start_span)", answer:"Assessoria Especial Militar.[span_28](end_span)", type:"text"},
-    [span_29](start_span){id:"P1-09", q:"Estágio realizado pelas Praças após a conclusão dos cursos, com duração de um ano?[span_29](end_span)[span_30](start_span)", answer:"Estágio de Aplicação.[span_30](end_span)", type:"text"},
-    [span_31](start_span){id:"P1-10", q:"A quem cabe a designação do escrivão na Sindicância na falta da autoridade nomeante?[span_31](end_span)[span_32](start_span)", answer:"Encarregado da Sindicância.[span_32](end_span)", type:"text"},
-    [span_33](start_span){id:"P1-11", q:"Na Sindicância, em quais termos são ouvidos o ofendido e as testemunhas?[span_33](end_span)[span_34](start_span)", answer:"Termo de Declaração e Termo de Depoimento.[span_34](end_span)", type:"text"},
-    [span_35](start_span){id:"P1-12", q:"De acordo com as Normas de Conduta dos Componentes da Escolta escreva dentro dos parênteses (F) para Falso ou (V) para Verdadeiro:\n\n( ) Não se deverá tocar no preso, a não ser em caso de legítima defesa, para evitar sua fuga, ferimentos em terceiros ou danificação de propriedade, ou ainda, para debelar distúrbios.\n\n( ) Se necessário, dentro da responsabilidade que lhe foi atribuída, ficará atrás da pessoa protegida ao entrar em prédios, passar por entre aglomerações de pessoas ou lugares perigosos;\n\n( ) Os integrantes do SP poderão ser designados para cumprir missões da guarda a presos militares no tribunal, dentro das instalações da prisão, nos locais em que trabalham durante o seu deslocamento entre diferentes prisões ou dentro de instalações militares.\n\n( ) A sua missão principal quando no serviço de guarda a presos, é mantê-lo sob controle e custódia, e executar suas missões de acordo com as ordens e regulamentos militares que prescrevem a conduta, emprego, custódia e tratamento correcional de presos militares.\n\n( ) Quando designado para guarda num tribunal, o SP deverá se afastado do preso e em posição que permita observá-lo perfeitamente, para evitar que ele tente se ferir ou ferir outrem.", answer:"RESPOSTA: VFVVF[span_35](end_span)[span_36](start_span)\n\n(V) Não se deverá tocar no preso, a não ser em caso de legítima defesa, para evitar sua fuga, ferimentos em terceiros ou danificação de propriedade, ou ainda, para debelar distúrbios.[span_36](end_span)[span_37](start_span)\n(F) Se necessário, dentro da responsabilidade que lhe foi atribuída, ficará atrás da pessoa protegida ao entrar em prédios, passar por entre aglomerações de pessoas ou lugares perigosos;[span_37](end_span)[span_38](start_span)\n(V) Os integrantes do SP poderão ser designados para cumprir missões da guarda a presos militares no tribunal, dentro das instalações da prisão, nos locais em que trabalham durante o seu deslocamento entre diferentes prisões ou dentro de instalações militares.[span_38](end_span)[span_39](start_span)\n(V) A sua missão principal quando no serviço de guarda a presos, é mantê-lo sob controle e custódia, e executar suas missões de acordo com as ordens e regulamentos militares que prescrevem a conduta, emprego, custódia e tratamento correcional de presos militares.[span_39](end_span)[span_40](start_span)\n(F) Quando designado para guarda num tribunal, o SP deverá se afastado do preso e em posição que permita observá-lo perfeitamente, para evitar que ele tente se ferir ou ferir outrem.[span_40](end_span)", type:"text"},
-    [span_41](start_span){id:"P1-13", q:"Conceitue Contravenção Disciplinar?[span_41](end_span)[span_42](start_span)", answer:"É toda ação ou omissão contrária às obrigações ou aos deveres militares estatuídos nas leis, nos regulamentos, nas normas e nas disposições em vigor que fundamentam a Organização Militar, desde que não incidindo no que é capitulado pelo Código Penal Militar como crime.[span_42](end_span)", type:"text"},
-    [span_43](start_span){id:"P1-14", q:"Procedimento administrativo para apuração de crimes militares (Art. 9º CPM)?[span_43](end_span)[span_44](start_span)", answer:"Inquérito Policial Militar (IPM).[span_44](end_span)", type:"text"},
-    [span_45](start_span){id:"P1-15", q:"Como os compromissos de tempo de serviço das praças são classificados?[span_45](end_span)[span_46](start_span)", answer:"Compromisso inicial; compromissos decorrentes das prorrogações do tempo de serviço; e compromissos de cursos ou estágios.[span_46](end_span)", type:"text"},
-    [span_47](start_span){id:"P1-16", q:"Qual o termo inicial da Sindicância subscrito pelo escrivão?[span_47](end_span)[span_48](start_span)", answer:"Autuação.[span_48](end_span)", type:"text"},
-    [span_49](start_span){id:"P1-17", q:"Qual data será lavrada a Parte de Deserção para ausência iniciada em 05/03/2024?[span_49](end_span)[span_50](start_span)", answer:"15 de março de 2024.[span_50](end_span)", type:"text"}
+    // QUESTÕES DO PDF 1
+    {id:"P1-01", q:"São deveres específicos de todas as Praças da Marinha, EXCETO?", a:["(A) Cumprir as instruções que tiverem para o serviço, executando-as e fazendo com que sejam bem executadas por seus subordinados.","(B) Executar as tarefas necessárias à manutenção e operação dos equipamentos e à conservação de compartimentos de suas OM.","(C) Tomar parte nas mostras, fainas e exercícios, ocupando para isto o posto que lhes for designado.","(D) Desempenhar em serviço, no porto ou em viagem, as tarefas que lhes forem determinadas.","(E) Participar dos exercícios de cultura física e desportos."], correct:1, type:"mc"},
+    {id:"P1-02", q:"Qual das alternativas abaixo não é considerada uma Licença?", a:["(A) Licença para acompanhar conjuge ou companheiro(a) (LAC).","(B) Licença à adotante (LA).","(C) Licença para tratamento de saúde de pessoa da família (LTSPE).","(D) Licença para frequentar curso de formação pessoal (LECEP).","(E) Licença paternidade (LP)."], correct:3, type:"mc"},
+    {id:"P1-03", q:"Qual é o documento utilizado para registro de dependentes junto à Diretoria do Pessoal Militar da Marinha (DPMM) e ao Comando do Pessoal de Fuzileiros Navais (CPesFN)?", answer:"Declaração de Dependente (DD).", type:"text"},
+    {id:"P1-04", q:"Qual das alternativas abaixo é uma circunstância atenuante da contravenção disciplinar?", a:["(A) Tratamento em serviço ordinário com rigor não autorizado pelos regulamentos militares.","(B) Ter sido cometida estando em risco a segurança da Organização Militar.","(C) Legítima defesa, própria ou de outrem.","(D) Força maior ou caso fortuito plenamente comprovado.","(E) Prestação anterior de serviços relevantes não reconhecidos."], correct:0, type:"mc"},
+    {id:"P1-05", q:"Qual da alternativa abaixo não é um Requisito Básico para a Matricula em Curso?", a:["(A) Estar apta em inspeção de saúde.","(B) Ter nota de AMS igual ou superior a sete (7,00).","(C) Ter sido selecionada para o curso ou estágio.","(D) Ter sido aprovada no último JAE anual.","(E) Estar definitivamente impedida de acesso, conforme estabelecido no RPPM."], correct:4, type:"mc"},
+    {id:"P1-06", q:"Qual das Hipóteses não caracteriza como Crime de Deserção?", a:["(A) Ausentar-se da unidade por mais de oito dias sem licença.","(B) Tendo cumprido pena, deixar de se apresentar dentro do prazo de oito dias.","(C) Não se apresentar no lugar designado, findo o prazo de trânsito ou férias.","(D) Deixar de se apresentar à autoridade competente após licença cassada.","(E) Evadir-se do poder de escolta ou de recinto de prisão."], correct:2, type:"mc"},
+    {id:"P1-07", q:"Procedimento administrativo sumário com objetivo de mera apuração preliminar de ocorrências anômalas?", answer:"Sindicância.", type:"text"},
+    {id:"P1-08", q:"Qual Órgão é um Órgão de Assistência direta e imediata do Ministério da Defesa?", answer:"Assessoria Especial Militar.", type:"text"},
+    {id:"P1-09", q:"Estágio realizado pelas Praças após a conclusão dos cursos, com duração de um ano?", answer:"Estágio de Aplicação.", type:"text"},
+    {id:"P1-10", q:"A quem cabe a designação do escrivão na Sindicância na falta da autoridade nomeante?", answer:"Encarregado da Sindicância.", type:"text"},
+    {id:"P1-11", q:"Na Sindicância, em quais termos são ouvidos o ofendido e as testemunhas?", answer:"Termo de Declaração e Termo de Depoimento.", type:"text"},
+    
+    // QUESTÃO P1-12 FORMATADA ORGANIZADA (V/F)
+    {id:"P1-12", q:"De acordo com as Normas de Conduta dos Componentes da Escolta escreva dentro dos parênteses (F) para Falso ou (V) para Verdadeiro:\n\n( ) Não se deverá tocar no preso, a não ser em caso de legítima defesa, para evitar sua fuga, ferimentos em terceiros ou danificação de propriedade, ou ainda, para debelar distúrbios.\n\n( ) Se necessário, dentro da responsabilidade que lhe foi atribuída, ficará atrás da pessoa protegida ao entrar em prédios, passar por entre aglomerações de pessoas ou lugares perigosos;\n\n( ) Os integrantes do SP poderão ser designados para cumprir missões da guarda a presos militares no tribunal, dentro das instalações da prisão, nos locais em que trabalham durante o seu deslocamento entre diferentes prisões ou dentro de instalações militares.\n\n( ) A sua missão principal quando no serviço de guarda a presos, é mantê-lo sob controle e custódia, e executar suas missões de acordo com as ordens e regulamentos militares que prescrevem a conduta, emprego, custódia e tratamento correcional de presos militares.\n\n( ) Quando designado para guarda num tribunal, o SP deverá se afastado do preso e em posição que permita observá-lo perfeitamente, para evitar que ele tente se ferir ou ferir outrem.", 
+     answer:"RESPOSTA: VFVVF\n\n(V) Não se deverá tocar no preso, a não ser em caso de legítima defesa, para evitar sua fuga, ferimentos em terceiros ou danificação de propriedade, ou ainda, para debelar distúrbios.\n(F) Se necessário, dentro da responsabilidade que lhe foi atribuída, ficará atrás da pessoa protegida ao entrar em prédios, passar por entre aglomerações de pessoas ou lugares perigosos;\n(V) Os integrantes do SP poderão ser designados para cumprir missões da guarda a presos militares no tribunal, dentro das instalações da prisão, nos locais em que trabalham durante o seu deslocamento entre diferentes prisões ou dentro de instalações militares.\n(V) A sua missão principal quando no serviço de guarda a presos, é mantê-lo sob controle e custódia, e executar suas missões de acordo com as ordens e regulamentos militares que prescrevem a conduta, emprego, custódia e tratamento correcional de presos militares.\n(F) Quando designado para guarda num tribunal, o SP deverá se afastado do preso e em posição que permita observá-lo perfeitamente, para evitar que ele tente se ferir ou ferir outrem.", type:"text"},
+    
+    {id:"P1-13", q:"Conceitue Contravenção Disciplinar?", answer:"É toda ação ou omissão contrária às obrigações ou aos deveres militares estatuídos nas leis, nos regulamentos, nas normas e nas disposições em vigor que fundamentam a Organização Militar, desde que não incidindo no que é capitulado pelo Código Penal Militar como crime.", type:"text"},
+    {id:"P1-14", q:"Procedimento administrativo para apuração de crimes militares (Art. 9º CPM)?", answer:"Inquérito Policial Militar (IPM).", type:"text"},
+    {id:"P1-15", q:"Como os compromissos de tempo de serviço das praças são classificados?", answer:"Compromisso inicial; compromissos decorrentes das prorrogações do tempo de serviço; e compromissos de cursos ou estágios.", type:"text"},
+    {id:"P1-16", q:"Qual o termo inicial da Sindicância subscrito pelo escrivão?", answer:"Autuação.", type:"text"},
+    {id:"P1-17", q:"Qual data será lavrada a Parte de Deserção para ausência iniciada em 05/03/2024?", answer:"15 de março de 2024.", type:"text"}
 ];
 
 let shuffled=[]; let current=0;
@@ -183,8 +197,8 @@ function show(){
             document.getElementById("options").appendChild(d);
         });
     } else {
-        let inp = document.createElement("input"); inp.placeholder="Sua resposta...";
-        let b = document.createElement("button"); b.innerText="Gabarito";
+        let inp = document.createElement("input"); inp.placeholder="Escreva a resposta aqui...";
+        let b = document.createElement("button"); b.innerText="Ver Gabarito";
         b.onclick=() => {
             document.getElementById("feedback").innerHTML = `<div id="feedback-area"><strong>PDF:</strong> <span class="res-oficial">${q.answer.replace(/\n/g, '<br>')}</span></div>`;
             document.getElementById("nextBtn").style.display="inline-block";
