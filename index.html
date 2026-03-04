@@ -6,7 +6,6 @@
 <title>Questionário Administração Naval</title>
 
 <style>
-
 body{
     font-family: Arial, sans-serif;
     background:#0b1e3d;
@@ -40,8 +39,8 @@ body{
     border-radius:8px;
     cursor:pointer;
     font-size:15px;
-    background:#1e90ff; /* azul */
-    color:black; /* letra preta */
+    background:#1e90ff;
+    color:black;
     font-weight:bold;
 }
 
@@ -50,12 +49,12 @@ body{
 }
 
 .correct{
-    background:#28a745 !important; /* verde */
+    background:#28a745 !important;
     color:white !important;
 }
 
 .wrong{
-    background:#dc3545 !important; /* vermelho */
+    background:#dc3545 !important;
     color:white !important;
 }
 
@@ -78,7 +77,6 @@ body{
     margin-top:10px;
     cursor:pointer;
 }
-
 </style>
 </head>
 
@@ -86,14 +84,10 @@ body{
 
 <div class="container">
 <h1>Administração Naval I e II</h1>
-
 <div id="quiz"></div>
-
 <button id="nextBtn" class="next" onclick="nextQuestion()" style="display:none;">Próxima</button>
 <button class="restart" onclick="startQuiz()">Reiniciar</button>
-
 <h2 id="result"></h2>
-
 </div>
 
 <script>
@@ -128,7 +122,55 @@ a:["Promoção post-mortem","Promoção honorária","Promoção administrativa",
 a:["Sindicância","IPM","Conselho Disciplinar","Auditoria"], correct:0},
 
 { q:"10) Procedimento para apuração de crimes militares?",
-a:["Inquérito Policial Militar (IPM)","Sindicância","Processo Civil","Portaria"], correct:0}
+a:["Inquérito Policial Militar (IPM)","Sindicância","Processo Civil","Portaria"], correct:0},
+
+{ q:"11) Estágio de complementação prática após cursos?",
+a:["Estágio de Aplicação","Curso Especial","Treinamento Básico","Estágio Inicial"], correct:0},
+
+{ q:"12) Quem designa o escrivão se autoridade não designar?",
+a:["Encarregado da Sindicância","Comandante","Juiz Militar","Secretário"], correct:0},
+
+{ q:"13) Termos usados na Sindicância (ofendido, sindicado, testemunhas)?",
+a:["Declaração, Inquirição e Depoimento","Relatório, Juntada e Portaria","Auto, Termo e Anexo","Depoimento, Processo e IPM"], correct:0},
+
+{ q:"14) Crime caracterizado por ausência superior a 8 dias?",
+a:["Deserção","Indisciplina","Contravenção","Abandono"], correct:0},
+
+{ q:"15) Promoção após reconhecimento de direito não efetivado?",
+a:["Ressarcimento de preterição","Promoção especial","Promoção automática","Promoção administrativa"], correct:0},
+
+{ q:"16) Órgão de assistência direta do Ministério da Defesa?",
+a:["Assessoria Especial Militar","SGM","DPMM","CPesFN"], correct:0},
+
+{ q:"17) Documento de compromisso legal do escrivão?",
+a:["Termo de Compromisso","Portaria","Autuação","Juntada"], correct:0},
+
+{ q:"18) Conceito de Contravenção Disciplinar?",
+a:["Ação ou omissão contrária aos deveres militares que não seja crime","Crime militar","Falta leve","Advertência"], correct:0},
+
+{ q:"19) Licença concedida ao militar?",
+a:["Licença paternidade","Licença administrativa","Licença comercial","Licença especial civil"], correct:0},
+
+{ q:"20) Principal missão da Guarda a Presos?",
+a:["Manter controle e custódia","Aplicar pena","Julgar","Interrogar"], correct:0},
+
+{ q:"21) Onde o Serviço de Polícia pode atuar?",
+a:["Guarda de presos e deslocamentos","Somente tribunal","Somente OM","Apenas prisão"], correct:0},
+
+{ q:"22) Compromissos de tempo de serviço são?",
+a:["Iniciais, prorrogações e cursos","Apenas iniciais","Apenas cursos","Apenas prorrogações"], correct:0},
+
+{ q:"23) Não se deve usar Bandeira Nacional como?",
+a:["Reposteiro ou pano de boca","Símbolo nacional","Honra oficial","Cerimônia pública"], correct:0},
+
+{ q:"24) Circunstância atenuante disciplinar?",
+a:["Bons antecedentes militares","Reincidência","Deserção","Crime militar"], correct:0},
+
+{ q:"25) Quando pode tocar no preso?",
+a:["Legítima defesa ou evitar fuga","Sempre","Nunca","Apenas por ordem verbal"], correct:0},
+
+{ q:"26) Dever das Praças?",
+a:["Cumprir instruções e executar o serviço","Recusar ordens","Evitar exercícios","Dispensar tarefas"], correct:0}
 
 ];
 
@@ -185,20 +227,18 @@ function checkAnswer(selected, correct, clickedBtn){
 let buttons=document.querySelectorAll(".answer-btn");
 buttons.forEach(btn=>btn.disabled=true);
 
-if(selected===correct){
-totalScore++;
-clickedBtn.classList.add("correct");
-document.getElementById("result").innerText="✅ CERTO!";
-}else{
-clickedBtn.classList.add("wrong");
-
 buttons.forEach(btn=>{
 if(btn.innerText === shuffledQuestions[currentQuestion].a[correct]){
-btn.classList.add("wrong"); // correta em vermelho como você pediu
+btn.classList.add("correct");
 }
 });
 
+if(selected !== correct){
+clickedBtn.classList.add("wrong");
 document.getElementById("result").innerText="❌ ERRADO!";
+}else{
+totalScore++;
+document.getElementById("result").innerText="✅ CERTO!";
 }
 
 document.getElementById("nextBtn").style.display="inline-block";
