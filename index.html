@@ -5,16 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <title>Simulado Oficial - Administração Naval</title>
 <style>
-    body { font-family: 'Segoe UI', sans-serif; background:#0b1e3d; margin:0; color:white; padding-bottom: 140px; overflow-x: hidden; }
+    body { font-family: 'Segoe UI', sans-serif; background:#0b1e3d; margin:0; color:white; padding-bottom: 160px; overflow-x: hidden; }
     
-    /* Brasão aumentado */
+    /* BRASÃO AUMENTADO */
     .header-banner { 
         width: 100%; 
-        height: 180px; 
+        height: 220px; 
         background: #0b1e3d url('https://upload.wikimedia.org/wikipedia/commons/0/0b/Brasão_do_Corpo_de_Fuzileiros_Navais.png') no-repeat center; 
         background-size: contain; 
         margin-bottom: 10px;
-        padding-top: 10px;
     }
 
     .container { display: flex; flex-direction: column; align-items: center; padding: 5px; }
@@ -75,13 +74,13 @@
     }
 
     #feedback-area { background: #071426; padding: 10px; margin-top: 10px; border-left: 4px solid #ffcc00; text-align: left; font-size: 11px; }
-    .res-oficial { color: #ffcc00; font-weight: bold; white-space: pre-wrap; }
+    .res-oficial { color: #ffcc00; font-weight: bold; white-space: pre-wrap; display: block; margin-top: 5px; }
 
-    /* Barra de gabarito com quadrados maiores */
-    .footer-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #071426; border-top: 2px solid #1c437a; padding: 8px 0; z-index: 100; }
-    .nav-title { font-size: 10px; text-align: center; color: #4da6ff; margin-bottom: 6px; font-weight: bold; text-transform: uppercase; }
-    .scroll-wrapper { display: flex; overflow-x: auto; padding: 0 10px; gap: 8px; }
-    .nav-item { flex: 0 0 65px; height: 45px; background: #132b52; border: 2px solid #4da6ff; border-radius: 6px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 11px; font-weight: bold; }
+    /* BARRA DE GABARITO COM QUADRADOS MAIORES */
+    .footer-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #071426; border-top: 2px solid #1c437a; padding: 10px 0; z-index: 100; }
+    .nav-title { font-size: 11px; text-align: center; color: #4da6ff; margin-bottom: 8px; font-weight: bold; text-transform: uppercase; }
+    .scroll-wrapper { display: flex; overflow-x: auto; padding: 0 12px; gap: 10px; }
+    .nav-item { flex: 0 0 75px; height: 50px; background: #132b52; border: 2.5px solid #4da6ff; border-radius: 8px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 12px; font-weight: bold; }
 
     .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 92%; background: white; color: #0b1e3d; padding: 15px; border-radius: 10px; z-index: 200; box-shadow: 0 0 25px rgba(0,0,0,0.7); }
     .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 150; }
@@ -119,7 +118,7 @@
 
 <script>
 const questions = [
-    // PDF 1 - ADM NAVAL
+    // PDF 1
     {id:"P1-01", q:"São deveres específicos de todas as Praças da Marinha, EXCETO?", a:["(A) Cumprir as instruções que tiverem para o serviço, executando-as e fazendo com que sejam bem executadas por seus subordinados.","(B) Executar as tarefas necessárias à manutenção e operação dos equipamentos e à conservação de compartimentos de suas OM.","(C) Tomar parte nas mostras, fainas e exercícios, ocupando para isto o posto que lhes for designado.","(D) Desempenhar em serviço, no porto ou em viagem, as tarefas que lhes forem determinadas.","(E) Participar dos exercícios de cultura física e desportos."], correct:1, type:"mc"},
     {id:"P1-02", q:"Qual das alternativas abaixo não é considerada uma Licença?", a:["(A) Licença para acompanhar conjuge ou companheiro(a) (LAC).","(B) Licença à adotante (LA).","(C) Licença para tratamento de saúde de pessoa da família (LTSPE).","(D) Licença para frequentar curso de formação pessoal (LECEP).","(E) Licença paternidade (LP)."], correct:3, type:"mc"},
     {id:"P1-03", q:"Qual é o documento utilizado para registro de dependentes junto à Diretoria do Pessoal Militar da Marinha (DPMM) e ao Comando do Pessoal de Fuzileiros Navais (CPesFN)?", answer:"Declaração de Dependente (DD).", type:"text"},
@@ -131,40 +130,21 @@ const questions = [
     {id:"P1-09", q:"Estágio realizado pelas Praças após a conclusão dos cursos, com duração de um ano?", answer:"Estágio de Aplicação.", type:"text"},
     {id:"P1-10", q:"A quem cabe a designação do escrivão na Sindicância na falta da autoridade nomeante?", answer:"Encarregado da Sindicância.", type:"text"},
     {id:"P1-11", q:"Na Sindicância, em quais termos são ouvidos o ofendido e as testemunhas?", answer:"Termo de Declaração e Termo de Depoimento.", type:"text"},
-    {id:"P1-12", q:"Promoção que resulta de ato ou atos incomuns, de coragem e audácia?", answer:"Promoção por bravura.", type:"text"},
+    {id:"P1-12", q:"De acordo com as Normas de Conduta dos Componentes da Escolta escreva dentro dos parênteses (F) para Falso ou (V) para Verdadeiro.", answer:"(V) Não se deverá tocar no preso, a não ser em caso de legítima defesa, para evitar sua fuga, ferimentos em terceiros ou danificação de propriedade, ou ainda, para debelar distúrbios.\n(F) Se necessário, dentro da responsabilidade que lhe foi atribuída, ficará atrás da pessoa protegida ao entrar em prédios, passar por entre aglomerações de pessoas ou lugares perigosos;\n(V) Os integrantes do SP poderão ser designados para cumprir missões da guarda a presos militares no tribunal, dentro das instalações da prisão, nos locais em que trabalham durante o seu deslocamento entre diferentes prisões ou dentro de instalações militares.\n(V) A sua missão principal quando no serviço de guarda a presos, é mantê-lo sob controle e custódia, e executar suas missões de acordo com as ordens e regulamentos militares que prescrevem a conduta, emprego, custódia e tratamento correcional de presos militares.\n(F) Quando designado para guarda num tribunal, o SP deverá se afastado do preso e em posição que permita observá-lo perfeitamente, para evitar que ele tente se ferir ou ferir outrem.", type:"text"},
     {id:"P1-13", q:"Conceitue Contravenção Disciplinar.", answer:"Ação ou omissão contrária às obrigações ou aos deveres militares estatuídos em lei que não constitua crime.", type:"text"},
     {id:"P1-14", q:"Procedimento administrativo para apuração de crimes militares (Art. 9º CPM)?", answer:"Inquérito Policial Militar (IPM).", type:"text"},
     {id:"P1-15", q:"Como os compromissos de tempo de serviço das praças são classificados?", answer:"Compromisso inicial; compromissos decorrentes das prorrogações do tempo de serviço; e compromissos de cursos ou estágios.", type:"text"},
     {id:"P1-16", q:"Qual o termo inicial da Sindicância subscrito pelo escrivão?", answer:"Autuação.", type:"text"},
     {id:"P1-17", q:"Qual data será lavrada a Parte de Deserção para ausência iniciada em 05/03/2024?", answer:"15 de março de 2024.", type:"text"},
 
-    // PDF 2 - RESPOSTAS TOTAIS (VERMELHO)
+    // PDF 2 
     {id:"P2-01", q:"Qual é o documento utilizado para registro de dependentes junto à DPMM e CPesFN?", answer:"Declaração de Dependente (DD).", type:"text"},
-    {id:"P2-02", q:"Qual Órgão de Direção Setorial contribui para o preparo e a aplicação do Poder Naval no tocante às atividades relacionadas com a economia, as finanças, o abastecimento, o patrimônio e a administração?", answer:"Secretaria-Geral da Marinha compete (SGM).", type:"text"},
+    {id:"P2-02", q:"Qual Órgão de Direção Setorial contribui para o preparo em economia e finanças?", answer:"Secretaria-Geral da Marinha compete (SGM).", type:"text"},
     {id:"P2-03", q:"Cite os deveres específicos de todas as Praças da Marinha.", answer:"a) Cumprir as instruções que tiverem para o serviço, executando-as e fazendo com que sejam bem executadas por seus subordinados.\nb) Tomar parte nas mostras, fainas e exercícios, ocupando para isto o posto que lhes for designado.\nc) Desempenhar em serviço, no porto ou em viagem, as tarefas que lhes forem determinadas.\nd) Participar dos exercícios de cultura física e desportos.", type:"text"},
     {id:"P2-04", q:"Quais as circunstâncias atenuantes da contravenção disciplinar?", answer:"- Bons antecedentes militares;\n- Idade menor de 18 anos;\n- Tempo de serviço militar menor de seis meses;\n- Prestação anterior de serviços relevantes já reconhecidos;\n- Tratamento em serviço ordinário com rigor não autorizado pelos regulamentos militares;\n- Provocação.", type:"text"},
     {id:"P2-05", q:"Cite 4 tipos de Licença concedidas aos Militares da Marinha.", answer:"- Licença para acompanhar cônjuge ou companheiro(a) (LAC);\n- Licença à adotante (LA);\n- Licença para tratamento de saúde de pessoa da família (LTSPF);\n- Licença Paternidade (LP).", type:"text"},
-    {id:"P2-06", q:"Promoção baseada no conjunto de qualidades e atributos que distinguem o militar?", answer:"Promoção por merecimento.", type:"text"},
-    {id:"P2-07", q:"O que é Sindicância?", answer:"É o procedimento administrativo sumário que se destina à apuração preliminar de fatos ou ocorrências anômalas, a fim de verificar a existência de indícios de autoria e materialidade de irregularidade administrativa.", type:"text"},
-    {id:"P2-08", q:"Qual Órgão é um Órgão de Assistência direta e imediata do Ministério da Defesa?", answer:"Assessoria Especial Militar.", type:"text"},
-    {id:"P2-09", q:"Estágio realizado pelas Praças logo após a conclusão dos cursos de formação ou de especialização, com duração de um ano?", answer:"Estágio de Aplicação.", type:"text"},
-    {id:"P2-10", q:"Quem designa o Escrivão caso não tenha sido feito pela autoridade nomeante?", answer:"Encarregado da Sindicância.", type:"text"},
-    {id:"P2-11", q:"Termos em que são ouvidos o ofendido, o sindicado e as testemunhas?", answer:"- Termo de Declaração (para o ofendido);\n- Termo de Inquirição (para o sindicado);\n- Termo de Depoimento (para a testemunha).", type:"text"},
-    {id:"P2-12", q:"Promoção que resulta de ato de coragem e audácia em serviço?", answer:"Promoção por bravura.", type:"text"},
-    {id:"P2-13", q:"Promoção em reconhecimento da Pátria à praça falecida no cumprimento do dever?", answer:"Promoção post-mortem.", type:"text"},
     {id:"P2-14", q:"Quais as Hipóteses que caracterizam como Crime de Deserção?", answer:"- Ausentar-se da unidade em que serve, ou do lugar em que deve permanecer, por mais de oito dias.\n- Tendo cumprido pena, deixar de se apresentar dentro do prazo de oito dias.\n- Deixar de se apresentar à autoridade competente, dentro do prazo de oito dias, contados daquele em que termina ou é cassada a licença ou agregação ou em que é declarado o estado de sítio ou de guerra.\n- Evadir-se do poder de escolta ou de recinto de prisão ou detenção, ou fugir em seguida à prática de crime para evitar a prisão, permanecendo ausente por mais de 8 dias (deserção por evasão ou fuga).\n- Conseguir exclusão do serviço ativo ou situação de inatividade, criando ou simulando incapacidade.\n- Deixar de apresentar-se no momento da partida do navio ou de aeronave, de que é tripulante, ou do deslocamento da unidade ou força em que serve (deserção especial).", type:"text"},
-    {id:"P2-15", q:"Promoção baseada na precedência hierárquica?", answer:"Promoção por antiguidade.", type:"text"},
-    {id:"P2-16", q:"Promoção feita após reconhecido o direito à praça preterida?", answer:"Promoção em ressarcimento de preterição.", type:"text"},
-    {id:"P2-17", q:"Escolta: Quando se deve tocar no corpo do preso?", answer:"O escolta não deverá tocar no corpo do preso, a não ser por medida de legítima defesa, própria ou de outrem; para evitar fuga; para evitar ferimentos em terceiros ou dano à propriedade.", type:"text"},
-    {id:"P2-18", q:"Onde os integrantes do SP podem cumprir missões de guarda a presos?", answer:"Em tribunais, prisões, locais de trabalho, deslocamentos ou outras instalações militares.", type:"text"},
-    {id:"P2-19", q:"Qual a missão principal no serviço de guarda a presos?", answer:"É mantê-lo sob controle e custódia total da autoridade militar.", type:"text"},
-    {id:"P2-20", q:"Conceitue Contravenção Disciplinar.", answer:"É toda ação ou omissão contrária às obrigações ou aos deveres militares estatuídos em lei ou regulamentos, que não constitua crime.", type:"text"},
-    {id:"P2-21", q:"Procedimento para apuração de crimes militares previsto no art. 9º CPM?", answer:"Inquérito Policial Militar (IPM).", type:"text"},
-    {id:"P2-22", q:"Classificação dos compromissos de tempo de serviço das praças?", answer:"- Compromisso inicial;\n- Compromissos decorrentes das prorrogações do tempo de serviço;\n- Compromissos de cursos ou estágios.", type:"text"},
-    {id:"P2-23", q:"Quais as proibições quanto ao uso da bandeira nacional?", answer:"I - Fazer saudação com a Bandeira Nacional, salvo em retribuição à saudação idêntica feita por outro navio ou estabelecimento;\nII - usar Bandeira Nacional que não se encontre em bom estado de conservação;\nIII - usar Bandeira Nacional como reposteiro ou pano de boca, guarnição de mesa, revestimento de tribuna, cobertura de placas, retratos, painéis ou monumentos a serem inaugurados;\nIV - usar Bandeira Nacional para prestação de honras de caráter particular por parte de qualquer pessoa natural ou entidade coletiva;\nV - colocar quaisquer indicações ou emblemas sobre a Bandeira Nacional; e\nVI - abater a Bandeira Nacional em continência.", type:"text"},
-    {id:"P2-24", q:"Qual é o termo inicial da Sindicância?", answer:"Autuação.", type:"text"},
-    {id:"P2-25", q:"Termo que registra a anexação de papel que interesse à prova?", answer:"Juntada.", type:"text"},
-    {id:"P2-26", q:"Documento pelo qual o escrivão presta o compromisso legal de sigilo?", answer:"Termo de Compromisso.", type:"text"}
+    {id:"P2-23", q:"Quais as proibições quanto ao uso da bandeira nacional?", answer:"I - Fazer saudação com a Bandeira Nacional, salvo em retribuição à saudação idêntica feita por outro navio ou estabelecimento;\nII - usar Bandeira Nacional que não se encontre em bom estado de conservação;\nIII - usar Bandeira Nacional como reposteiro ou pano de boca, guarnição de mesa, revestimento de tribuna, cobertura de placas, retratos, painéis ou monumentos a serem inaugurados;\nIV - usar Bandeira Nacional para prestação de honras de caráter particular por parte de qualquer pessoa natural ou entidade coletiva;\nV - colocar quaisquer indicações ou emblemas sobre a Bandeira Nacional; e\nVI - abater a Bandeira Nacional em continência.", type:"text"}
 ];
 
 let shuffled=[]; let current=0;
