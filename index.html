@@ -6,89 +6,29 @@
 <title>Simulado Oficial - Administração Naval</title>
 <style>
     body { font-family: 'Segoe UI', sans-serif; background:#0b1e3d; margin:0; color:white; padding-bottom: 110px; overflow-x: hidden; }
-    
-    .header-banner { 
-        width: 100%; 
-        height: 100px; 
-        background: #0b1e3d url('https://upload.wikimedia.org/wikipedia/commons/0/0b/Brasão_do_Corpo_de_Fuzileiros_Navais.png') no-repeat center; 
-        background-size: contain; 
-        margin-bottom: 5px;
-    }
-
+    .header-banner { width: 100%; height: 100px; background: #0b1e3d url('https://upload.wikimedia.org/wikipedia/commons/0/0b/Brasão_do_Corpo_de_Fuzileiros_Navais.png') no-repeat center; background-size: contain; margin-bottom: 5px; }
     .container { display: flex; flex-direction: column; align-items: center; padding: 5px; }
-
-    .box { 
-        background: #132b52; 
-        padding: 10px; 
-        border-radius: 10px; 
-        width: 96%; 
-        max-width: 800px; 
-        text-align: center; 
-        box-shadow: 0 4px 15px rgba(0,0,0,0.5); 
-        border: 1px solid #1c437a; 
-    }
-
-    /* Fontes reduzidas ao máximo para evitar rolagem */
+    .box { background: #132b52; padding: 10px; border-radius: 10px; width: 96%; max-width: 800px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); border: 1px solid #1c437a; }
     #progress { font-size: 9px; color: #4da6ff; margin-bottom: 3px; }
     #question-header { margin: 0; color: #ffcc00; font-size: 12px; text-decoration: underline; }
-    #question-text { margin: 6px 0; font-size: 12px; line-height: 1.1; text-align: left; }
-
-    .option { 
-        background: #4da6ff; 
-        color: black; 
-        padding: 6px; 
-        margin: 4px 0; 
-        border-radius: 4px; 
-        cursor: pointer; 
-        font-weight: bold; 
-        text-align: left; 
-        font-size: 11px; 
-        line-height: 1.1;
-    }
-
+    #question-text { margin: 6px 0; font-size: 11px; line-height: 1.1; text-align: left; }
+    .option { background: #4da6ff; color: black; padding: 6px; margin: 4px 0; border-radius: 4px; cursor: pointer; font-weight: bold; text-align: left; font-size: 10px; line-height: 1.1; }
     .correct { background: green !important; color: white; }
     .wrong { background: red !important; color: white; }
-
-    input { 
-        width: 100%; 
-        box-sizing: border-box;
-        padding: 6px; 
-        margin-top: 8px; 
-        border-radius: 4px; 
-        border: 1px solid #4da6ff; 
-        background: #0b1e3d; 
-        color: white; 
-        font-size: 16px; /* Para evitar zoom do sistema */
-    }
-
-    button { 
-        margin-top: 8px; 
-        padding: 6px 12px; 
-        border: none; 
-        border-radius: 4px; 
-        background: #ffcc00; 
-        color: #0b1e3d; 
-        font-weight: bold; 
-        font-size: 11px;
-        text-transform: uppercase; 
-    }
-
+    input { width: 100%; box-sizing: border-box; padding: 6px; margin-top: 8px; border-radius: 4px; border: 1px solid #4da6ff; background: #0b1e3d; color: white; font-size: 16px; }
+    button { margin-top: 8px; padding: 6px 12px; border: none; border-radius: 4px; background: #ffcc00; color: #0b1e3d; font-weight: bold; font-size: 11px; text-transform: uppercase; }
     #feedback-area { background: #071426; padding: 8px; margin-top: 8px; border-left: 3px solid #ffcc00; text-align: left; font-size: 10px; }
-    .res-oficial { color: #ffcc00; font-weight: bold; white-space: pre-wrap; }
-
+    .res-oficial { color: #ffcc00; font-weight: bold; white-space: pre-wrap; display: block; margin-top: 5px; }
     .footer-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #071426; border-top: 1px solid #1c437a; padding: 4px 0; z-index: 100; }
     .nav-title { font-size: 8px; text-align: center; color: #4da6ff; margin-bottom: 2px; font-weight: bold; }
     .scroll-wrapper { display: flex; overflow-x: auto; padding: 0 8px; gap: 4px; }
     .nav-item { flex: 0 0 45px; height: 28px; background: #132b52; border: 1px solid #4da6ff; border-radius: 4px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 9px; font-weight: bold; }
-
     .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 92%; background: white; color: #0b1e3d; padding: 12px; border-radius: 8px; z-index: 200; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
     .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 150; }
 </style>
 </head>
 <body>
-
 <div class="header-banner"></div>
-
 <div class="container">
     <div class="box" id="mainBox">
         <div id="progress"></div>
@@ -100,12 +40,10 @@
         <button id="nextBtn" onclick="nextQuestion()" style="display:none;">Próxima Questão</button>
     </div>
 </div>
-
 <div class="footer-nav">
     <div class="nav-title">GABARITO RÁPIDO (P1: ADM / P2: QUEST)</div>
     <div class="scroll-wrapper" id="navBar"></div>
 </div>
-
 <div class="overlay" id="overlay" onclick="closeModal()"></div>
 <div class="modal" id="modal">
     <div style="display:flex; justify-content: space-between; border-bottom: 1px solid #0b1e3d; padding-bottom: 4px; margin-bottom: 6px; font-size: 11px; font-weight: bold;">
@@ -117,7 +55,7 @@
 
 <script>
 const questions = [
-    // PDF 1 - ADM NAVAL
+    // PDF 1 (ADM NAVAL) - Mantido integral
     {id:"P1-01", q:"São deveres específicos de todas as Praças da Marinha, EXCETO?", a:["(A) Cumprir as instruções que tiverem para o serviço, executando-as e fazendo com que sejam bem executadas por seus subordinados.","(B) Executar as tarefas necessárias à manutenção e operação dos equipamentos e à conservação de compartimentos de suas OM.","(C) Tomar parte nas mostras, fainas e exercícios, ocupando para isto o posto que lhes for designado.","(D) Desempenhar em serviço, no porto ou em viagem, as tarefas que lhes forem determinadas.","(E) Participar dos exercícios de cultura física e desportos."], correct:1, type:"mc"},
     {id:"P1-02", q:"Qual das alternativas abaixo não é considerada uma Licença?", a:["(A) Licença para acompanhar conjuge ou companheiro(a) (LAC).","(B) Licença à adotante (LA).","(C) Licença para tratamento de saúde de pessoa da família (LTSPE).","(D) Licença para frequentar curso de formação pessoal (LECEP).","(E) Licença paternidade (LP)."], correct:3, type:"mc"},
     {id:"P1-03", q:"Qual é o documento utilizado para registro de dependentes junto à Diretoria do Pessoal Militar da Marinha (DPMM) e ao Comando do Pessoal de Fuzileiros Navais (CPesFN)?", answer:"Declaração de Dependente (DD).", type:"text"},
@@ -133,36 +71,36 @@ const questions = [
     {id:"P1-13", q:"Conceitue Contravenção Disciplinar.", answer:"Ação ou omissão contrária às obrigações ou aos deveres militares estatuídos em lei que não constitua crime.", type:"text"},
     {id:"P1-14", q:"Procedimento administrativo para apuração de crimes militares (Art. 9º CPM)?", answer:"Inquérito Policial Militar (IPM).", type:"text"},
     {id:"P1-15", q:"Como os compromissos de tempo de serviço das praças são classificados?", answer:"Compromisso inicial; compromissos decorrentes de prorrogações; e compromissos de cursos ou estágios.", type:"text"},
-    {id:"P1-16", q:"Qual o termo inicial da Sindicância subscrito pelo escrivão, após a capa?", answer:"Autuação.", type:"text"},
+    {id:"P1-16", q:"Qual o termo inicial da Sindicância subscrito pelo escrivão?", answer:"Autuação.", type:"text"},
     {id:"P1-17", q:"Qual data será lavrada a Parte de Deserção para ausência iniciada em 05/03/2024?", answer:"15 de março de 2024.", type:"text"},
 
-    // PDF 2 - QUESTIONÁRIO
-    {id:"P2-01", q:"Qual o documento para registro de dependentes junto à DPMM e CPesFN?", answer:"Declaração de Dependente (DD).", type:"text"},
-    {id:"P2-02", q:"Qual Órgão de Direção Setorial contribui para o preparo em economia e finanças?", answer:"Secretaria-Geral da Marinha (SGM).", type:"text"},
-    {id:"P2-03", q:"Cite os deveres específicos de todas as Praças da Marinha (Conforme Item A).", answer:"Cumprir as instruções que tiverem para o serviço, executando-as e fazendo com que sejam bem executadas por seus subordinados.", type:"text"},
-    {id:"P2-04", q:"Quais as circunstâncias atenuantes da contravenção disciplinar?", answer:"Bons antecedentes militares; Idade menor de 18 anos; Tempo de serviço militar menor de seis meses; Prestação anterior de serviços relevantes já reconhecidos; Tratamento em serviço ordinário com rigor não autorizado pelos regulamentos militares; Provocação.", type:"text"},
-    {id:"P2-05", q:"Cite 4 tipos de Licença concedidas aos Militares da Marinha.", answer:"Licença para acompanhar cônjuge (LAC), Licença Adotante (LA), Licença para tratamento de saúde de pessoa da família (LTSPF) e Licença Paternidade (LP).", type:"text"},
-    {id:"P2-06", q:"Promoção baseada no conjunto de qualidades e atributos que distinguem o militar?", answer:"Promoção por merecimento.", type:"text"},
-    {id:"P2-07", q:"O que é Sindicância?", answer:"Procedimento administrativo sumário que se destina à apuração preliminar de fatos ou ocorrências anômalas.", type:"text"},
-    {id:"P2-08", q:"Órgão de Assistência direta e imediata do Ministério da Defesa?", answer:"Assessoria Especial Militar.", type:"text"},
-    {id:"P2-09", q:"Estágio de um ano realizado pelas Praças logo após os cursos?", answer:"Estágio de Aplicação.", type:"text"},
-    {id:"P2-10", q:"Quem designa o Escrivão caso não tenha sido feito pela autoridade nomeante?", answer:"Encarregado da Sindicância.", type:"text"},
-    {id:"P2-11", q:"Termos em que são ouvidos o ofendido, o sindicado e as testemunhas?", answer:"Termo de Declaração (ofendido), Termo de Inquirição (sindicado) e Termo de Depoimento (testemunha).", type:"text"},
-    {id:"P2-12", q:"Promoção que resulta de ato de coragem e audácia em serviço?", answer:"Promoção por bravura.", type:"text"},
-    {id:"P2-13", q:"Promoção em reconhecimento da Pátria à praça falecida no cumprimento do dever?", answer:"Promoção post-mortem.", type:"text"},
+    // PDF 2 (QUESTIONÁRIO) - REVISÃO COMPLETA (SEM ABREVIAÇÕES)
+    {id:"P2-01", q:"Qual é o documento utilizado para registro de dependentes junto à Diretoria do Pessoal Militar da Marinha (DPMM) e ao Comando do Pessoal de Fuzileiros Navais (CPesFN)?", answer:"Declaração de Dependente (DD).", type:"text"},
+    {id:"P2-02", q:"Qual Órgão de Direção Setorial contribui para o preparo e a aplicação do Poder Naval no tocante às atividades relacionadas com a economia, as finanças, o abastecimento, o patrimônio e a administração?", answer:"Secretaria-Geral da Marinha compete (SGM).", type:"text"},
+    {id:"P2-03", q:"Cite os deveres específicos de todas as Praças da Marinha.", answer:"a) Cumprir as instruções que tiverem para o serviço, executando-as e fazendo com que sejam bem executadas por seus subordinados.\nb) Tomar parte nas mostras, fainas e exercícios, ocupando para isto o posto que lhes for designado.\nc) Desempenhar em serviço, no porto ou em viagem, as tarefas que lhes forem determinadas.\nd) Participar dos exercícios de cultura física e desportos.", type:"text"},
+    {id:"P2-04", q:"Quais as circunstâncias atenuantes da contravenção disciplinar?", answer:"- Bons antecedentes militares;\n- Idade menor de 18 anos;\n- Tempo de serviço militar menor de seis meses;\n- Prestação anterior de serviços relevantes já reconhecidos;\n- Tratamento em serviço ordinário com rigor não autorizado pelos regulamentos militares;\n- Provocação.", type:"text"},
+    {id:"P2-05", q:"De acordo com as Normas para a Administração de Pessoal do Corpo de Fuzileiros Navais. Cite 4 tipos de Licença concedidas aos Militares da Marinha.", answer:"- Licença para acompanhar cônjuge ou companheiro(a) (LAC);\n- Licença à adotante (LA);\n- Licença para tratamento de saúde de pessoa da família (LTSPF);\n- Licença Paternidade (LP).", type:"text"},
+    {id:"P2-06", q:"Promoção baseada no conjunto de qualidades e atributos que distinguem e realçam o valor do militar entre seus pares, avaliados no decurso da carreira e no desempenho de cargos e comissões exercidos?", answer:"Promoção por merecimento.", type:"text"},
+    {id:"P2-07", q:"Conceitue Sindicância.", answer:"É o procedimento administrativo sumário que se destina à apuração preliminar de fatos ou ocorrências anômalas, a fim de verificar a existência de indícios de autoria e materialidade de irregularidade administrativa.", type:"text"},
+    {id:"P2-08", q:"Qual Órgão é um Órgão de Assistência direta e imediata do Ministério da Defesa?", answer:"Assessoria Especial Militar.", type:"text"},
+    {id:"P2-09", q:"Estágio realizado pelas Praças logo após a conclusão dos cursos de formação ou de especialização, com duração de um ano?", answer:"Estágio de Aplicação.", type:"text"},
+    {id:"P2-10", q:"A quem cabe a designação do escrivão na Sindicância caso não tenha sido feito pela autoridade nomeante na portaria de instauração?", answer:"Encarregado da Sindicância.", type:"text"},
+    {id:"P2-11", q:"Na Sindicância, em quais termos são ouvidos o ofendido, o sindicado e as testemunhas?", answer:"- Termo de Declaração (para o ofendido);\n- Termo de Inquirição (para o sindicado);\n- Termo de Depoimento (para a testemunha).", type:"text"},
+    {id:"P2-12", q:"Promoção que resulta de ato ou atos incomuns de coragem e audácia, que, no cumprimento do dever ou além dele, representem feitos heróicos de valor incontestável?", answer:"Promoção por bravura.", type:"text"},
+    {id:"P2-13", q:"Promoção em reconhecimento da Pátria à praça falecida no cumprimento do dever ou em consequência dele?", answer:"Promoção post-mortem.", type:"text"},
     {id:"P2-14", q:"Quais as Hipóteses que caracterizam como Crime de Deserção?", answer:"- Ausentar-se da unidade em que serve, ou do lugar em que deve permanecer, por mais de oito dias.\n- Tendo cumprido pena, deixar de se apresentar dentro do prazo de oito dias.\n- Deixar de se apresentar à autoridade competente, dentro do prazo de oito dias, contados daquele em que termina ou é cassada a licença ou agregação ou em que é declarado o estado de sítio ou de guerra.\n- Evadir-se do poder de escolta ou de recinto de prisão ou detenção, ou fugir em seguida à prática de crime para evitar a prisão, permanecendo ausente por mais de 8 dias (deserção por evasão ou fuga).\n- Conseguir exclusão do serviço ativo ou situação de inatividade, criando ou simulando incapacidade.\n- Deixar de apresentar-se no momento da partida do navio ou de aeronave, de que é tripulante, ou do deslocamento da unidade ou força em que serve (deserção especial).", type:"text"},
-    {id:"P2-15", q:"Promoção baseada na precedência hierárquica de uma praça sobre as demais?", answer:"Promoção por antiguidade.", type:"text"},
-    {id:"P2-16", q:"Promoção feita após reconhecido o direito à praça preterida por erro administrativo?", answer:"Promoção em ressarcimento de preterição.", type:"text"},
-    {id:"P2-17", q:"Escolta: Quando se deve tocar no corpo do preso?", answer:"Legítima defesa própria ou de outrem; para evitar fuga; para evitar ferimentos em terceiros ou dano à propriedade.", type:"text"},
-    {id:"P2-18", q:"Onde os integrantes do SP podem ser designados para cumprir missões de guarda?", answer:"Tribunal, prisões, locais de trabalho, deslocamentos ou instalações militares.", type:"text"},
-    {id:"P2-19", q:"Qual a missão principal no serviço de guarda a presos?", answer:"Mantê-lo sob controle e custódia total da autoridade.", type:"text"},
-    {id:"P2-20", q:"Conceitue Contravenção Disciplinar de acordo com o regulamento.", answer:"Toda ação ou omissão contrária às obrigações ou aos deveres militares que não constitua crime.", type:"text"},
-    {id:"P2-21", q:"Procedimento para apuração de crimes militares previsto no art. 9º CPM?", answer:"Inquérito Policial Militar (IPM).", type:"text"},
-    {id:"P2-22", q:"Classificação dos compromissos de tempo de serviço?", answer:"Compromisso inicial; compromissos de prorrogações; e compromissos de cursos ou estágios.", type:"text"},
-    {id:"P2-23", q:"Proibições quanto ao uso da bandeira nacional?", answer:"I - Fazer saudação (salvo em retribuição); II - usar em mau estado de conservação; III - usar como reposteiro, pano de boca, guarnição de mesa ou revestimento de tribuna; IV - usar para honras de caráter particular; V - colocar indicações ou emblemas sobre ela; VI - abater em continência.", type:"text"},
-    {id:"P2-24", q:"Qual é o termo inicial da Sindicância?", answer:"Autuação.", type:"text"},
-    {id:"P2-25", q:"Termo que registra a anexação de papel que interesse à prova?", answer:"Juntada.", type:"text"},
-    {id:"P2-26", q:"Documento pelo qual o escrivão presta o compromisso legal de sigilo?", answer:"Termo de Compromisso.", type:"text"}
+    {id:"P2-15", q:"Promoção baseada na precedência hierárquica de uma praça sobre as demais de igual graduação dentro de um mesmo CP, EF ou QPA?", answer:"Promoção por antiguidade.", type:"text"},
+    {id:"P2-16", q:"Promoção feita após ser reconhecido à praça preterida, o direito à promoção que lhe caberia?", answer:"Promoção em ressarcimento de preterição.", type:"text"},
+    {id:"P2-17", q:"Quanto à Escolta, quando se deve tocar no corpo do preso?", answer:"O escolta não deverá tocar no corpo do preso, a não ser por medida de legítima defesa, própria ou de outrem; para evitar fuga; para evitar ferimentos em terceiros ou dano à propriedade.", type:"text"},
+    {id:"P2-18", q:"Onde os integrantes do SP poderão ser designados para cumprir missões de guarda a presos?", answer:"Em tribunais, prisões, locais de trabalho, deslocamentos ou outras instalações militares.", type:"text"},
+    {id:"P2-19", q:"Qual a missão principal no serviço de guarda a presos?", answer:"É mantê-lo sob controle e custódia total da autoridade militar.", type:"text"},
+    {id:"P2-20", q:"Conceitue Contravenção Disciplinar.", answer:"É toda ação ou omissão contrária às obrigações ou aos deveres militares estatuídos em lei ou regulamentos, que não constitua crime.", type:"text"},
+    {id:"P2-21", q:"É um procedimento administrativo que se destina à apuração de fatos que possam constituir crimes militares (previstos no art. 9º CPM), bem como as suas autorias?", answer:"Inquérito Policial Militar (IPM).", type:"text"},
+    {id:"P2-22", q:"Como os compromissos de tempo de serviço das praças são classificados?", answer:"- Compromisso inicial;\n- Compromissos decorrentes das prorrogações do tempo de serviço;\n- Compromissos de cursos ou estágios.", type:"text"},
+    {id:"P2-23", q:"Quais as proibições quanto ao uso da bandeira nacional?", answer:"I - Fazer saudação com a Bandeira Nacional, salvo em retribuição à saudação idêntica feita por outro navio ou estabelecimento;\nII - usar Bandeira Nacional que não se encontre em bom estado de conservação;\nIII - usar Bandeira Nacional como reposteiro ou pano de boca, guarnição de mesa, revestimento de tribuna, cobertura de placas, retratos, painéis ou monumentos a serem inaugurados;\nIV - usar Bandeira Nacional para prestação de honras de caráter particular por parte de qualquer pessoa natural ou entidade coletiva;\nV - colocar quaisquer indicações ou emblemas sobre a Bandeira Nacional; e\nVI - abater a Bandeira Nacional em continência.", type:"text"},
+    {id:"P2-24", q:"É o termo inicial da Sindicância subscrito pelo escrivão, mencionando todos os documentos iniciais que foram entregues ao escrivão pelo encarregado (incluindo Portaria de Instauração, anexos e Termo de Compromisso)?", answer:"Autuação.", type:"text"},
+    {id:"P2-25", q:"É o termo que registra a anexação à Sindicância de qualquer documento ou papel que interesse à prova?", answer:"Juntada.", type:"text"},
+    {id:"P2-26", q:"Documento pelo qual o escrivão prestará o compromisso legal de manter os autos em sigilo e de cumprir fielmente o contido nas normas aplicáveis?", answer:"Termo de Compromisso.", type:"text"}
 ];
 
 let shuffled=[]; let current=0;
@@ -198,7 +136,6 @@ function show(){
     document.getElementById("question-header").innerText = "QUESTÃO " + q.id;
     document.getElementById("question-text").innerText = q.q;
     document.getElementById("progress").innerText = "SIMULADO: " + (current+1) + " / " + shuffled.length;
-    
     document.getElementById("options").innerHTML=""; document.getElementById("discursive").innerHTML="";
 
     if(q.type==="mc"){
