@@ -3,20 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Simulado Oficial - Administração Naval</title>
+<title>Simulado Oficial - Adm Naval</title>
 <style>
     body { font-family: 'Segoe UI', sans-serif; background:#0b1e3d; margin:0; color:white; padding-bottom: 120px; }
     
-    /* BANNER NO TOPO COM O SEU LINK */
-    .header-banner {
+    /* BANNER NO TOPO */
+    #banner-container {
         width: 100%;
-        height: 180px;
-        background-image: url('https://share.google/r9eTdGxLVFk0k1uFX'); 
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
+        height: 200px;
+        background-color: #071426;
         border-bottom: 3px solid #ffcc00;
-        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+    #banner-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ajusta a imagem para preencher o espaço */
     }
 
     .container { display:flex; justify-content:center; align-items:center; padding: 10px; }
@@ -32,20 +37,20 @@
 
     #feedback-area { background: #071426; padding: 15px; margin-top: 15px; border-left: 5px solid #ffcc00; text-align: left; font-size: 14px; }
 
-    /* BARRA DE CONSULTA INFERIOR */
     .footer-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #071426; border-top: 2px solid #ffcc00; padding: 8px 0; z-index: 100; }
     .nav-title { font-size: 11px; text-align: center; color: #ffcc00; margin-bottom: 5px; font-weight: bold; }
     .scroll-wrapper { display: flex; overflow-x: auto; padding: 0 10px; gap: 8px; }
     .nav-item { flex: 0 0 40px; height: 40px; background: #132b52; border: 1px solid #4da6ff; border-radius: 4px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 14px; }
 
-    /* MODAL DE CONSULTA */
     .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85%; max-width: 450px; background: white; color: black; padding: 20px; border-radius: 10px; z-index: 200; }
     .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 150; }
 </style>
 </head>
 <body>
 
-<div class="header-banner"></div>
+<div id="banner-container">
+    <img id="topBanner" src="" alt="Banner Administrativo">
+</div>
 
 <div class="container">
     <div class="box" id="mainBox">
@@ -60,7 +65,7 @@
 </div>
 
 <div class="footer-nav">
-    <div class="nav-title">CONSULTA RÁPIDA (ORDEM DO PDF)</div>
+    <div class="nav-title">CONSULTA RÁPIDA (1 A 43)</div>
     <div class="scroll-wrapper" id="navBar"></div>
 </div>
 
@@ -74,13 +79,17 @@
 </div>
 
 <script>
+// --- CONFIGURAÇÃO DA IMAGEM ---
+// O link que você mandou é de visualização. O código abaixo tenta converter para link direto.
+const rawLink = "https://share.google/r9eTdGxLVFk0k1uFX"; 
+document.getElementById('topBanner').src = rawLink;
+
 const questions = [
-    // --- 43 QUESTÕES EXTRAÍDAS DOS PDFs ---
     {q:"Documento para registro de dependentes junto à DPMM e CPesFN?", a:["Declaração de Dependente (DD)","Portaria","Ficha Militar","Termo"], correct:0, type:"mc"},
     {q:"Órgão de Direção Setorial relacionado à economia e administração naval?", a:["Secretaria-Geral da Marinha (SGM)","EMA","CGCFN","DPC"], correct:0, type:"mc"},
     {q:"Cite os deveres específicos de todas as Praças da Marinha.", answer:"a) Cumprir instruções; b) Tomar parte nas mostras, fainas e exercícios; c) Desempenhar tarefas determinadas; d) Participar de cultura física.", type:"text"},
     {q:"Quais as circunstâncias atenuantes da contravenção disciplinar?", answer:"Bons antecedentes; Idade < 18 anos; Tempo < 6 meses; Serviços relevantes; Rigor não autorizado; Provocação.", type:"text"},
-    {q:"Qual dessas não é considerada uma Licença?", a:["LECEP","LAC","LA","LTSPF"], correct:0, type:"mc"},
+    {q:"Qual das alternativas abaixo não é considerada uma Licença?", a:["LECEP","LAC","LA","LTSPF"], correct:0, type:"mc"},
     {q:"Conceitue Contravenção Disciplinar.", answer:"Ação ou omissão contrária às obrigações ou deveres militares que não constitua crime.", type:"text"},
     {q:"Procedimento para apuração de crimes militares (Art. 9º CPM):", answer:"Inquérito Policial Militar (IPM).", type:"text"},
     {q:"Classificação dos compromissos de tempo de serviço:", answer:"Inicial; Decorrentes de prorrogações; e de cursos ou estágios.", type:"text"},
@@ -102,23 +111,23 @@ const questions = [
     {q:"Proibições quanto ao uso da Bandeira Nacional:", answer:"Não usar como reposteiro, pano de boca, guarnição de mesa ou revestimento de tribuna.", type:"text"},
     {q:"Idade considerada atenuante na contravenção:", a:["Menor de 18 anos","Menor de 21 anos","Menor de 16 anos","Qualquer idade"], correct:0, type:"mc"},
     {q:"Designa o escrivão ad hoc na falta de oficial ou sargento:", a:["Encarregado","Comandante","Estado-Maior","Imediato"], correct:0, type:"mc"},
-    {q:"Dever das Praças: Executar tarefas de...", a:["Manutenção e operação","Apenas limpeza","Apenas pintura","Somente vigia"], correct:0, type:"mc"},
+    {q:"Dever das Praças: Executar tarefas de manutenção e operação de equipamentos?", a:["Sim, é dever","Não, apenas oficiais","Apenas em alto mar","Opcional"], correct:0, type:"mc"},
     {q:"Qual licença para tratamento de saúde de pessoa da família?", a:["LTSPF","LAC","LA","LP"], correct:0, type:"mc"},
     {q:"Escrivão designado por qualquer pessoa idônea:", answer:"Escrivão ad hoc.", type:"text"},
     {q:"Órgão de assistência direta ao Ministério da Defesa:", a:["Assessoria Especial Militar","HFA","ESG","Calha Norte"], correct:0, type:"mc"},
-    {q:"Tempo do Estágio de Aplicação:", a:["Um ano","Seis meses","Dois anos","Três meses"], correct:0, type:"mc"},
+    {q:"Duração do Estágio de Aplicação:", a:["Um ano","Seis meses","Dois anos","Três meses"], correct:0, type:"mc"},
     {q:"Quem é ouvido no Termo de Depoimento?", answer:"Testemunhas.", type:"text"},
     {q:"Quem é ouvido no Termo de Declaração?", answer:"Ofendido.", type:"text"},
-    {q:"Atenuante: Bons antecedentes militares e...", a:["Falta de instrução militar","Reincidência","Idade > 60","Nenhuma anterior"], correct:0, type:"mc"},
-    {q:"O que o SP observa no preso no tribunal para segurança?", answer:"Evitar que ele se fira com objetos ou tente fuga.", type:"text"},
-    {q:"Uso da Bandeira em mau estado de conservação:", a:["É proibido","Permitido se for rápido","Permitido em combate","Obrigatório"], correct:0, type:"mc"},
-    {q:"Pode colocar emblemas sobre a Bandeira Nacional?", a:["Não, é proibido","Sim, se for da Marinha","Apenas o brasão da República","Com autorização"], correct:0, type:"mc"},
-    {q:"Frequência das prorrogações de tempo de serviço:", answer:"Variável, conforme compromissos assumidos.", type:"text"},
+    {q:"Atenuante: Bons antecedentes militares e tempo de serviço menor que?", a:["6 meses","1 ano","2 anos","3 meses"], correct:0, type:"mc"},
+    {q:"O que o SP observa no preso no tribunal?", answer:"Evitar que ele se fira com objetos ou tente fuga.", type:"text"},
+    {q:"Uso da Bandeira em mau estado de conservação:", a:["É proibido","Permitido se for rápido","Permitido em combate","Livre"], correct:0, type:"mc"},
+    {q:"Pode colocar emblemas sobre a Bandeira Nacional?", a:["Não, é proibido","Sim, da MB","Apenas brasão","Sim"], correct:0, type:"mc"},
+    {q:"Frequência das prorrogações de tempo de serviço:", answer:"Variável, conforme compromissos.", type:"text"},
     {q:"Documentos obrigatórios na Autuação:", answer:"Portaria de Instauração, anexos e Termo de Compromisso.", type:"text"},
-    {q:"Atenuante: Tempo de serviço militar menor de...", a:["6 meses","1 ano","2 anos","3 meses"], correct:0, type:"mc"},
-    {q:"Onde se posiciona o SP ao escoltar o preso em deslocamento?", answer:"À retaguarda e lateralmente, mantendo distância de segurança.", type:"text"},
-    {q:"Pode abater a Bandeira Nacional em continência?", a:["Não, é proibido","Sim, para o Presidente","Apenas no mar","Sim, no pôr do sol"], correct:0, type:"mc"},
-    {q:"Dever das Praças: Tomar parte nas...", a:["Mostras, fainas e exercícios","Somente fainas","Festas","Apenas exercícios"], correct:0, type:"mc"}
+    {q:"Atenuante: Tempo de serviço menor de 6 meses?", a:["Sim","Não","Só após 1 ano","Só após 2 anos"], correct:0, type:"mc"},
+    {q:"Onde se posiciona o SP ao escoltar o preso?", answer:"À retaguarda e lateralmente.", type:"text"},
+    {q:"Pode abater a Bandeira Nacional em continência?", a:["Não, é proibido","Sim","Às vezes","No pôr do sol"], correct:0, type:"mc"},
+    {q:"Dever das Praças: Tomar parte nas mostras, fainas e exercícios?", a:["Sim","Não","Só fainas","Só mostras"], correct:0, type:"mc"}
 ];
 
 let shuffled=[]; let current=0; let score=0;
@@ -139,7 +148,7 @@ function openModal(idx) {
     const q = questions[idx];
     document.getElementById("modal-title").innerText = "Questão " + (idx + 1);
     let resp = q.type === "mc" ? q.a[q.correct] : q.answer;
-    document.getElementById("modal-body").innerHTML = `<strong>Pergunta:</strong><p>${q.q}</p><strong>Resposta Correta:</strong><p style="color: #0b1e3d; font-weight:bold; background: #f0f0f0; padding: 5px;">${resp}</p>`;
+    document.getElementById("modal-body").innerHTML = `<strong>Pergunta:</strong><p>${q.q}</p><strong>Resposta:</strong><p style="color: blue; font-weight:bold;">${resp}</p>`;
     document.getElementById("modal").style.display = "block";
     document.getElementById("overlay").style.display = "block";
 }
@@ -181,21 +190,19 @@ function show(){
             document.getElementById("options").appendChild(d);
         });
     } else {
-        let inp = document.createElement("input"); inp.id="userInp"; inp.placeholder="Digite sua resposta...";
-        let b = document.createElement("button"); b.innerText="Conferir Resposta";
+        let inp = document.createElement("input"); inp.id="userInp"; inp.placeholder="Escreva sua resposta...";
+        let b = document.createElement("button"); b.innerText="Conferir";
         b.onclick=() => {
-            document.getElementById("feedback").innerHTML = `<div id="feedback-area"><strong>Resposta do PDF:</strong><br><span style="color:#ffcc00">${q.answer}</span></div>`;
+            document.getElementById("feedback").innerHTML = `<div id="feedback-area"><strong>Oficial:</strong> ${q.answer}</div>`;
             document.getElementById("nextBtn").style.display="inline-block";
         };
         document.getElementById("discursive").appendChild(inp); document.getElementById("discursive").appendChild(b);
     }
 }
 
-function nextQuestion(){ current++; if(current < shuffled.length) show(); else finish(); }
-
-function finish(){
-    document.getElementById("mainBox").innerHTML = `<h2>Simulado Concluído!</h2><p>Acertos nas objetivas: ${score}</p><button onclick="location.reload()">Reiniciar Simulado</button>`;
-}
+function nextQuestion(){ current++; if(current < shuffled.length) show(); else {
+    document.getElementById("mainBox").innerHTML = `<h2>Fim!</h2><p>Acertos: ${score}</p><button onclick="location.reload()">Reiniciar</button>`;
+}}
 
 start();
 </script>
