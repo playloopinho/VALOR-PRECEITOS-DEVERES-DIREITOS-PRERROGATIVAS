@@ -3,279 +3,125 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Administração Naval - Completo Oficial</title>
-
+<title>Simulado Naval - 43 Questões</title>
 <style>
-body{
-    font-family: Arial;
-    background:#0b1e3d;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    margin:0;
-    color:white;
-}
-
-.container{
-    width:95%;
-    max-width:850px;
-    text-align:center;
-}
-
-.box{
-    background:#132b52;
-    padding:20px;
-    border-radius:10px;
-}
-
-.option{
-    background:#4da6ff;
-    color:black;
-    padding:10px;
-    margin:8px 0;
-    border-radius:8px;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-.correct{background:green !important;color:white;}
-.wrong{background:red !important;color:white;}
-
-input{
-    width:90%;
-    padding:8px;
-    margin-top:10px;
-}
-
-button{
-    margin-top:15px;
-    padding:8px 15px;
-    border:none;
-    border-radius:5px;
-    cursor:pointer;
-}
+    body{ font-family: 'Segoe UI', sans-serif; background:#0b1e3d; display:flex; justify-content:center; align-items:center; min-height:100vh; margin:0; color:white; }
+    .container{ width:95%; max-width:850px; text-align:center; padding: 20px; }
+    .box{ background:#132b52; padding:30px; border-radius:12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    .option{ background:#4da6ff; color:black; padding:12px; margin:10px 0; border-radius:8px; cursor:pointer; font-weight:bold; text-align: left; }
+    .option:hover { background: #80bfff; }
+    .correct{background:green !important;color:white;}
+    .wrong{background:red !important;color:white;}
+    input{ width:90%; padding:12px; margin-top:15px; border-radius: 5px; border: 2px solid #4da6ff; background: #0b1e3d; color: white; }
+    button{ margin-top:20px; padding:12px 25px; border:none; border-radius:5px; cursor:pointer; background: #ffcc00; color: #0b1e3d; font-weight: bold; }
+    #result { margin-top: 20px; }
+    #progress { margin-bottom: 20px; color: #a0c4ff; }
 </style>
 </head>
 <body>
-
 <div class="container">
-<div class="box">
-<div id="progress"></div>
-<h3 id="question"></h3>
-<div id="options"></div>
-<div id="discursive"></div>
-<button id="nextBtn" onclick="nextQuestion()" style="display:none;">Próxima</button>
-<h3 id="result"></h3>
-</div>
+    <div class="box">
+        <div id="progress"></div>
+        <h3 id="question"></h3>
+        <div id="options"></div>
+        <div id="discursive"></div>
+        <button id="nextBtn" onclick="nextQuestion()" style="display:none;">Próxima</button>
+        <h3 id="result"></h3>
+    </div>
 </div>
 
 <script>
-
 const questions = [
+    /* --- QUESTIONÁRIO 01 (26 Questões) --- */
+    {type:"mc", q:"Documento para registro de dependentes junto à DPMM e CPesFN?", a:["Declaração de Dependente (DD)","Portaria","Ficha","Termo"], correct:0},
+    {type:"mc", q:"Órgão que contribui para o preparo do Poder Naval em economia e administração?", a:["Secretaria-Geral da Marinha (SGM)","EMA","CGCFN","DPC"], correct:0},
+    {type:"mc", q:"Dever específico: Cumprir as instruções que tiverem para o serviço e...", a:["fazer com que sejam bem executadas por subordinados","ignorar ordens verbais","questionar superiores","apenas observar"], correct:0},
+    {type:"mc", q:"Circunstância atenuante: Bons antecedentes militares e...", a:["Idade menor de 18 anos","Reincidência","Crime","Deserção"], correct:0},
+    {type:"mc", q:"Circunstância atenuante: Tempo de serviço militar menor de...", a:["seis meses","um ano","dois anos","três meses"], correct:0},
+    {type:"mc", q:"Qual licença permite acompanhar cônjuge ou companheiro(a)?", a:["LAC","LA","LTSPF","LP"], correct:0},
+    {type:"text", q:"Promoção baseada no conjunto de qualidades e atributos que distinguem a praça:", answer:"promoção por merecimento"},
+    {type:"text", q:"Procedimento administrativo sumário para apuração de ocorrências anômalas:", answer:"sindicância"},
+    {type:"mc", q:"Órgão de assistência direta e imediata do Ministério da Defesa?", a:["Assessoria Especial Militar","HFA","ESG","Calha Norte"], correct:0},
+    {type:"text", q:"Estágio após C-Espc, C-Subespc, etc, com duração de um ano:", answer:"estágio de aplicação"},
+    {type:"text", q:"A quem cabe a designação do Escrivão, caso não feita pela autoridade nomeante?", answer:"encarregado da sindicância"},
+    {type:"text", q:"Em qual termo o sindicado é ouvido?", answer:"termo de inquirição"},
+    {type:"text", q:"Promoção por atos incomuns de coragem e audácia:", answer:"promoção por bravura"},
+    {type:"text", q:"Promoção que expressa reconhecimento à praça falecida no dever:", answer:"promoção post-mortem"},
+    {type:"mc", q:"Hipótese de deserção: ausentar-se por mais de...", a:["oito dias","cinco dias","dez dias","quinze dias"], correct:0},
+    {type:"mc", q:"Deserção especial: deixar de apresentar-se no momento da partida de...", a:["navio ou aeronave","viatura","formatura","refeição"], correct:0},
+    {type:"text", q:"Promoção baseada na precedência hierárquica dentro do mesmo Corpo:", answer:"promoção por antiguidade"},
+    {type:"text", q:"Promoção após reconhecido à praça preterida o direito que lhe caberia:", answer:"promoção em ressarcimento de preterição"},
+    {type:"text", q:"Não se deve tocar no preso exceto em caso de:", answer:"legítima defesa"},
+    {type:"text", q:"Onde o SP pode cumprir missões de guarda a presos?", answer:"tribunal, prisões ou instalações militares"},
+    {type:"text", q:"Missão principal da guarda a presos:", answer:"mantê-lo sob controle e custódia"},
+    {type:"text", q:"Conceitue Contravenção Disciplinar.", answer:"ação ou omissão contrária aos deveres militares que não seja crime"},
+    {type:"text", q:"Procedimento para apuração de crimes militares (Art. 9º CPM):", answer:"inquérito policial militar"},
+    {type:"text", q:"Classificação dos compromissos: inicial, prorrogações e...", answer:"compromissos de cursos ou estágios"},
+    {type:"mc", q:"É proibido usar Bandeira Nacional como reposteiro, pano de boca ou...", a:["revestimento de tribuna","símbolo","galhardete","insígnia"], correct:0},
+    {type:"text", q:"Termo inicial da Sindicância subscrito pelo escrivão:", answer:"autuação"},
 
-/* ================= 26 OBJETIVAS ================= */
-
-{type:"mc",q:"Documento utilizado para registro de dependentes junto à DPMM e CPesFN?",
-a:["Declaração de Dependente (DD)","Portaria","Ficha Militar","Termo"],correct:0},
-
-{type:"mc",q:"Órgão de Direção Setorial relacionado à economia e administração naval?",
-a:["Secretaria-Geral da Marinha (SGM)","Comando Naval","Diretoria Militar","Conselho"],correct:0},
-
-{type:"mc",q:"Documento que registra anexação à Sindicância?",
-a:["Juntada","Autuação","IPM","Portaria"],correct:0},
-
-{type:"mc",q:"Termo inicial da Sindicância?",
-a:["Autuação","Juntada","Relatório","Depoimento"],correct:0},
-
-{type:"mc",q:"Promoção baseada no conjunto de qualidades?",
-a:["Promoção por merecimento","Automática","Especial","Administrativa"],correct:0},
-
-{type:"mc",q:"Promoção baseada na precedência hierárquica?",
-a:["Promoção por antiguidade","Bravura","Post-mortem","Especial"],correct:0},
-
-{type:"mc",q:"Promoção por ato de coragem?",
-a:["Promoção por bravura","Antiguidade","Tempo","Administrativa"],correct:0},
-
-{type:"mc",q:"Promoção após falecimento?",
-a:["Promoção post-mortem","Honorária","Administrativa","Automática"],correct:0},
-
-{type:"mc",q:"Procedimento administrativo sumário preliminar?",
-a:["Sindicância","IPM","Conselho","Auditoria"],correct:0},
-
-{type:"mc",q:"Procedimento para apuração de crimes militares?",
-a:["Inquérito Policial Militar (IPM)","Sindicância","Processo Civil","Portaria"],correct:0},
-
-{type:"mc",q:"Estágio de complementação prática após cursos?",
-a:["Estágio de Aplicação","Curso Especial","Treinamento","Inicial"],correct:0},
-
-{type:"mc",q:"Crime por ausência superior a 8 dias?",
-a:["Deserção","Indisciplina","Contravenção","Abandono"],correct:0},
-
-{type:"mc",q:"Promoção após reconhecimento de direito não efetivado?",
-a:["Ressarcimento de preterição","Especial","Automática","Administrativa"],correct:0},
-
-{type:"mc",q:"Documento de compromisso do escrivão?",
-a:["Termo de Compromisso","Portaria","Autuação","Juntada"],correct:0},
-
-{type:"mc",q:"Conceito de Contravenção Disciplinar?",
-a:["Ação ou omissão contrária aos deveres que não seja crime","Crime","Advertência","Suspensão"],correct:0},
-
-{type:"mc",q:"Principal missão da Guarda a Presos?",
-a:["Manter controle e custódia","Julgar","Aplicar pena","Interrogar"],correct:0},
-
-{type:"mc",q:"Compromissos de tempo de serviço são:",
-a:["Inicial, prorrogações e cursos","Somente inicial","Somente cursos","Somente prorrogação"],correct:0},
-
-{type:"mc",q:"Não se deve usar Bandeira Nacional como:",
-a:["Reposteiro ou pano de boca","Símbolo","Honra","Cerimônia"],correct:0},
-
-{type:"mc",q:"Circunstância atenuante disciplinar?",
-a:["Bons antecedentes militares","Reincidência","Deserção","Crime"],correct:0},
-
-{type:"mc",q:"Quando pode tocar no preso?",
-a:["Legítima defesa ou evitar fuga","Sempre","Nunca","Por ordem verbal"],correct:0},
-
-{type:"mc",q:"Dever das Praças?",
-a:["Cumprir instruções e executar serviço","Recusar ordens","Evitar exercícios","Dispensar tarefas"],correct:0},
-
-/* ================= 17 DO PDF ================= */
-
-/* Objetivas */
-
-{type:"mc",q:"São deveres específicos de todas as Praças, EXCETO:",
-a:["Cumprir instruções","Executar manutenção","Tomar parte em exercícios","Participar de cultura física"],correct:3},
-
-{type:"mc",q:"Qual NÃO é considerada Licença?",
-a:["Licença para frequentar curso de formação pessoal (LECEP)","Licença à adotante","Licença paternidade","Licença saúde familiar"],correct:0},
-
-{type:"mc",q:"Qual NÃO caracteriza Crime de Deserção?",
-a:["Evadir-se do poder de escolta","Ausentar-se por mais de oito dias","Não retornar de férias","Não retornar de licença"],correct:0},
-
-{type:"mc",q:"Órgão de assistência direta do Ministério da Defesa?",
-a:["Assessoria Especial Militar","Hospital das FFAA","ESG","Programa Calha Norte"],correct:0},
-
-/* Discursivas */
-
-{type:"text",q:"Escreva: Como são classificados os compromissos de tempo de serviço?",
-answer:"compromisso inicial; compromissos decorrentes das prorrogações do tempo de serviço; compromissos de cursos ou estágios"},
-
-{type:"text",q:"Conceitue Contravenção Disciplinar.",
-answer:"ação ou omissão contrária às obrigações ou deveres militares que não constitua crime"},
-
-{type:"text",q:"Procedimento destinado à apuração de crimes militares e autoria?",
-answer:"inquérito policial militar"},
-
-{type:"text",q:"Termo inicial da Sindicância subscrito pelo escrivão?",
-answer:"autuação"},
-
-{type:"text",q:"Escrivão designado na ausência é chamado?",
-answer:"escrivão ad hoc"},
-
-{type:"text",q:"Ofendido na sindicância é ouvido em?",
-answer:"termo de inquirição"},
-
-{type:"text",q:"Data em que é lavrada Parte de Deserção após 8 dias de ausência?",
-answer:"15 de março de 2024"}
-
+    /* --- DOCUMENTO ADM NAVAL (17 Questões) --- */
+    {type:"mc", q:"São deveres de todas as Praças, EXCETO (Doc 2):", a:["Participar dos exercícios de cultura física","Cumprir instruções","Executar manutenção","Fazer mostras"], correct:0},
+    {type:"mc", q:"Qual NÃO é considerada Licença (Doc 2)?", a:["LECEP","LA","LAC","LTSPF"], correct:0},
+    {type:"mc", q:"Documento para registro de dependentes (Doc 2):", a:["Declaração de Dependente (DD)","RBA","RBI","DBA"], correct:0},
+    {type:"mc", q:"Circunstância atenuante: Prestação anterior de serviços...", a:["relevantes não reconhecidos","obrigatórios","comuns","irrelevantes"], correct:4},
+    {type:"mc", q:"Requisito básico para matrícula: Estar apta em...", a:["inspeção de saúde","teste físico","tiro","natação"], correct:0},
+    {type:"mc", q:"Não caracteriza crime de deserção (Doc 2):", a:["Evadir-se da escolta por 2 dias","Ausentar-se por 9 dias","Faltar após férias","Faltar após licença"], correct:0},
+    {type:"text", q:"O ofendido na sindicância é ouvido em:", answer:"termo de inquirição"},
+    {type:"text", q:"Escrivão designado na falta de militares é o:", answer:"escrivão ad hoc"},
+    {type:"text", q:"Promoção por Merecimento baseia-se no conjunto de:", answer:"qualidades e atributos"},
+    {type:"text", q:"Promoção por Antiguidade baseia-se na:", answer:"precedência hierárquica"},
+    {type:"mc", q:"Conduta da escolta: o SP ficará em qual posição ao entrar em prédios?", a:["Atrás da pessoa protegida","À frente","Ao lado","Distante"], correct:0},
+    {type:"text", q:"Data da Parte de Deserção para ausência desde 05 de março:", answer:"15 de março de 2024"},
+    {type:"text", q:"Termo que registra a anexação de papéis à prova:", answer:"juntada"},
+    {type:"text", q:"O Termo de Compromisso exige que o escrivão mantenha o:", answer:"sigilo"},
+    {type:"mc", q:"A quem o SP deve observar no tribunal para evitar ferimentos?", a:["O preso","O juiz","O público","O advogado"], correct:0},
+    {type:"text", q:"Como são ouvidas as testemunhas na Sindicância?", answer:"termo de depoimento"},
+    {type:"mc", q:"Qual o documento de compromisso do escrivão?", a:["Termo de Compromisso","Portaria","Juntada","Autuação"], correct:0}
 ];
 
-let shuffled=[];
-let current=0;
-let score=0;
-
-function shuffle(arr){
-for(let i=arr.length-1;i>0;i--){
-let j=Math.floor(Math.random()*(i+1));
-[arr[i],arr[j]]=[arr[j],arr[i]];
-}
-}
-
-function start(){
-shuffled=[...questions];
-shuffle(shuffled);
-current=0;
-score=0;
-show();
-}
-
+let shuffled=[]; let current=0; let score=0;
+function shuffle(arr){ for(let i=arr.length-1;i>0;i--){ let j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } }
+function start(){ shuffled=[...questions]; shuffle(shuffled); current=0; score=0; show(); }
 function show(){
-document.getElementById("nextBtn").style.display="none";
-document.getElementById("result").innerText="";
-document.getElementById("progress").innerText="Questão "+(current+1)+" de "+shuffled.length;
-
-let q=shuffled[current];
-document.getElementById("question").innerText=q.q;
-document.getElementById("options").innerHTML="";
-document.getElementById("discursive").innerHTML="";
-
-if(q.type==="mc"){
-let answers=[...q.a];
-shuffle(answers);
-answers.forEach(ans=>{
-let div=document.createElement("div");
-div.className="option";
-div.innerText=ans;
-div.onclick=()=>select(div,ans,q.a[q.correct]);
-document.getElementById("options").appendChild(div);
-});
-}else{
-let input=document.createElement("input");
-input.id="textAnswer";
-let btn=document.createElement("button");
-btn.innerText="Responder";
-btn.onclick=()=>checkText(q.answer);
-document.getElementById("discursive").appendChild(input);
-document.getElementById("discursive").appendChild(btn);
+    document.getElementById("nextBtn").style.display="none";
+    document.getElementById("result").innerText="";
+    document.getElementById("progress").innerText="Questão "+(current+1)+" de "+shuffled.length;
+    let q=shuffled[current];
+    document.getElementById("question").innerText=q.q;
+    document.getElementById("options").innerHTML="";
+    document.getElementById("discursive").innerHTML="";
+    if(q.type==="mc"){
+        let answers=[...q.a]; let cor=q.a[q.correct]; shuffle(answers);
+        answers.forEach(ans=>{
+            let div=document.createElement("div"); div.className="option"; div.innerText=ans;
+            div.onclick=()=>select(div,ans,cor); document.getElementById("options").appendChild(div);
+        });
+    }else{
+        let input=document.createElement("input"); input.id="textAns";
+        let btn=document.createElement("button"); btn.innerText="Responder";
+        btn.onclick=()=>checkText(q.answer);
+        document.getElementById("discursive").appendChild(input); document.getElementById("discursive").appendChild(btn);
+    }
 }
-}
-
 function select(el,sel,cor){
-let opts=document.querySelectorAll(".option");
-opts.forEach(o=>o.onclick=null);
-
-if(sel===cor){
-el.classList.add("correct");
-score++;
-}else{
-el.classList.add("wrong");
-opts.forEach(o=>{if(o.innerText===cor){o.classList.add("correct");}});
+    document.querySelectorAll(".option").forEach(o=>o.onclick=null);
+    if(sel===cor){ el.classList.add("correct"); score++; } else { el.classList.add("wrong"); document.querySelectorAll(".option").forEach(o=>{if(o.innerText===cor)o.classList.add("correct")});}
+    document.getElementById("nextBtn").style.display="inline-block";
 }
-
-document.getElementById("nextBtn").style.display="inline-block";
+function checkText(cor){
+    let val=document.getElementById("textAns").value.toLowerCase().trim();
+    if(val.length > 2 && cor.toLowerCase().includes(val)){ score++; document.getElementById("result").innerText="✅ Correto!"; }
+    else { document.getElementById("result").innerText="❌ Resposta: "+cor; }
+    document.getElementById("nextBtn").style.display="inline-block";
 }
-
-function checkText(correct){
-let val=document.getElementById("textAnswer").value.toLowerCase().trim();
-
-if(val.includes(correct.substring(0,10))){
-score++;
-document.getElementById("result").innerText="✅ Correto!";
-}else{
-document.getElementById("result").innerText="❌ Resposta correta: "+correct;
+function nextQuestion(){ current++; if(current<shuffled.length) show(); else finish(); }
+function finish(){
+    document.getElementById("question").innerText="FIM! Acertos: "+score+"/"+shuffled.length;
+    document.getElementById("options").innerHTML=""; document.getElementById("discursive").innerHTML="";
+    document.getElementById("progress").innerText=""; document.getElementById("nextBtn").style.display="none";
 }
-
-document.getElementById("nextBtn").style.display="inline-block";
-}
-
-function nextQuestion(){
-current++;
-if(current<shuffled.length){
-show();
-}else{
-let percent=Math.round((score/shuffled.length)*100);
-document.getElementById("question").innerText="SIMULADO FINALIZADO";
-document.getElementById("options").innerHTML="";
-document.getElementById("discursive").innerHTML="";
-document.getElementById("progress").innerText="";
-document.getElementById("result").innerText=
-"Resultado Final: "+score+" de "+shuffled.length+" | "+percent+"%";
-document.getElementById("nextBtn").style.display="none";
-}
-}
-
 start();
-
 </script>
 </body>
 </html>
