@@ -3,73 +3,101 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-<title>Simulado - Gestão Marinha 2026</title>
+<title>Gestão 2026 - Master</title>
 <style>
-    body { font-family: 'Segoe UI', sans-serif; background:#0b1e3d; margin:0; color:white; padding-bottom: 160px; overflow-x: hidden; }
+    :root {
+        --primary: #0b1e3d;
+        --secondary: #132b52;
+        --accent: #ffcc00;
+        --text: #ffffff;
+        --success: #2ecc71;
+        --error: #e74c3c;
+    }
+
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--primary); margin:0; color: var(--text); padding-bottom: 160px; overflow-x: hidden; }
     
     .header-banner { 
         width: 100%; 
-        height: 160px; 
-        background: #0b1e3d url('https://upload.wikimedia.org/wikipedia/commons/0/0b/Brasão_do_Corpo_de_Fuzileiros_Navais.png') no-repeat center; 
+        height: 140px; 
+        background: var(--primary) url('https://upload.wikimedia.org/wikipedia/commons/0/0b/Brasão_do_Corpo_de_Fuzileiros_Navais.png') no-repeat center; 
         background-size: contain; 
-        margin-top: 15px;
-        margin-bottom: 10px;
+        margin: 20px 0;
+        filter: drop-shadow(0 0 8px rgba(0,0,0,0.5));
     }
 
-    .container { display: flex; flex-direction: column; align-items: center; padding: 5px; }
+    .container { display: flex; flex-direction: column; align-items: center; padding: 10px; }
 
     .box { 
-        background: #132b52; 
-        padding: 15px; 
-        border-radius: 12px; 
-        width: 92%; 
-        max-width: 600px; 
+        background: var(--secondary); 
+        padding: 20px; 
+        border-radius: 15px; 
+        width: 90%; 
+        max-width: 650px; 
         text-align: center; 
-        box-shadow: 0 4px 20px rgba(0,0,0,0.6); 
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
         border: 1px solid #1c437a; 
+        transition: all 0.3s ease;
     }
 
-    #progress { font-size: 11px; color: #4da6ff; margin-bottom: 5px; font-weight: bold; letter-spacing: 1px; }
-    #question-header { margin: 0; color: #ffcc00; font-size: 14px; text-decoration: underline; font-weight: bold; }
-    #question-text { margin: 15px 0; font-size: 13px; line-height: 1.5; text-align: left; white-space: pre-wrap; }
+    #progress-container { width: 100%; background: #071426; border-radius: 10px; height: 8px; margin-bottom: 15px; overflow: hidden; }
+    #progress-bar { height: 100%; background: var(--accent); width: 0%; transition: width 0.4s ease; }
 
+    #info-row { display: flex; justify-content: space-between; font-size: 11px; color: #4da6ff; font-weight: bold; margin-bottom: 10px; }
+    
+    #question-header { margin: 0; color: var(--accent); font-size: 16px; text-transform: uppercase; letter-spacing: 1px; }
+    #question-text { margin: 20px 0; font-size: 14px; line-height: 1.6; text-align: left; border-left: 3px solid var(--accent); padding-left: 15px; }
+
+    .input-group { position: relative; margin-top: 15px; }
     input { 
         width: 100%; 
         box-sizing: border-box;
-        padding: 12px; 
-        margin-top: 10px; 
-        border-radius: 6px; 
-        border: 2px solid #4da6ff; 
+        padding: 15px; 
+        border-radius: 8px; 
+        border: 2px solid #1c437a; 
         background: #071426; 
         color: white; 
         font-size: 15px; 
+        transition: border 0.3s;
     }
+    input:focus { border-color: var(--accent); outline: none; }
 
-    .btn-main { 
+    button { 
         margin-top: 15px; 
-        padding: 12px; 
+        padding: 14px; 
         border: none; 
-        border-radius: 6px; 
-        background: #ffcc00; 
-        color: #0b1e3d; 
-        font-weight: bold; 
+        border-radius: 8px; 
+        background: var(--accent); 
+        color: var(--primary); 
+        font-weight: 800; 
         font-size: 13px;
         text-transform: uppercase; 
         cursor: pointer;
         width: 100%;
+        transition: transform 0.1s, background 0.2s;
     }
+    button:active { transform: scale(0.98); }
+    button:hover { background: #e6b800; }
 
-    #feedback-area { background: #071426; padding: 12px; margin-top: 15px; border-left: 4px solid #ffcc00; text-align: left; border-radius: 4px; }
-    .res-oficial { color: #ffcc00; font-weight: bold; white-space: pre-wrap; display: block; margin-top: 8px; font-size: 12px; line-height: 1.4; }
+    #feedback-area { 
+        background: #071426; 
+        padding: 15px; 
+        margin-top: 20px; 
+        border-radius: 8px; 
+        text-align: left; 
+        display: none; 
+        animation: fadeIn 0.5s;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .res-oficial { color: var(--accent); font-weight: 600; display: block; margin-top: 10px; font-size: 13px; line-height: 1.5; }
 
     .footer-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #071426; border-top: 2px solid #1c437a; padding: 10px 0; z-index: 100; }
-    .nav-title { font-size: 10px; text-align: center; color: #4da6ff; margin-bottom: 8px; font-weight: bold; text-transform: uppercase; }
-    .scroll-wrapper { display: flex; overflow-x: auto; padding: 0 10px; gap: 8px; }
-    .nav-item { flex: 0 0 55px; height: 45px; background: #132b52; border: 2px solid #4da6ff; border-radius: 8px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 11px; font-weight: bold; }
+    .scroll-wrapper { display: flex; overflow-x: auto; padding: 0 15px; gap: 10px; scrollbar-width: none; }
+    .nav-item { flex: 0 0 50px; height: 50px; background: var(--secondary); border: 2px solid #1c437a; border-radius: 10px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 12px; font-weight: bold; transition: 0.2s; }
+    .nav-item.active { border-color: var(--accent); background: #1c437a; }
 
-    /* Estilo do Modal */
-    .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 88%; background: white; color: #0b1e3d; padding: 20px; border-radius: 12px; z-index: 200; box-shadow: 0 0 30px rgba(0,0,0,0.8); }
-    .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 150; }
+    .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85%; background: white; color: var(--primary); padding: 25px; border-radius: 15px; z-index: 200; box-shadow: 0 0 40px rgba(0,0,0,0.9); }
+    .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 150; backdrop-filter: blur(3px); }
 </style>
 </head>
 <body>
@@ -78,107 +106,151 @@
 
 <div class="container">
     <div class="box">
-        <div id="progress"></div>
-        <h4 id="question-header"></h4>
-        <div id="question-text"></div>
+        <div id="info-row">
+            <span id="counter">QUESTÃO 1 / 22</span>
+            <span id="score">ACERTOS: 0</span>
+        </div>
+        <div id="progress-container"><div id="progress-bar"></div></div>
         
-        <input type="text" id="userInput" placeholder="Escreva sua resposta para treinar...">
-        <button class="btn-main" onclick="revealFeedback()">Ver Gabarito</button>
+        <h4 id="question-header">PERGUNTA</h4>
+        <div id="question-text">Carregando...</div>
         
-        <div id="feedback"></div>
-        <button id="nextBtn" class="btn-main" onclick="nextQuestion()" style="display:none; background: #2ecc71; color: white;">Próxima Questão</button>
+        <div id="quiz-controls">
+            <input type="text" id="userInput" placeholder="Sua resposta (palavras-chave)..." autocomplete="off">
+            <button id="checkBtn" onclick="checkAnswer()">Validar Resposta</button>
+        </div>
+        
+        <div id="feedback-area">
+            <strong id="status-label">GABARITO:</strong>
+            <span class="res-oficial" id="correct-answer"></span>
+            <button id="nextBtn" onclick="nextQuestion()" style="background: var(--success); color: white; margin-top: 15px;">Avançar</button>
+        </div>
     </div>
 </div>
 
 <div class="footer-nav">
-    <div class="nav-title">Consultar Respostas Rápidas</div>
+    <div style="text-align: center; font-size: 9px; color: #4da6ff; margin-bottom: 5px; font-weight: bold;">MAPA DE QUESTÕES</div>
     <div class="scroll-wrapper" id="navBar"></div>
 </div>
 
 <div class="overlay" id="overlay" onclick="closeModal()"></div>
 <div class="modal" id="modal">
-    <div style="display:flex; justify-content: space-between; border-bottom: 2px solid #0b1e3d; padding-bottom: 8px; margin-bottom: 10px;">
-        <span id="modal-title" style="font-weight:bold;"></span>
-        <span onclick="closeModal()" style="cursor:pointer; font-size: 22px; font-weight:bold;">&times;</span>
+    <div style="display:flex; justify-content: space-between; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 15px;">
+        <span id="modal-title" style="font-weight:bold; color: var(--primary)"></span>
+        <span onclick="closeModal()" style="cursor:pointer; font-size: 24px; line-height: 1;">&times;</span>
     </div>
-    <div id="modal-body" style="font-size: 13px; line-height: 1.5; max-height: 350px; overflow-y: auto;"></div>
+    <div id="modal-body" style="font-size: 14px; line-height: 1.6; max-height: 60vh; overflow-y: auto; color: #333;"></div>
 </div>
 
 <script>
 const questions = [
-    {id:"1", q:"Quais são os principais componentes de um processo de qualidade na visão de JURAN?", answer:"Planejamento da qualidade, controle da qualidade e aperfeiçoamento da qualidade."},
-    {id:"2", q:"Quais são as eras da qualidade?", answer:"Era da inspeção, era do controle estatístico da qualidade, era da garantia da qualidade e era da gestão da qualidade total."},
-    {id:"3", q:"Explique a Era da Inspeção.", answer:"Apoia-se em um sistema de medidas, utilizando-se de gabaritos e outros acessórios e de um padrão de referência."},
-    {id:"4", q:"Cite os fatores higiênicos segundo HERZBERG.", answer:"Salário, segurança, condições ambientais, bem-estar físico, supervisão e aceitação grupal."},
-    {id:"5", q:"Cite os fatores motivacionais segundo HERZBERG.", answer:"Ascensão funcional, trabalho em si, reconhecimento e responsabilidade, liberdade e confiança, desafios profissionais, maior responsabilidade e estímulo a criatividade."},
-    {id:"6", q:"Qual a definição oficial de Qualidade?", answer:"A Qualidade é o conjunto das propriedades e características de um produto, processo ou serviço, que lhe fornecem a capacidade de satisfazer as necessidades explícitas ou implícitas."},
-    {id:"7", q:"O que é qualidade total?", answer:"É o processo utilizado para garantir o atendimento às necessidades e expectativas dos clientes."},
-    {id:"8", q:"O que é custo da qualidade?", answer:"É a expressão usada para indicar dinheiro gasto para prevenir, avaliar e corrigir problemas, desperdícios e falhas de serviços e produtos."},
-    {id:"9", q:"O que é processo?", answer:"É um conjunto de causas ou fatores que agindo entre si, promovem a transformação da Matéria-prima ou lhe agregam valor, produzindo um resultado ou efeito desejado."},
-    {id:"10", q:"Como os processos podem ser classificados?", answer:"Os processos podem ser classificados como repetitivos e não repetitivos."},
-    {id:"11", q:"Quais são as fases básicas do ciclo PDCA?", answer:"Planejar, executar, verificar e agir."},
-    {id:"12", q:"O que são indicadores de desempenho?", answer:"São grandezas numéricas que medem atributos de um processo ou de seus resultados, com o objetivo de comparar essas medidas com metas numéricas preestabelecidas."},
-    {id:"13", q:"O que é o programa 5S?", answer:"É um programa de reeducação contra o desperdício."},
-    {id:"14", q:"O termo 5S é derivado de cinco palavras em japonês, todas iniciadas com a letra S. Cite cada uma delas e suas atribuições.", answer:"SEIRI- Seleção, utilização, arrumação e organização;\nSEITON- Ordenação, sistematização e classificação;\nSEISOU- Limpeza e zelo;\nSEIKETSU- Bem-estar, higiene, asseio, saúde e integridade;\nSHITSUKE Autodisciplina, educação e compromisso."},
-    {id:"15", q:"Cite os benefícios do programa 5S.", answer:"Otimização dos espaços, minimização de excessos, consciência dos disperdícios, melhor aproveitamento do tempo e consciência da importância do controle."},
-    {id:"16", q:"O que é Brainstorming?", answer:"É uma dinâmica de grupo em que as pessoas, de forma organizada e com oportunidades iguais, fazem um grande esforço mental para opinar sobre determinado assunto."},
-    {id:"17", q:"O que é equipe?", answer:"Grupo de pessoas que trabalham juntos com sinergia, com competência e habilidades que se complementam para atingir um objetivo comum."},
-    {id:"18", q:"O que é comunicação?", answer:"É a transmissão de qualquer tipo de informação, por qualquer via ou processo."},
-    {id:"19", q:"O que é mensagem?", answer:"É o conteúdo ou assunto das informações que são transmitidas."},
-    {id:"20", q:"O que é canal de comunicação?", answer:"É o meio pelo qual a mensagem é transmitida."},
-    {id:"21", q:"O que é o programa Netuno?", answer:"É um processo administrativo destinado a aprimorar a gestão das Organizações Militares e, consequentemente, proporcionar à Marinha do Brasil as melhores condições para estar pronta e adequada à estatura político estratégica exigida pelo país."},
-    {id:"22", q:"A Marinha do Brasil possui em sua estrutura sete órgãos de Direção Setorial. Cite-os.", answer:"Comando de Operações Navais (ComOpNav), Secretaria Geral da Marinha (SGM), Diretoria Geral do Material da Marinha (DGMM), Diretoria Geral do Pessoal da Marinha (DGPM), Diretoria Geral de Navegação (DGN), Diretoria Geral de Desenvolvimento Nuclear e Tecnológico da Marinha (DGDNTM) e o Comando Geral do Corpo de Fuzileiros Navais (CGCFN)."}
+    {id:"1", q:"Quais são os principais componentes de um processo de qualidade na visão de JURAN?", answer:"Planejamento da qualidade, controle da qualidade e aperfeiçoamento da qualidade.", keys:["planejamento", "controle", "aperfeiçoamento"]},
+    {id:"2", q:"Quais são as eras da qualidade?", answer:"Era da inspeção, era do controle estatístico da qualidade, era da garantia da qualidade e era da gestão da qualidade total.", keys:["inspeção", "estatístico", "garantia", "gestão"]},
+    {id:"3", q:"Explique a Era da Inspeção.", answer:"Apoia-se em um sistema de medidas, utilizando-se de gabaritos e outros acessórios e de um padrão de referência.", keys:["medidas", "gabaritos", "padrão"]},
+    {id:"4", q:"Cite os fatores higiênicos segundo HERZBERG.", answer:"Salário, segurança, condições ambientais, bem-estar físico, supervisão e aceitação grupal.", keys:["salário", "segurança", "ambientais", "supervisão"]},
+    {id:"5", q:"Cite os fatores motivacionais segundo HERZBERG.", answer:"Ascensão funcional, trabalho em si, reconhecimento e responsabilidade, liberdade e confiança, desafios profissionais, maior responsabilidade e estímulo a criatividade.", keys:["ascensão", "trabalho", "reconhecimento", "responsabilidade"]},
+    {id:"6", q:"Qual a definição oficial de Qualidade?", answer:"A Qualidade é o conjunto das propriedades e características de um produto, processo ou serviço, que lhe fornecem a capacidade de satisfazer as necessidades explícitas ou implícitas.", keys:["propriedades", "características", "satisfazer", "necessidades"]},
+    {id:"7", q:"O que é qualidade total?", answer:"É o processo utilizado para garantir o atendimento às necessidades e expectativas dos clientes.", keys:["atendimento", "necessidades", "expectativas", "clientes"]},
+    {id:"8", q:"O que é custo da qualidade?", answer:"É a expressão usada para indicar dinheiro gasto para prevenir, avaliar e corrigir problemas, desperdícios e falhas de serviços e produtos.", keys:["dinheiro", "prevenir", "corrigir", "desperdícios"]},
+    {id:"9", q:"O que é processo?", answer:"É um conjunto de causas ou fatores que agindo entre si, promovem a transformação da Matéria-prima ou lhe agregam valor, produzindo um resultado ou efeito desejado.", keys:["causas", "fatores", "transformação", "matéria-prima"]},
+    {id:"10", q:"Como os processos podem ser classificados?", answer:"Os processos podem ser classificados como repetitivos e não repetitivos.", keys:["repetitivos", "não repetitivos"]},
+    {id:"11", q:"Quais são as fases básicas do ciclo PDCA?", answer:"Planejar, executar, verificar e agir.", keys:["planejar", "executar", "verificar", "agir"]},
+    {id:"12", q:"O que são indicadores de desempenho?", answer:"São grandezas numéricas que medem atributos de um processo ou de seus resultados, com o objetivo de comparar essas medidas com metas numéricas preestabelecidas.", keys:["grandezas", "numéricas", "atributos", "metas"]},
+    {id:"13", q:"O que é o programa 5S?", answer:"É um programa de reeducação contra o desperdício.", keys:["reeducação", "desperdício"]},
+    {id:"14", q:"O termo 5S é derivado de cinco palavras em japonês. Cite cada uma delas e suas atribuições.", answer:"SEIRI (Seleção), SEITON (Ordenação), SEISOU (Limpeza), SEIKETSU (Higiene) e SHITSUKE (Autodisciplina).", keys:["seiri", "seiton", "seisou", "seiketsu", "shitsuke"]},
+    {id:"15", q:"Cite os benefícios do programa 5S.", answer:"Otimização dos espaços, minimização de excessos, consciência dos disperdícios, melhor aproveitamento do tempo e consciência da importância do controle.", keys:["espaços", "excessos", "tempo", "controle"]},
+    {id:"16", q:"O que é Brainstorming?", answer:"É uma dinâmica de grupo em que as pessoas, de forma organizada e com oportunidades iguais, fazem um grande esforço mental para opinar sobre determinado assunto.", keys:["dinâmica", "grupo", "mental", "opinar"]},
+    {id:"17", q:"O que é equipe?", answer:"Grupo de pessoas que trabalham juntos com sinergia, com competência e habilidades que se complementam para atingir um objetivo comum.", keys:["sinergia", "competência", "objetivo"]},
+    {id:"18", q:"O que é comunicação?", answer:"É a transmissão de qualquer tipo de informação, por qualquer via ou processo.", keys:["transmissão", "informação"]},
+    {id:"19", q:"O que é mensagem?", answer:"É o conteúdo ou assunto das informações que são transmitidas.", keys:["conteúdo", "assunto", "informações"]},
+    {id:"20", q:"O que é canal de comunicação?", answer:"É o meio pelo qual a mensagem é transmitida.", keys:["meio", "transmitida"]},
+    {id:"21", q:"O que é o programa Netuno?", answer:"É um processo administrativo destinado a aprimorar a gestão das Organizações Militares.", keys:["processo", "administrativo", "gestão", "militares"]},
+    {id:"22", q:"A Marinha do Brasil possui sete órgãos de Direção Setorial. Cite-os.", answer:"ComOpNav, SGM, DGMM, DGPM, DGN, DGDNTM e CGCFN.", keys:["comopnav", "sgm", "dgmm", "dgpm", "dgn", "dgdntm", "cgcfn"]}
 ];
 
-let current = 0;
+let shuffled = [];
+let currentIndex = 0;
+let correctCount = 0;
+
+function init() {
+    shuffled = [...questions].sort(() => Math.random() - 0.5);
+    createNavBar();
+    showQuestion();
+}
 
 function createNavBar() {
     const navBar = document.getElementById("navBar");
     navBar.innerHTML = "";
-    questions.forEach((q, idx) => {
+    shuffled.forEach((q, idx) => {
         let div = document.createElement("div");
         div.className = "nav-item";
-        div.innerText = "Q" + q.id;
-        div.onclick = () => openModal(idx);
+        div.id = "nav-" + idx;
+        div.innerText = q.id;
+        div.onclick = () => jumpTo(idx);
         navBar.appendChild(div);
     });
 }
 
-function show(){
-    document.getElementById("nextBtn").style.display="none";
-    document.getElementById("feedback").innerHTML="";
-    document.getElementById("userInput").value="";
+function showQuestion() {
+    let q = shuffled[currentIndex];
+    document.getElementById("feedback-area").style.display = "none";
+    document.getElementById("userInput").value = "";
+    document.getElementById("userInput").style.borderColor = "#1c437a";
+    document.getElementById("quiz-controls").style.display = "block";
     
-    let q = questions[current];
     document.getElementById("question-header").innerText = "QUESTÃO " + q.id;
     document.getElementById("question-text").innerText = q.q;
-    document.getElementById("progress").innerText = "SIMULADO GESTÃO: " + (current+1) + " / " + questions.length;
+    
+    // Atualiza Progresso
+    document.getElementById("counter").innerText = `QUESTÃO ${currentIndex + 1} / ${shuffled.length}`;
+    document.getElementById("progress-bar").style.width = ((currentIndex + 1) / shuffled.length * 100) + "%";
+    
+    // Marca nav-item ativa
+    document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
+    document.getElementById("nav-" + currentIndex).classList.add("active");
 }
 
-function revealFeedback() {
-    let q = questions[current];
-    document.getElementById("feedback").innerHTML = `
-        <div id="feedback-area">
-            <strong>GABARITO:</strong>
-            <span class="res-oficial">${q.answer.replace(/\n/g, '<br>')}</span>
-        </div>
-    `;
-    document.getElementById("nextBtn").style.display="block";
+function checkAnswer() {
+    let q = shuffled[currentIndex];
+    let userVal = document.getElementById("userInput").value.toLowerCase();
+    let matches = q.keys.filter(key => userVal.includes(key.toLowerCase()));
+    
+    document.getElementById("quiz-controls").style.display = "none";
+    document.getElementById("feedback-area").style.display = "block";
+    document.getElementById("correct-answer").innerText = q.answer;
+
+    if(matches.length >= 1 || userVal.length > 5) {
+        document.getElementById("userInput").style.borderColor = "var(--success)";
+        document.getElementById("status-label").innerText = "MUITO BEM! VEJA A RESPOSTA COMPLETA:";
+        document.getElementById("status-label").style.color = "var(--success)";
+        correctCount++;
+        document.getElementById("score").innerText = "ACERTOS: " + correctCount;
+    } else {
+        document.getElementById("userInput").style.borderColor = "var(--error)";
+        document.getElementById("status-label").innerText = "VEJA A RESPOSTA CORRETA:";
+        document.getElementById("status-label").style.color = "var(--accent)";
+    }
 }
 
-function nextQuestion(){ 
-    current++; 
-    if(current >= questions.length) current = 0;
-    show(); 
+function nextQuestion() {
+    currentIndex++;
+    if(currentIndex < shuffled.length) {
+        showQuestion();
+    } else {
+        alert("Simulado Concluído! Acertos: " + correctCount);
+        location.reload();
+    }
+}
+
+function jumpTo(idx) {
+    currentIndex = idx;
+    showQuestion();
 }
 
 function openModal(idx) {
-    const q = questions[idx];
-    document.getElementById("modal-title").innerText = "RESPOSTA Q" + q.id;
-    document.getElementById("modal-body").innerHTML = `
-        <strong>${q.q}</strong><br><br>
-        <span style="color:#2980b9; font-weight:bold;">R: ${q.answer.replace(/\n/g, '<br>')}</span>
-    `;
+    const q = shuffled[idx];
+    document.getElementById("modal-title").innerText = "GABARITO Q" + q.id;
+    document.getElementById("modal-body").innerHTML = `<strong>${q.q}</strong><br><br><span style="color:#d35400">R: ${q.answer}</span>`;
     document.getElementById("modal").style.display = "block";
     document.getElementById("overlay").style.display = "block";
 }
@@ -188,8 +260,7 @@ function closeModal() {
     document.getElementById("overlay").style.display = "none";
 }
 
-createNavBar();
-show();
+init();
 </script>
 </body>
 </html>
