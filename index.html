@@ -11,7 +11,6 @@
         --accent: #ffcc00;
         --text: #ffffff;
         --success: #2ecc71;
-        --error: #e74c3c;
     }
 
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--primary); margin:0; color: var(--text); padding-bottom: 180px; overflow-x: hidden; }
@@ -55,32 +54,36 @@
         color: white; 
         font-size: 14px; 
         resize: none;
+        font-family: inherit;
     }
 
-    .btn-main { margin-top: 10px; padding: 12px; border: none; border-radius: 8px; background: var(--accent); color: var(--primary); font-weight: 800; cursor: pointer; width: 100%; text-transform: uppercase; }
+    .btn-main { margin-top: 10px; padding: 12px; border: none; border-radius: 8px; background: var(--accent); color: var(--primary); font-weight: 800; cursor: pointer; width: 100%; text-transform: uppercase; font-size: 13px; }
     
-    #hint-btn { background: transparent; border: 1px solid var(--accent); color: var(--accent); margin-top: 10px; padding: 8px; font-size: 11px; width: auto; min-width: 120px; }
+    #hint-btn { background: transparent; border: 1px solid var(--accent); color: var(--accent); margin-top: 10px; padding: 8px; font-size: 11px; width: auto; min-width: 140px; cursor: pointer; border-radius: 5px; }
 
     #hint-box { 
-        background: rgba(77, 166, 255, 0.1); 
+        background: rgba(255, 204, 0, 0.05); 
         border-radius: 8px; 
-        padding: 10px; 
+        padding: 12px; 
         margin-top: 10px; 
         font-size: 12px; 
-        color: #b3d9ff; 
+        color: #ffcc00; 
         display: none; 
         text-align: left;
-        border: 1px dashed #1c437a;
+        border: 1px dashed rgba(255, 204, 0, 0.3);
     }
 
+    .hint-item { margin-bottom: 5px; display: flex; align-items: center; }
+    .hint-item::before { content: '🔑'; margin-right: 8px; font-size: 10px; }
+
     #feedback-area { background: #071426; padding: 15px; margin-top: 15px; border-radius: 8px; text-align: left; display: none; }
-    .res-oficial { color: var(--accent); font-weight: 600; display: block; margin-top: 8px; font-size: 13px; }
+    .res-oficial { color: var(--accent); font-weight: 600; display: block; margin-top: 8px; font-size: 13px; line-height: 1.5; }
 
     .footer-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #071426; border-top: 2px solid #1c437a; padding: 10px 0; z-index: 100; }
-    .scroll-wrapper { display: flex; overflow-x: auto; padding: 0 15px; gap: 8px; }
+    .scroll-wrapper { display: flex; overflow-x: auto; padding: 0 15px; gap: 8px; scrollbar-width: none; }
     .nav-item { flex: 0 0 45px; height: 45px; background: var(--secondary); border: 1px solid #1c437a; border-radius: 8px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 12px; font-weight: bold; color: #4da6ff; }
 
-    .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85%; background: white; color: var(--primary); padding: 25px; border-radius: 15px; z-index: 200; }
+    .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85%; background: white; color: var(--primary); padding: 25px; border-radius: 15px; z-index: 200; box-shadow: 0 0 40px rgba(0,0,0,0.8); }
     .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 150; backdrop-filter: blur(3px); }
 </style>
 </head>
@@ -100,22 +103,22 @@
         <div id="question-text">...</div>
         
         <div id="quiz-controls">
-            <textarea id="userInput" rows="3" placeholder="Sua resposta..."></textarea>
-            <button id="hint-btn" onclick="giveHint()">💡 PEDIR DICA (0/5)</button>
+            <textarea id="userInput" rows="3" placeholder="Escreva aqui para praticar a memorização..."></textarea>
+            <button id="hint-btn" onclick="giveHint()">💡 PALAVRA-CHAVE (0/5)</button>
             <div id="hint-box"></div>
-            <button class="btn-main" onclick="checkAnswer()">Validar Resposta</button>
+            <button class="btn-main" onclick="checkAnswer()">Validar Minha Resposta</button>
         </div>
         
         <div id="feedback-area">
             <strong id="status-label">GABARITO:</strong>
             <span class="res-oficial" id="correct-answer"></span>
-            <button class="btn-main" onclick="confirmNext()" style="background: var(--success); color: white;">Próxima Questão</button>
+            <button class="btn-main" onclick="confirmNext()" style="background: var(--success); color: white;">Próxima Questão (Aleatória)</button>
         </div>
     </div>
 </div>
 
 <div class="footer-nav">
-    <div style="text-align: center; font-size: 9px; color: #4da6ff; margin-bottom: 5px; font-weight: bold;">GABARITO RÁPIDO (PDF)</div>
+    <div style="text-align: center; font-size: 9px; color: #4da6ff; margin-bottom: 5px; font-weight: bold;">GABARITO RÁPIDO (ORDEM DO PDF)</div>
     <div class="scroll-wrapper" id="navBar"></div>
 </div>
 
@@ -125,33 +128,33 @@
         <span id="modal-title" style="font-weight:bold;"></span>
         <span onclick="closeModal()" style="cursor:pointer; font-size: 20px;">&times;</span>
     </div>
-    <div id="modal-body" style="font-size: 14px; color: #333;"></div>
+    <div id="modal-body" style="font-size: 14px; line-height: 1.6; color: #333;"></div>
 </div>
 
 <script>
 const questions = [
-    {id:"1", q:"Quais são os principais componentes de um processo de qualidade na visão de JURAN?", answer:"Planejamento da qualidade, controle da qualidade e aperfeiçoamento da qualidade.", keys:["planejamento", "controle", "aperfeiçoamento"]},
-    {id:"2", q:"Quais são as eras da qualidade?", answer:"Era da inspeção, era do controle estatístico da qualidade, era da garantia da qualidade e era da gestão da qualidade total.", keys:["inspeção", "estatístico", "garantia", "gestão"]},
-    {id:"3", q:"Explique a Era da Inspeção.", answer:"Apoia-se em um sistema de medidas, utilizando-se de gabaritos e outros acessórios e de um padrão de referência.", keys:["medidas", "gabaritos", "padrão"]},
-    {id:"4", q:"Cite os fatores higiênicos segundo HERZBERG.", answer:"Salário, segurança, condições ambientais, bem-estar físico, supervisão e aceitação grupal.", keys:["salário", "segurança", "ambientais", "supervisão"]},
-    {id:"5", q:"Cite os fatores motivacionais segundo HERZBERG.", answer:"Ascensão funcional, trabalho em si, reconhecimento e responsabilidade, liberdade e confiança, desafios profissionais, maior responsabilidade e estímulo a criatividade.", keys:["ascensão", "trabalho", "reconhecimento", "responsabilidade"]},
-    {id:"6", q:"Qual a definição oficial de Qualidade?", answer:"A Qualidade é o conjunto das propriedades e características de um produto, processo ou serviço, que lhe fornecem a capacidade de satisfazer as necessidades explícitas ou implícitas.", keys:["propriedades", "características", "satisfazer", "necessidades"]},
-    {id:"7", q:"O que é qualidade total?", answer:"É o processo utilizado para garantir o atendimento às necessidades e expectativas dos clientes.", keys:["atendimento", "necessidades", "expectativas", "clientes"]},
-    {id:"8", q:"O que é custo da qualidade?", answer:"É a expressão usada para indicar dinheiro gasto para prevenir, avaliar e corrigir problemas, desperdícios e falhas de serviços e produtos.", keys:["dinheiro", "prevenir", "corrigir", "desperdícios"]},
-    {id:"9", q:"O que é processo?", answer:"É um conjunto de causas ou fatores que agindo entre si, promovem a transformação da Matéria-prima ou lhe agregam valor, produzindo um resultado ou efeito desejado.", keys:["causas", "fatores", "transformação", "matéria-prima"]},
-    {id:"10", q:"Como os processos podem ser classificados?", answer:"Os processos podem ser classificados como repetitivos e não repetitivos.", keys:["repetitivos", "não repetitivos"]},
-    {id:"11", q:"Quais são as fases básicas do ciclo PDCA?", answer:"Planejar, executar, verificar e agir.", keys:["planejar", "executar", "verificar", "agir"]},
-    {id:"12", q:"O que são indicadores de desempenho?", answer:"São grandezas numéricas que medem atributos de um processo ou de seus resultados, com o objetivo de comparar essas medidas com metas numéricas preestabelecidas.", keys:["grandezas", "numéricas", "atributos", "metas"]},
-    {id:"13", q:"O que é o programa 5S?", answer:"É um programa de reeducação contra o desperdício.", keys:["reeducação", "desperdício"]},
-    {id:"14", q:"O termo 5S é derivado de cinco palavras em japonês. Cite cada uma delas e suas atribuições.", answer:"SEIRI (Seleção), SEITON (Ordenação), SEISOU (Limpeza), SEIKETSU (Higiene) e SHITSUKE (Autodisciplina).", keys:["seiri", "seiton", "seisou", "seiketsu", "shitsuke"]},
-    {id:"15", q:"Cite os benefícios do programa 5S.", answer:"Otimização dos espaços, minimização de excessos, consciência dos disperdícios, melhor aproveitamento do tempo e consciência da importância do controle.", keys:["espaços", "excessos", "tempo", "controle"]},
-    {id:"16", q:"O que é Brainstorming?", answer:"É uma dinâmica de grupo em que as pessoas, de forma organizada e com oportunidades iguais, fazem um grande esforço mental para opinar sobre determinado assunto.", keys:["dinâmica", "grupo", "mental", "opinar"]},
-    {id:"17", q:"O que é equipe?", answer:"Grupo de pessoas que trabalham juntos com sinergia, com competência e habilidades que se complementam para atingir um objetivo comum.", keys:["sinergia", "competência", "objetivo"]},
-    {id:"18", q:"O que é comunicação?", answer:"É a transmissão de qualquer tipo de informação, por qualquer via ou processo.", keys:["transmissão", "informação"]},
-    {id:"19", q:"O que é mensagem?", answer:"É o conteúdo ou assunto das informações que são transmitidas.", keys:["conteúdo", "assunto", "informações"]},
-    {id:"20", q:"O que é canal de comunicação?", answer:"É o meio pelo qual a mensagem é transmitida.", keys:["meio", "transmitida"]},
-    {id:"21", q:"O que é o programa Netuno?", answer:"É um processo administrativo destinado a aprimorar a gestão das Organizações Militares.", keys:["processo", "administrativo", "gestão", "militares"]},
-    {id:"22", q:"A Marinha do Brasil possui sete órgãos de Direção Setorial. Cite-os.", answer:"ComOpNav, SGM, DGMM, DGPM, DGN, DGDNTM e CGCFN.", keys:["comopnav", "sgm", "dgmm", "dgpm", "dgn", "dgdntm", "cgcfn"]}
+    {id:"1", q:"Quais são os principais componentes de um processo de qualidade na visão de JURAN?", answer:"Planejamento da qualidade, controle da qualidade e aperfeiçoamento da qualidade.", keys:["Planejamento", "Controle", "Aperfeiçoamento", "Processo", "Qualidade"]},
+    {id:"2", q:"Quais são as eras da qualidade?", answer:"Era da inspeção, era do controle estatístico da qualidade, era da garantia da qualidade e era da gestão da qualidade total.", keys:["Inspeção", "Controle Estatístico", "Garantia", "Gestão Total", "Eras"]},
+    {id:"3", q:"Explique a Era da Inspeção.", answer:"Apoia-se em um sistema de medidas, utilizando-se de gabaritos e outros acessórios e de um padrão de referência.", keys:["Sistema de medidas", "Gabaritos", "Acessórios", "Padrão", "Referência"]},
+    {id:"4", q:"Cite os fatores higiênicos segundo HERZBERG.", answer:"Salário, segurança, condições ambientais, bem-estar físico, supervisão e aceitação grupal.", keys:["Salário", "Segurança", "Ambientais", "Supervisão", "Aceitação"]},
+    {id:"5", q:"Cite os fatores motivacionais segundo HERZBERG.", answer:"Ascensão funcional, trabalho em si, reconhecimento e responsabilidade, liberdade e confiança, desafios profissionais, maior responsabilidade e estímulo a criatividade.", keys:["Ascensão", "Reconhecimento", "Responsabilidade", "Desafios", "Criatividade"]},
+    {id:"6", q:"Qual a definição oficial de Qualidade?", answer:"A Qualidade é o conjunto das propriedades e características de um produto, processo ou serviço, que lhe fornecem a capacidade de satisfazer as necessidades explícitas ou implícitas.", keys:["Propriedades", "Características", "Satisfazer", "Necessidades", "Implícitas"]},
+    {id:"7", q:"O que é qualidade total?", answer:"É o processo utilizado para garantir o atendimento às necessidades e expectativas dos clientes.", keys:["Processo", "Atendimento", "Necessidades", "Expectativas", "Clientes"]},
+    {id:"8", q:"O que é custo da qualidade?", answer:"É a expressão usada para indicar dinheiro gasto para prevenir, avaliar e corrigir problemas, desperdícios e falhas de serviços e produtos.", keys:["Dinheiro", "Prevenir", "Corrigir", "Desperdícios", "Falhas"]},
+    {id:"9", q:"O que é processo?", answer:"É um conjunto de causas ou fatores que agindo entre si, promovem a transformação da Matéria-prima ou lhe agregam valor, produzindo um resultado ou efeito desejado.", keys:["Causas", "Fatores", "Transformação", "Matéria-prima", "Valor"]},
+    {id:"10", q:"Como os processos podem ser classificados?", answer:"Os processos podem ser classificados como repetitivos e não repetitivos.", keys:["Classificados", "Repetitivos", "Não repetitivos", "Processos", "Categorias"]},
+    {id:"11", q:"Quais são as fases básicas do ciclo PDCA?", answer:"Planejar, executar, verificar e agir.", keys:["Planejar", "Executar", "Verificar", "Agir", "Ciclo"]},
+    {id:"12", q:"O que são indicadores de desempenho?", answer:"São grandezas numéricas que medem atributos de um processo ou de seus resultados, com o objetivo de comparar essas medidas com metas numéricas preestabelecidas.", keys:["Grandezas", "Numéricas", "Atributos", "Metas", "Comparar"]},
+    {id:"13", q:"O que é o programa 5S?", answer:"É um programa de reeducação contra o desperdício.", keys:["Programa", "Reeducação", "Contra", "Desperdício", "Hábito"]},
+    {id:"14", q:"O termo 5S é derivado de cinco palavras em japonês. Cite cada uma delas e suas atribuições.", answer:"SEIRI (Seleção), SEITON (Ordenação), SEISOU (Limpeza), SEIKETSU (Higiene) e SHITSUKE (Autodisciplina).", keys:["SEIRI", "SEITON", "SEISOU", "SEIKETSU", "SHITSUKE"]},
+    {id:"15", q:"Cite os benefícios do programa 5S.", answer:"Otimização dos espaços, minimização de excessos, consciência dos disperdícios, melhor aproveitamento do tempo e consciência da importância do controle.", keys:["Espaços", "Excessos", "Desperdícios", "Tempo", "Controle"]},
+    {id:"16", q:"O que é Brainstorming?", answer:"É uma dinâmica de grupo em que as pessoas, de forma organizada e com oportunidades iguais, fazem um grande esforço mental para opinar sobre determinado assunto.", keys:["Dinâmica", "Grupo", "Organizada", "Esforço Mental", "Opinar"]},
+    {id:"17", q:"O que é equipe?", answer:"Grupo de pessoas que trabalham juntos com sinergia, com competência e habilidades que se complementam para atingir um objetivo comum.", keys:["Sinergia", "Competência", "Habilidades", "Complementam", "Objetivo Comum"]},
+    {id:"18", q:"O que é comunicação?", answer:"É a transmissão de qualquer tipo de informação, por qualquer via ou processo.", keys:["Transmissão", "Informação", "Via", "Processo", "Comunicação"]},
+    {id:"19", q:"O que é mensagem?", answer:"É o conteúdo ou assunto das informações que são transmitidas.", keys:["Conteúdo", "Assunto", "Informações", "Transmitidas", "Mensagem"]},
+    {id:"20", q:"O que é canal de comunicação?", answer:"É o meio pelo qual a mensagem é transmitida.", keys:["Meio", "Mensagem", "Transmitida", "Canal", "Comunicação"]},
+    {id:"21", q:"O que é o programa Netuno?", answer:"É um processo administrativo destinado a aprimorar a gestão das Organizações Militares.", keys:["Processo", "Administrativo", "Aprimorar", "Gestão", "OMs"]},
+    {id:"22", q:"A Marinha do Brasil possui sete órgãos de Direção Setorial. Cite-os.", answer:"ComOpNav, SGM, DGMM, DGPM, DGN, DGDNTM e CGCFN.", keys:["ComOpNav", "SGM", "DGMM", "DGPM", "CGCFN"]}
 ];
 
 let shuffled = [];
@@ -188,15 +191,15 @@ function createNavBar() {
 
 function updateDisplay() {
     if(currentIndex >= questions.length) {
-        alert("Simulado concluído!");
+        alert("Simulado concluído! Parabéns.");
         localStorage.clear();
         location.reload();
         return;
     }
     hintLevel = 0;
     document.getElementById("hint-box").style.display = "none";
-    document.getElementById("hint-box").innerText = "";
-    document.getElementById("hint-btn").innerText = "💡 PEDIR DICA (0/5)";
+    document.getElementById("hint-box").innerHTML = "";
+    document.getElementById("hint-btn").innerText = "💡 PALAVRA-CHAVE (0/5)";
     
     let q = shuffled[currentIndex];
     document.getElementById("feedback-area").style.display = "none";
@@ -211,34 +214,34 @@ function updateDisplay() {
 
 function giveHint() {
     if (hintLevel >= 5) return;
-    hintLevel++;
     const q = shuffled[currentIndex];
     const hintBox = document.getElementById("hint-box");
     hintBox.style.display = "block";
-    document.getElementById("hint-btn").innerText = `💡 PEDIR DICA (${hintLevel}/5)`;
+    
+    // Pega a palavra-chave correspondente ao nível atual
+    let keyword = q.keys[hintLevel] || q.keys[0]; // Caso tenha menos de 5 keys
+    
+    hintLevel++;
+    document.getElementById("hint-btn").innerText = `💡 PALAVRA-CHAVE (${hintLevel}/5)`;
 
-    let text = "";
-    switch(hintLevel) {
-        case 1: text = `Dica 1: A resposta tem cerca de ${q.answer.split(' ').length} palavras.`; break;
-        case 2: text = `Dica 2: Uma palavra importante é "${q.keys[0].toUpperCase()}".`; break;
-        case 3: text = `Dica 3: Começa com "${q.answer.split(' ').slice(0, 2).join(' ')}..."`; break;
-        case 4: text = `Dica 4: Outras palavras-chave: ${q.keys.slice(1, 3).join(', ')}.`; break;
-        case 5: text = `Dica 5 (Final): ${q.answer.substring(0, Math.floor(q.answer.length/2))}...`; break;
-    }
-    hintBox.innerHTML += `<div>• ${text}</div>`;
+    const div = document.createElement("div");
+    div.className = "hint-item";
+    div.innerHTML = `<strong>Dica ${hintLevel}:</strong> ${keyword}`;
+    hintBox.appendChild(div);
 }
 
 function checkAnswer() {
     let q = shuffled[currentIndex];
     let userVal = document.getElementById("userInput").value.toLowerCase();
+    // Valida se o usuário escreveu pelo menos 2 palavras-chave principais
     let matches = q.keys.filter(k => userVal.includes(k.toLowerCase()));
     
     document.getElementById("quiz-controls").style.display = "none";
     document.getElementById("feedback-area").style.display = "block";
     document.getElementById("correct-answer").innerText = q.answer;
 
-    if(matches.length >= 1 || userVal.length > 10) {
-        document.getElementById("status-label").innerText = "MUITO BEM! RESPOSTA:";
+    if(matches.length >= 2 || (userVal.length > 15 && matches.length >= 1)) {
+        document.getElementById("status-label").innerText = "CORRETO! VEJA O GABARITO:";
         document.getElementById("status-label").style.color = "var(--success)";
         correctCount++;
     } else {
@@ -258,8 +261,13 @@ function confirmNext() {
 
 function openModal(idx) {
     const q = questions[idx];
-    document.getElementById("modal-title").innerText = "GABARITO Q" + q.id;
-    document.getElementById("modal-body").innerHTML = `<p><strong>${q.q}</strong></p><p style="color:#d35400; font-weight:bold; border-top:1px solid #eee; pt-10">R: ${q.answer}</p>`;
+    document.getElementById("modal-title").innerText = "GABARITO - QUESTÃO " + q.id;
+    document.getElementById("modal-body").innerHTML = `
+        <p style="margin-bottom:15px;"><strong>${q.q}</strong></p>
+        <div style="background:#fff3e0; padding:15px; border-radius:10px; border-left:5px solid #ff9800; color:#444;">
+            ${q.answer}
+        </div>
+    `;
     document.getElementById("modal").style.display = "block";
     document.getElementById("overlay").style.display = "block";
 }
