@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-<title>Simulado - Gestão 2026</title>
+<title>Simulado - Gestão Marinha 2026</title>
 <style>
     body { font-family: 'Segoe UI', sans-serif; background:#0b1e3d; margin:0; color:white; padding-bottom: 160px; overflow-x: hidden; }
     
     .header-banner { 
         width: 100%; 
-        height: 150px; 
-        background: #0b1e3d url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Brasão_do_Corpo_de_Fuzileiros_Navais.png/531px-Brasão_do_Corpo_de_Fuzileiros_Navais.png') no-repeat center; 
+        height: 160px; 
+        background: #0b1e3d url('https://upload.wikimedia.org/wikipedia/commons/0/0b/Brasão_do_Corpo_de_Fuzileiros_Navais.png') no-repeat center; 
         background-size: contain; 
+        margin-top: 15px;
         margin-bottom: 10px;
-        margin-top: 10px;
     }
 
     .container { display: flex; flex-direction: column; align-items: center; padding: 5px; }
@@ -21,17 +21,17 @@
     .box { 
         background: #132b52; 
         padding: 15px; 
-        border-radius: 10px; 
-        width: 90%; 
+        border-radius: 12px; 
+        width: 92%; 
         max-width: 600px; 
         text-align: center; 
-        box-shadow: 0 4px 15px rgba(0,0,0,0.5); 
+        box-shadow: 0 4px 20px rgba(0,0,0,0.6); 
         border: 1px solid #1c437a; 
     }
 
-    #progress { font-size: 11px; color: #4da6ff; margin-bottom: 5px; font-weight: bold; text-transform: uppercase; }
+    #progress { font-size: 11px; color: #4da6ff; margin-bottom: 5px; font-weight: bold; letter-spacing: 1px; }
     #question-header { margin: 0; color: #ffcc00; font-size: 14px; text-decoration: underline; font-weight: bold; }
-    #question-text { margin: 12px 0; font-size: 13px; line-height: 1.5; text-align: left; white-space: pre-wrap; }
+    #question-text { margin: 15px 0; font-size: 13px; line-height: 1.5; text-align: left; white-space: pre-wrap; }
 
     input { 
         width: 100%; 
@@ -42,12 +42,12 @@
         border: 2px solid #4da6ff; 
         background: #071426; 
         color: white; 
-        font-size: 14px; 
+        font-size: 15px; 
     }
 
-    button { 
+    .btn-main { 
         margin-top: 15px; 
-        padding: 12px 20px; 
+        padding: 12px; 
         border: none; 
         border-radius: 6px; 
         background: #ffcc00; 
@@ -59,16 +59,16 @@
         width: 100%;
     }
 
-    #feedback-area { background: #071426; padding: 12px; margin-top: 15px; border-left: 4px solid #ffcc00; text-align: left; font-size: 12px; border-radius: 4px; }
-    .res-oficial { color: #ffcc00; font-weight: bold; white-space: pre-wrap; display: block; margin-top: 8px; line-height: 1.4; }
+    #feedback-area { background: #071426; padding: 12px; margin-top: 15px; border-left: 4px solid #ffcc00; text-align: left; border-radius: 4px; }
+    .res-oficial { color: #ffcc00; font-weight: bold; white-space: pre-wrap; display: block; margin-top: 8px; font-size: 12px; line-height: 1.4; }
 
     .footer-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #071426; border-top: 2px solid #1c437a; padding: 10px 0; z-index: 100; }
-    .nav-title { font-size: 10px; text-align: center; color: #4da6ff; margin-bottom: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+    .nav-title { font-size: 10px; text-align: center; color: #4da6ff; margin-bottom: 8px; font-weight: bold; text-transform: uppercase; }
     .scroll-wrapper { display: flex; overflow-x: auto; padding: 0 10px; gap: 8px; }
     .nav-item { flex: 0 0 55px; height: 45px; background: #132b52; border: 2px solid #4da6ff; border-radius: 8px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 11px; font-weight: bold; }
 
-    /* Modal */
-    .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85%; background: white; color: #0b1e3d; padding: 20px; border-radius: 12px; z-index: 200; box-shadow: 0 0 30px rgba(0,0,0,0.8); }
+    /* Estilo do Modal */
+    .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 88%; background: white; color: #0b1e3d; padding: 20px; border-radius: 12px; z-index: 200; box-shadow: 0 0 30px rgba(0,0,0,0.8); }
     .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 150; }
 </style>
 </head>
@@ -77,21 +77,21 @@
 <div class="header-banner"></div>
 
 <div class="container">
-    <div class="box" id="mainBox">
-        <div id="progress">Carregando...</div>
+    <div class="box">
+        <div id="progress"></div>
         <h4 id="question-header"></h4>
         <div id="question-text"></div>
-        <div id="discursive-area">
-            <input type="text" id="userInput" placeholder="Escreva sua resposta aqui...">
-            <button onclick="revealFeedback()">Ver Gabarito</button>
-        </div>
+        
+        <input type="text" id="userInput" placeholder="Escreva sua resposta para treinar...">
+        <button class="btn-main" onclick="revealFeedback()">Ver Gabarito</button>
+        
         <div id="feedback"></div>
-        <button id="nextBtn" onclick="nextQuestion()" style="display:none; background: #2ecc71; color: white; margin-top: 10px;">Próxima Questão</button>
+        <button id="nextBtn" class="btn-main" onclick="nextQuestion()" style="display:none; background: #2ecc71; color: white;">Próxima Questão</button>
     </div>
 </div>
 
 <div class="footer-nav">
-    <div class="nav-title">Acesso Rápido ao Gabarito</div>
+    <div class="nav-title">Consultar Respostas Rápidas</div>
     <div class="scroll-wrapper" id="navBar"></div>
 </div>
 
@@ -99,35 +99,35 @@
 <div class="modal" id="modal">
     <div style="display:flex; justify-content: space-between; border-bottom: 2px solid #0b1e3d; padding-bottom: 8px; margin-bottom: 10px;">
         <span id="modal-title" style="font-weight:bold;"></span>
-        <span onclick="closeModal()" style="cursor:pointer; font-size: 20px; font-weight:bold;">&times;</span>
+        <span onclick="closeModal()" style="cursor:pointer; font-size: 22px; font-weight:bold;">&times;</span>
     </div>
     <div id="modal-body" style="font-size: 13px; line-height: 1.5; max-height: 350px; overflow-y: auto;"></div>
 </div>
 
 <script>
 const questions = [
-    [span_0](start_span){id:"1", q:"Quais são os principais componentes de um processo de qualidade na visão de JURAN?[span_0](end_span)[span_1](start_span)", answer:"Planejamento da qualidade, controle da qualidade e aperfeiçoamento da qualidade.[span_1](end_span)"},
-    [span_2](start_span){id:"2", q:"Quais são as eras da qualidade?[span_2](end_span)[span_3](start_span)", answer:"Era da inspeção, era do controle estatístico da qualidade, era da garantia da qualidade e era da gestão da qualidade total.[span_3](end_span)"},
-    [span_4](start_span){id:"3", q:"Explique a Era da Inspeção.[span_4](end_span)[span_5](start_span)", answer:"Apoia-se em um sistema de medidas, utilizando-se de gabaritos e outros acessórios e de um padrão de referência.[span_5](end_span)"},
-    [span_6](start_span){id:"4", q:"Cite os fatores higiênicos segundo HERZBERG.[span_6](end_span)[span_7](start_span)", answer:"Salário, segurança, condições ambientais, bem-estar físico, supervisão e aceitação grupal.[span_7](end_span)"},
-    [span_8](start_span){id:"5", q:"Cite os fatores motivacionais segundo HERZBERG.[span_8](end_span)[span_9](start_span)", answer:"Ascensão funcional, trabalho em si, reconhecimento e responsabilidade, liberdade e confiança, desafios profissionais, maior responsabilidade e estímulo a criatividade.[span_9](end_span)"},
-    [span_10](start_span){id:"6", q:"Qual a definição oficial de Qualidade?[span_10](end_span)[span_11](start_span)", answer:"A Qualidade é o conjunto das propriedades e características de um produto, processo ou serviço, que lhe fornecem a capacidade de satisfazer as necessidades explícitas ou implícitas.[span_11](end_span)"},
-    [span_12](start_span){id:"7", q:"O que é qualidade total?[span_12](end_span)[span_13](start_span)", answer:"É o processo utilizado para garantir o atendimento às necessidades e expectativas dos clientes.[span_13](end_span)"},
-    [span_14](start_span){id:"8", q:"O que é custo da qualidade?[span_14](end_span)[span_15](start_span)", answer:"É a expressão usada para indicar dinheiro gasto para prevenir, avaliar e corrigir problemas, desperdícios e falhas de serviços e produtos.[span_15](end_span)"},
-    [span_16](start_span){id:"9", q:"O que é processo?[span_16](end_span)[span_17](start_span)", answer:"É um conjunto de causas ou fatores que agindo entre si, promovem a transformação da Matéria-prima ou lhe agregam valor, produzindo um resultado ou efeito desejado.[span_17](end_span)"},
-    [span_18](start_span){id:"10", q:"Como os processos podem ser classificados?[span_18](end_span)[span_19](start_span)", answer:"Os processos podem ser classificados como repetitivos e não repetitivos.[span_19](end_span)"},
-    [span_20](start_span){id:"11", q:"Quais são as fases básicas do ciclo PDCA?[span_20](end_span)[span_21](start_span)", answer:"Planejar, executar, verificar e agir.[span_21](end_span)"},
-    [span_22](start_span){id:"12", q:"O que são indicadores de desempenho?[span_22](end_span)[span_23](start_span)", answer:"São grandezas numéricas que medem atributos de um processo ou de seus resultados, com o objetivo de comparar essas medidas com metas numéricas preestabelecidas.[span_23](end_span)"},
-    [span_24](start_span){id:"13", q:"O que é o programa 5S?[span_24](end_span)[span_25](start_span)", answer:"É um programa de reeducação contra o desperdício.[span_25](end_span)"},
-    [span_26](start_span){id:"14", q:"O termo 5S é derivado de cinco palavras em japonês, todas iniciadas com a letra S. Cite cada uma delas e suas atribuições.[span_26](end_span)[span_27](start_span)", answer:"SEIRI- Seleção, utilização, arrumação e organização;\nSEITON- Ordenação, sistematização e classificação;\nSEISOU- Limpeza e zelo;\nSEIKETSU- Bem-estar, higiene, asseio, saúde e integridade;\nSHITSUKE Autodisciplina, educação e compromisso.[span_27](end_span)"},
-    [span_28](start_span){id:"15", q:"Cite os benefícios do programa 5S.[span_28](end_span)[span_29](start_span)", answer:"Otimização dos espaços, minimização de excessos, consciência dos disperdícios, melhor aproveitamento do tempo e consciência da importância do controle.[span_29](end_span)"},
-    [span_30](start_span){id:"16", q:"O que é Brainstorming?[span_30](end_span)[span_31](start_span)", answer:"É uma dinâmica de grupo em que as pessoas, de forma organizada e com oportunidades iguais, fazem um grande esforço mental para opinar sobre determinado assunto.[span_31](end_span)"},
-    [span_32](start_span){id:"17", q:"O que é equipe?[span_32](end_span)[span_33](start_span)", answer:"Grupo de pessoas que trabalham juntos com sinergia, com competência e habilidades que se complementam para atingir um objetivo comum.[span_33](end_span)"},
-    [span_34](start_span){id:"18", q:"O que é comunicação?[span_34](end_span)[span_35](start_span)", answer:"É a transmissão de qualquer tipo de informação, por qualquer via ou processo.[span_35](end_span)"},
-    [span_36](start_span){id:"19", q:"O que é mensagem?[span_36](end_span)[span_37](start_span)", answer:"É o conteúdo ou assunto das informações que são transmitidas.[span_37](end_span)"},
-    [span_38](start_span){id:"20", q:"O que é canal de comunicação?[span_38](end_span)[span_39](start_span)", answer:"É o meio pelo qual a mensagem é transmitida.[span_39](end_span)"},
-    [span_40](start_span){id:"21", q:"O que é o programa Netuno?[span_40](end_span)[span_41](start_span)", answer:"É um processo administrativo destinado a aprimorar a gestão das Organizações Militares e, consequentemente, proporcionar à Marinha do Brasil as melhores condições para estar pronta e adequada à estatura político estratégica exigida pelo país.[span_41](end_span)"},
-    {id:"22", q:"A Marinha do Brasil possui em sua estrutura sete órgãos de Direção Setorial. [span_42](start_span)Cite-os.[span_42](end_span)[span_43](start_span)", answer:"Comando de Operações Navais (ComOpNav), Secretaria Geral da Marinha (SGM), Diretoria Geral do Material da Marinha (DGMM), Diretoria Geral do Pessoal da Marinha (DGPM), Diretoria Geral de Navegação (DGN), Diretoria Geral de Desenvolvimento Nuclear e Tecnológico da Marinha (DGDNTM) e o Comando Geral do Corpo de Fuzileiros Navais (CGCFN).[span_43](end_span)"}
+    {id:"1", q:"Quais são os principais componentes de um processo de qualidade na visão de JURAN?", answer:"Planejamento da qualidade, controle da qualidade e aperfeiçoamento da qualidade."},
+    {id:"2", q:"Quais são as eras da qualidade?", answer:"Era da inspeção, era do controle estatístico da qualidade, era da garantia da qualidade e era da gestão da qualidade total."},
+    {id:"3", q:"Explique a Era da Inspeção.", answer:"Apoia-se em um sistema de medidas, utilizando-se de gabaritos e outros acessórios e de um padrão de referência."},
+    {id:"4", q:"Cite os fatores higiênicos segundo HERZBERG.", answer:"Salário, segurança, condições ambientais, bem-estar físico, supervisão e aceitação grupal."},
+    {id:"5", q:"Cite os fatores motivacionais segundo HERZBERG.", answer:"Ascensão funcional, trabalho em si, reconhecimento e responsabilidade, liberdade e confiança, desafios profissionais, maior responsabilidade e estímulo a criatividade."},
+    {id:"6", q:"Qual a definição oficial de Qualidade?", answer:"A Qualidade é o conjunto das propriedades e características de um produto, processo ou serviço, que lhe fornecem a capacidade de satisfazer as necessidades explícitas ou implícitas."},
+    {id:"7", q:"O que é qualidade total?", answer:"É o processo utilizado para garantir o atendimento às necessidades e expectativas dos clientes."},
+    {id:"8", q:"O que é custo da qualidade?", answer:"É a expressão usada para indicar dinheiro gasto para prevenir, avaliar e corrigir problemas, desperdícios e falhas de serviços e produtos."},
+    {id:"9", q:"O que é processo?", answer:"É um conjunto de causas ou fatores que agindo entre si, promovem a transformação da Matéria-prima ou lhe agregam valor, produzindo um resultado ou efeito desejado."},
+    {id:"10", q:"Como os processos podem ser classificados?", answer:"Os processos podem ser classificados como repetitivos e não repetitivos."},
+    {id:"11", q:"Quais são as fases básicas do ciclo PDCA?", answer:"Planejar, executar, verificar e agir."},
+    {id:"12", q:"O que são indicadores de desempenho?", answer:"São grandezas numéricas que medem atributos de um processo ou de seus resultados, com o objetivo de comparar essas medidas com metas numéricas preestabelecidas."},
+    {id:"13", q:"O que é o programa 5S?", answer:"É um programa de reeducação contra o desperdício."},
+    {id:"14", q:"O termo 5S é derivado de cinco palavras em japonês, todas iniciadas com a letra S. Cite cada uma delas e suas atribuições.", answer:"SEIRI- Seleção, utilização, arrumação e organização;\nSEITON- Ordenação, sistematização e classificação;\nSEISOU- Limpeza e zelo;\nSEIKETSU- Bem-estar, higiene, asseio, saúde e integridade;\nSHITSUKE Autodisciplina, educação e compromisso."},
+    {id:"15", q:"Cite os benefícios do programa 5S.", answer:"Otimização dos espaços, minimização de excessos, consciência dos disperdícios, melhor aproveitamento do tempo e consciência da importância do controle."},
+    {id:"16", q:"O que é Brainstorming?", answer:"É uma dinâmica de grupo em que as pessoas, de forma organizada e com oportunidades iguais, fazem um grande esforço mental para opinar sobre determinado assunto."},
+    {id:"17", q:"O que é equipe?", answer:"Grupo de pessoas que trabalham juntos com sinergia, com competência e habilidades que se complementam para atingir um objetivo comum."},
+    {id:"18", q:"O que é comunicação?", answer:"É a transmissão de qualquer tipo de informação, por qualquer via ou processo."},
+    {id:"19", q:"O que é mensagem?", answer:"É o conteúdo ou assunto das informações que são transmitidas."},
+    {id:"20", q:"O que é canal de comunicação?", answer:"É o meio pelo qual a mensagem é transmitida."},
+    {id:"21", q:"O que é o programa Netuno?", answer:"É um processo administrativo destinado a aprimorar a gestão das Organizações Militares e, consequentemente, proporcionar à Marinha do Brasil as melhores condições para estar pronta e adequada à estatura político estratégica exigida pelo país."},
+    {id:"22", q:"A Marinha do Brasil possui em sua estrutura sete órgãos de Direção Setorial. Cite-os.", answer:"Comando de Operações Navais (ComOpNav), Secretaria Geral da Marinha (SGM), Diretoria Geral do Material da Marinha (DGMM), Diretoria Geral do Pessoal da Marinha (DGPM), Diretoria Geral de Navegação (DGN), Diretoria Geral de Desenvolvimento Nuclear e Tecnológico da Marinha (DGDNTM) e o Comando Geral do Corpo de Fuzileiros Navais (CGCFN)."}
 ];
 
 let current = 0;
@@ -152,14 +152,14 @@ function show(){
     let q = questions[current];
     document.getElementById("question-header").innerText = "QUESTÃO " + q.id;
     document.getElementById("question-text").innerText = q.q;
-    document.getElementById("progress").innerText = "GESTÃO: " + (current+1) + " / " + questions.length;
+    document.getElementById("progress").innerText = "SIMULADO GESTÃO: " + (current+1) + " / " + questions.length;
 }
 
 function revealFeedback() {
     let q = questions[current];
     document.getElementById("feedback").innerHTML = `
         <div id="feedback-area">
-            <strong>RESPOSTA ESPERADA:</strong>
+            <strong>GABARITO:</strong>
             <span class="res-oficial">${q.answer.replace(/\n/g, '<br>')}</span>
         </div>
     `;
@@ -174,10 +174,10 @@ function nextQuestion(){
 
 function openModal(idx) {
     const q = questions[idx];
-    document.getElementById("modal-title").innerText = "GABARITO Q" + q.id;
+    document.getElementById("modal-title").innerText = "RESPOSTA Q" + q.id;
     document.getElementById("modal-body").innerHTML = `
-        <strong>Pergunta:</strong><br>${q.q}<br><br>
-        <strong>Resposta:</strong><br><span style="color:#d35400; font-weight:bold;">${q.answer.replace(/\n/g, '<br>')}</span>
+        <strong>${q.q}</strong><br><br>
+        <span style="color:#2980b9; font-weight:bold;">R: ${q.answer.replace(/\n/g, '<br>')}</span>
     `;
     document.getElementById("modal").style.display = "block";
     document.getElementById("overlay").style.display = "block";
@@ -188,7 +188,6 @@ function closeModal() {
     document.getElementById("overlay").style.display = "none";
 }
 
-// Inicialização
 createNavBar();
 show();
 </script>
