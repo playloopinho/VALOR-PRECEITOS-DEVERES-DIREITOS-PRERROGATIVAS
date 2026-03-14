@@ -173,7 +173,16 @@ function init() {
     if(savedAns) answeredCount = parseInt(savedAns);
     if(savedCor) correctCount = parseInt(savedCor);
 
-    shuffled = [...questions].sort(() => 0.5 - Math.random());
+    // Carrega ou Gera ordem randômica fixa
+    let savedOrder = localStorage.getItem('gestao_order');
+    if(savedOrder) {
+        let indices = JSON.parse(savedOrder);
+        shuffled = indices.map(i => questions.find(q => q.id == i));
+    } else {
+        shuffled = [...questions].sort(() => 0.5 - Math.random());
+        localStorage.setItem('gestao_order', JSON.stringify(shuffled.map(q => q.id)));
+    }
+    
     updateDisplay();
 }
 
@@ -190,8 +199,8 @@ function createNavBar() {
 }
 
 function updateDisplay() {
-    if(currentIndex >= questions.length) {
-        alert("Simulado concluído! Parabéns.");
+    if(currentIndex >= shuffled.length) {
+        alert("Simulado concluído! Todas as 22 questões revisadas.");
         localStorage.clear();
         location.reload();
         return;
@@ -207,7 +216,7 @@ function updateDisplay() {
     document.getElementById("userInput").value = "";
     document.getElementById("question-header").innerText = "QUESTÃO " + q.id;
     document.getElementById("question-text").innerText = q.q;
-    document.getElementById("counter").innerText = `QUESTÃO ${answeredCount + 1} DE ${questions.length}`;
+    document.getElementById("counter").innerText = `PERGUNTA ${answeredCount + 1} DE ${questions.length}`;
     document.getElementById("score").innerText = "ACERTOS: " + correctCount;
     document.getElementById("progress-bar").style.width = (answeredCount / questions.length * 100) + "%";
 }
@@ -218,8 +227,7 @@ function giveHint() {
     const hintBox = document.getElementById("hint-box");
     hintBox.style.display = "block";
     
-    // Pega a palavra-chave correspondente ao nível atual
-    let keyword = q.keys[hintLevel] || q.keys[0]; // Caso tenha menos de 5 keys
+    let keyword = q.keys[hintLevel] || q.keys[hintLevel % q.keys.length];
     
     hintLevel++;
     document.getElementById("hint-btn").innerText = `💡 PALAVRA-CHAVE (${hintLevel}/5)`;
@@ -233,7 +241,6 @@ function giveHint() {
 function checkAnswer() {
     let q = shuffled[currentIndex];
     let userVal = document.getElementById("userInput").value.toLowerCase();
-    // Valida se o usuário escreveu pelo menos 2 palavras-chave principais
     let matches = q.keys.filter(k => userVal.includes(k.toLowerCase()));
     
     document.getElementById("quiz-controls").style.display = "none";
@@ -241,11 +248,11 @@ function checkAnswer() {
     document.getElementById("correct-answer").innerText = q.answer;
 
     if(matches.length >= 2 || (userVal.length > 15 && matches.length >= 1)) {
-        document.getElementById("status-label").innerText = "CORRETO! VEJA O GABARITO:";
+        document.getElementById("status-label").innerText = "MUITO BEM! RESPOSTA:";
         document.getElementById("status-label").style.color = "var(--success)";
         correctCount++;
     } else {
-        document.getElementById("status-label").innerText = "GABARITO OFICIAL:";
+        document.getElementById("status-label").innerText = "GABARITO:";
         document.getElementById("status-label").style.color = "var(--accent)";
     }
 }
@@ -263,8 +270,8 @@ function openModal(idx) {
     const q = questions[idx];
     document.getElementById("modal-title").innerText = "GABARITO - QUESTÃO " + q.id;
     document.getElementById("modal-body").innerHTML = `
-        <p style="margin-bottom:15px;"><strong>${q.q}</strong></p>
-        <div style="background:#fff3e0; padding:15px; border-radius:10px; border-left:5px solid #ff9800; color:#444;">
+        <p><strong>${q.q}</strong></p>
+        <div style="background:#fff3e0; padding:15px; border-radius:10px; border-left:5px solid #ff9800;">
             ${q.answer}
         </div>
     `;
