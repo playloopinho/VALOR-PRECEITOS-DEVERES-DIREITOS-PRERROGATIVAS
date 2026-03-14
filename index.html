@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-<title>Simulado Oficial - Bases Sociológicas e Filosóficas</title>
+<title>Simulado - Questionário de Gestão</title>
 <style>
     body { font-family: 'Segoe UI', sans-serif; background:#0b1e3d; margin:0; color:white; padding-bottom: 160px; overflow-x: hidden; }
     
     .header-banner { 
         width: 100%; 
-        height: 220px; 
+        height: 180px; 
         background: #0b1e3d url('https://upload.wikimedia.org/wikipedia/commons/0/0b/Brasão_do_Corpo_de_Fuzileiros_Navais.png') no-repeat center; 
         background-size: contain; 
         margin-bottom: 10px;
@@ -32,32 +32,16 @@
     #question-header { margin: 0; color: #ffcc00; font-size: 13px; text-decoration: underline; font-weight: bold; }
     #question-text { margin: 8px 0; font-size: 12px; line-height: 1.4; text-align: left; white-space: pre-wrap; }
 
-    .option { 
-        background: #4da6ff; 
-        color: black; 
-        padding: 8px; 
-        margin: 5px 0; 
-        border-radius: 5px; 
-        cursor: pointer; 
-        font-weight: bold; 
-        text-align: left; 
-        font-size: 11px; 
-        line-height: 1.1;
-    }
-
-    .correct { background: green !important; color: white; }
-    .wrong { background: red !important; color: white; }
-
     input { 
         width: 100%; 
         box-sizing: border-box;
-        padding: 10px; 
+        padding: 12px; 
         margin-top: 8px; 
         border-radius: 4px; 
         border: 1px solid #4da6ff; 
         background: #0b1e3d; 
         color: white; 
-        font-size: 16px; 
+        font-size: 14px; 
     }
 
     button { 
@@ -70,6 +54,7 @@
         font-weight: bold; 
         font-size: 12px;
         text-transform: uppercase; 
+        cursor: pointer;
     }
 
     #feedback-area { background: #071426; padding: 10px; margin-top: 10px; border-left: 4px solid #ffcc00; text-align: left; font-size: 11px; }
@@ -78,7 +63,7 @@
     .footer-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #071426; border-top: 2px solid #1c437a; padding: 10px 0; z-index: 100; }
     .nav-title { font-size: 11px; text-align: center; color: #4da6ff; margin-bottom: 8px; font-weight: bold; text-transform: uppercase; }
     .scroll-wrapper { display: flex; overflow-x: auto; padding: 0 12px; gap: 10px; }
-    .nav-item { flex: 0 0 75px; height: 50px; background: #132b52; border: 2.5px solid #4da6ff; border-radius: 8px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 12px; font-weight: bold; }
+    .nav-item { flex: 0 0 60px; height: 40px; background: #132b52; border: 2px solid #4da6ff; border-radius: 8px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 11px; font-weight: bold; }
 
     .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 92%; background: white; color: #0b1e3d; padding: 15px; border-radius: 10px; z-index: 200; box-shadow: 0 0 25px rgba(0,0,0,0.7); }
     .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 150; }
@@ -93,7 +78,6 @@
         <div id="progress"></div>
         <h4 id="question-header"></h4>
         <div id="question-text"></div>
-        <div id="options"></div>
         <div id="discursive"></div>
         <div id="feedback"></div>
         <button id="nextBtn" onclick="nextQuestion()" style="display:none;">Próxima Questão</button>
@@ -101,7 +85,7 @@
 </div>
 
 <div class="footer-nav">
-    <div class="nav-title">Consultar Gabarito (AULA FASE 1 - EXERCÍCIO BASES)</div>
+    <div class="nav-title">Gabarito Rápido - GESTÃO 2026</div>
     <div class="scroll-wrapper" id="navBar"></div>
 </div>
 
@@ -116,89 +100,77 @@
 
 <script>
 const questions = [
-    {id:"Q-01", q:"1 - Em relação as bases sociológicas, responda: “É aquela em que as pessoas orientam suas ações umas para as outras. O resultado desta orientação de forças agindo no seio de uma coletividade é que vai constituir o material de análise sociológica\". Estamos falando de:", a:["(a) Comportamento.","(b) Situação social.","(c) Filosofia social.","(d) Ética."], correct:1, type:"mc"},
-    {id:"Q-02", q:"2 - É o primeiro elemento a unir grupos de indivíduos sob um signo comum; é o elemento catalisador, agente das relações sociais.", a:["(a) Relacionamento cultural.","(b) Competência.","(c) Caráter.","(d) Língua."], correct:3, type:"mc"},
-    {id:"Q-03", q:"3 - Abrangem inúmeros aspectos, tais como o vestuário, a alimentação, a música, a religião etc. Tratam, de fato, do estilo de vida de um povo, sua maneira de lidar com a realidade. Eles são relativos ao comportamento em geral. Estamos falando de:", a:["(a) Costumes.","(b) Língua.","(c) Padrão familiar.","(d) Valores."], correct:0, type:"mc"},
-    {id:"Q-04", q:"4 - Referem-se a critérios, normas e ideias de uma dada sociedade; Eles têm íntima relação com o processo de formação de atitudes:", a:["(a) Costumes.","(b) Ética.","(c) Cultura pessoal.","(d) Valores."], correct:3, type:"mc"},
-    {id:"Q-05", q:"5 - “Dentro de uma determinada cultura, podemos notar grupos de pessoas que desenvolvem comportamentos próprios, não compartilhados por todos os membros desta cultura; é o que se define como”:", a:["(a) Sociedade egoísta.","(b) Contexto social.","(c) Subcultura.","(d) Costume."], correct:2, type:"mc"},
-    {id:"Q-06", q:"6 - Diretamente decorrente do conceito de cultura, tal prática consiste em considerar a cultura do próprio grupo como superior às demais; ou seja, é usada como padrão de referência em relação às outras. Estamos falando de:", a:["(a) Etnocentrismo.","(b) Cultura regional.","(c) Valores.","(d) Costumes."], correct:0, type:"mc"},
-    {id:"Q-07", q:"7 - São aspectos de um mesmo fenômeno, constantemente vivenciados pelos membros de qualquer grupo social. ______________é um conjunto de privilégios e deveres; _________________ é o comportamento derivado de tal conjunto de privilégios e deveres. Falamos de:", a:["(a) Status - Temperamento.","(b) Papel - Caráter.","(c) Status - Papel.","(d) Papel - Sociedade."], correct:2, type:"mc"},
-    {id:"Q-08", q:"8 - “Em relação ao fenômeno, constantemente vivenciados pelos membros de qualquer grupo social: É o comportamento esperado de um indivíduo que detém determinado status”. Estamos falando de:", a:["(a) Temperamento.","(b) Caráter.","(c) Responsabilidade ética.","(d) Papel."], correct:3, type:"mc"},
-    {id:"Q-09", q:"9 - Em relação ao “Processo de Interação social”: Quais são os processos de interação de maior incidência nas sociedades e grupos humanos?", a:["(a) Cultura comercial e sociedade.","(b) Cooperação, competição e conflito.","(c) Valores e costumes.","(d) Cultura e subcultura."], correct:1, type:"mc"},
-    {id:"Q-10", q:"10 - Em relação ao “Processo de Interação social: Podemos dizer que o _______________é a exacerbação da competição. Uma definição mais específica afirma que tal processo consiste em obter recompensas pela eliminação ou enfraquecimento dos competidores. Falamos de:", a:["(a) Exagero da competição acirrada.","(b) Conflito.","(c) Roubo de posses.","(d) Cuidado individualista."], correct:1, type:"mc"},
-    {id:"Q-11", q:"11 - É um ser eminentemente coletivo, uma síntese ou reunião de indivíduos, que possui uma unidade interna, e como tal é percebido por seus membros. Não é um simples aglomerado de pessoas; seus membros estão em permanente interação.", a:["(a) Valores sociais.","(b) Interação social.","(c) Sociedade.","(d) Grupo."], correct:3, type:"mc"},
-    {id:"Q-12", q:"12 - Em relação ao “Processo de Interação social”: É definida como a luta pela posse de recompensas cuja oferta é limitada. Tais recompensas incluem dinheiro, poder, status, amor e muitos outros. Estamos falando de:", a:["(a) Cooperação.","(b) Competição.","(c) Conflito.","(d) Conflito exagerado."], correct:1, type:"mc"},
-    {id:"Q-13", q:"13 - Complete as lacunas: “A essência da liderança caracteriza-se ainda pela relação da _____________ e da ____________com o processo de influenciação”. A “primeira lacuna” trata fundamentalmente da moral e de sua prática; ao passo que a “segunda lacuna” refere-se ao estudo e à hierarquia desses.", a:["(a) Axiologia e da ética.","(b) Ética e da axiologia.","(c) Sociedade e da filosofia.","(d) Filosofia e da sociedade."], correct:1, type:"mc"},
-    {id:"Q-14", q:"14 - A ética não é um valor em si mesma, é, um processo de escolha por meio de valores. Assim, um _____________ é aquele selecionado, dentre tantos outros, a partir de valores culturalmente consagrados. Esses valores se referem às virtudes. Complete a lacuna com a opção correta:", a:["(a) Comportamento ético.","(b) Incentivo material.","(c) Filosofo reconhecido.","(d) Líder delegativo."], correct:0, type:"mc"},
-    {id:"Q-15", q:"15 - É a parte da filosofia que se ocupa com a reflexão a respeito dos fundamentos da vida moral. Estamos falando de:", a:["(a) Ética, ou filosofia moral.","(b) Filosofia de Freud.","(c) Axiologia.","(d) Etnocentrismo."], correct:0, type:"mc"},
-    {id:"Q-16", q:"16 - É um conjunto de regras que determinam o comportamento dos indivíduos em uma dada sociedade, ou diretrizes que determinam os limites do comportamento aceitável em uma determinada sociedade, estamos falando de:", a:["(a) Moral.","(b) Axiologia.","(c) Cultura.","(d) Subcultura."], correct:0, type:"mc"},
-    {id:"Q-17A", q:"17 - Ramo da filosofia que estuda os valores:", a:["(a) Ética.","(b) Valores da liderança.","(c) Axiologia.","(d) Moral."], correct:2, type:"mc"},
-    {id:"Q-17B", q:"17 - Implica em uma opção pelo coletivo em detrimento do individual; mas nada impede o desenvolvimento e o estímulo das habilidades de cada membro em prol de um objetivo comum.", a:["(a) Cooperação.","(b) Competição.","(c) Conflito.","(d) Acomodação."], correct:0, type:"mc"},
-    {id:"Q-18", q:"18 - PAPEL é o comportamento esperado que detém certo status e:", a:["(a) É um conjunto de privilégios e deveres.","(b) É o comportamento derivado de tal conjunto de privilégios e deveres.","(c) É a tendência a considerar a cultura do grupo superior as demais.","(d) Fortalecimento da autoestima do grupo, sua lealdade interna."], correct:1, type:"mc"},
-    {id:"Q-19", q:"19 - Tudo que é aprendido e partilhado pelos membros de determinada sociedade é chamado de:", a:["(a) Raça.","(b) Cultura.","(c) Subcultura.","(d) Crença."], correct:1, type:"mc"},
-    {id:"Q-20", q:"20 - “Consiste na hierarquização dos valores. Tanto aqueles estabelecidos pela sociedade à qual pertencemos, quanto aqueles (que em geral coincidem com os primeiros) que nos são transmitidos pela educação familiar e são por nós escalonados, isto é, a eles são atribuídas prioridades”. É a característica fundamental da:", a:["(a) Cultura social.","(b) Axiologia.","(c) Subcultura.","(d) Moral e ética."], correct:1, type:"mc"},
-    {id:"Q-21", q:"21 - A filosofia não tem compromisso com fins imediatos ou interesseiros de qualquer ordem; seu objetivo único é o conhecimento e a pesquisa da verdade em si mesma. Várias situações que exigem uma tomada de posição. São questões abrangidas pela filosofia:", a:["(a) Conhecimento e linguagem.","(b) O homem em seus múltiplos aspectos.","(c) Questões pedagógicas e culturais.","(d) Todas as respostas acimas estão corretas."], correct:3, type:"mc"}
+    {id:"1", q:"Quais são os principais componentes de um processo de qualidade na visão de JURAN?", answer:"Planejamento da qualidade, controle da qualidade e aperfeiçoamento da qualidade."},
+    {id:"2", q:"Quais são as eras da qualidade?", answer:"Era da inspeção, era do controle estatístico da qualidade, era da garantia da qualidade e era da gestão da qualidade total."},
+    {id:"3", q:"Explique a Era da Inspeção.", answer:"Apoia-se em um sistema de medidas, utilizando-se de gabaritos e outros acessórios e de um padrão de referência."},
+    {id:"4", q:"Cite os fatores higiênicos segundo HERZBERG.", answer:"Salário, segurança, condições ambientais, bem-estar físico, supervisão e aceitação grupal."},
+    {id:"5", q:"Cite os fatores motivacionais segundo HERZBERG.", answer:"Ascensão funcional, trabalho em si, reconhecimento e responsabilidade, liberdade e confiança, desafios profissionais, maior responsabilidade e estímulo a criatividade."},
+    {id:"6", q:"Qual a definição oficial de Qualidade?", answer:"A Qualidade é o conjunto das propriedades e características de um produto, processo ou serviço, que lhe fornecem a capacidade de satisfazer as necessidades explícitas ou implícitas."},
+    {id:"7", q:"O que é qualidade total?", answer:"É o processo utilizado para garantir o atendimento às necessidades e expectativas dos clientes."},
+    {id:"8", q:"O que é custo da qualidade?", answer:"É a expressão usada para indicar dinheiro gasto para prevenir, avaliar e corrigir problemas, desperdícios e falhas de serviços e produtos."},
+    {id:"9", q:"O que é processo?", answer:"É um conjunto de causas ou fatores que agindo entre si, promovem a transformação da Matéria-prima ou lhe agregam valor, produzindo um resultado ou efeito desejado."},
+    {id:"10", q:"Como os processos podem ser classificados?", answer:"Os processos podem ser classificados como repetitivos e não repetitivos."},
+    {id:"11", q:"Quais são as fases básicas do ciclo PDCA?", answer:"Planejar, executar, verificar e agir."},
+    {id:"12", q:"O que são indicadores de desempenho?", answer:"São grandezas numéricas que medem atributos de um processo ou de seus resultados, com o objetivo de comparar essas medidas com metas numéricas preestabelecidas."},
+    {id:"13", q:"O que é o programa 5S?", answer:"É um programa de reeducação contra o desperdício."},
+    {id:"14", q:"O termo 5S é derivado de cinco palavras em japonês, todas iniciadas com a letra S. Cite cada uma delas e suas atribuições.", answer:"SEIRI- Seleção, utilização, arrumação e organização;\nSEITON- Ordenação, sistematização e classificação;\nSEISOU- Limpeza e zelo;\nSEIKETSU- Bem-estar, higiene, asseio, saúde e integridade;\nSHITSUKE Autodisciplina, educação e compromisso."},
+    {id:"15", q:"Cite os benefícios do programa 5S.", answer:"Otimização dos espaços, minimização de excessos, consciência dos disperdícios, melhor aproveitamento do tempo e consciência da importância do controle."},
+    {id:"16", q:"O que é Brainstorming?", answer:"É uma dinâmica de grupo em que as pessoas, de forma organizada e com oportunidades iguais, fazem um grande esforço mental para opinar sobre determinado assunto."},
+    {id:"17", q:"O que é equipe?", answer:"Grupo de pessoas que trabalham juntos com sinergia, com competência e habilidades que se complementam para atingir um objetivo comum."},
+    {id:"18", q:"O que é comunicação?", answer:"É a transmissão de qualquer tipo de informação, por qualquer via ou processo."},
+    {id:"19", q:"O que é mensagem?", answer:"É o conteúdo ou assunto das informações que são transmitidas."},
+    {id:"20", q:"O que é canal de comunicação?", answer:"É o meio pelo qual a mensagem é transmitida."},
+    {id:"21", q:"O que é o programa Netuno?", answer:"É um processo administrativo destinado a aprimorar a gestão das Organizações Militares e, consequentemente, proporcionar à Marinha do Brasil as melhores condições para estar pronta e adequada à estatura político estratégica exigida pelo país."},
+    {id:"22", q:"A Marinha do Brasil possui em sua estrutura sete órgãos de Direção Setorial. Cite-os.", answer:"Comando de Operações Navais (ComOpNav), Secretaria Geral da Marinha (SGM), Diretoria Geral do Material da Marinha (DGMM), Diretoria Geral do Pessoal da Marinha (DGPM), Diretoria Geral de Navegação (DGN), Diretoria Geral de Desenvolvimento Nuclear e Tecnológico da Marinha (DGDNTM) e o Comando Geral do Corpo de Fuzileiros Navais (CGCFN)."}
 ];
 
-let shuffled=[]; let current=0;
+let current=0;
 
 function createNavBar() {
     const navBar = document.getElementById("navBar"); navBar.innerHTML = "";
     questions.forEach((q, idx) => {
         let div = document.createElement("div"); div.className = "nav-item";
-        div.innerText = q.id; div.onclick = () => openModal(idx);
+        div.innerText = "Q-" + q.id; div.onclick = () => openModal(idx);
         navBar.appendChild(div);
     });
 }
 
 function openModal(idx) {
     const q = questions[idx];
-    document.getElementById("modal-title").innerText = "GABARITO " + q.id;
-    let resp = q.type === "mc" ? q.a[q.correct] : q.answer;
-    document.getElementById("modal-body").innerHTML = `<strong>${q.q.replace(/\n/g, '<br>')}</strong><br><br><span class="res-oficial">${resp.replace(/\n/g, '<br>')}</span>`;
+    document.getElementById("modal-title").innerText = "RESPOSTA Q-" + q.id;
+    document.getElementById("modal-body").innerHTML = `<strong>${q.q}</strong><br><br><span class="res-oficial">${q.answer.replace(/\n/g, '<br>')}</span>`;
     document.getElementById("modal").style.display = "block"; document.getElementById("overlay").style.display = "block";
 }
 
 function closeModal() { document.getElementById("modal").style.display = "none"; document.getElementById("overlay").style.display = "none"; }
 
-function start(){
-    shuffled=[...questions].sort(() => Math.random() - 0.5);
-    createNavBar();
-    show();
-}
-
 function show(){
     document.getElementById("nextBtn").style.display="none"; document.getElementById("feedback").innerHTML="";
-    let q=shuffled[current];
+    let q=questions[current];
     document.getElementById("question-header").innerText = "QUESTÃO " + q.id;
-    document.getElementById("question-text").innerHTML = q.q.replace(/\n/g, '<br>');
-    document.getElementById("progress").innerText = "SIMULADO: " + (current+1) + " / " + shuffled.length;
-    document.getElementById("options").innerHTML=""; document.getElementById("discursive").innerHTML="";
-
-    if(q.type==="mc"){
-        q.a.forEach(opt => {
-            let d = document.createElement("div"); d.className="option"; d.innerText=opt;
-            d.onclick=() => {
-                document.querySelectorAll(".option").forEach(o=>o.onclick=null);
-                if(opt === q.a[q.correct]) d.classList.add("correct");
-                else { d.classList.add("wrong"); document.querySelectorAll(".option").forEach(o=>{if(o.innerText===q.a[q.correct])o.classList.add("correct")}); }
-                document.getElementById("nextBtn").style.display="inline-block";
-            };
-            document.getElementById("options").appendChild(d);
-        });
-    } else {
-        let inp = document.createElement("input"); inp.placeholder="Escreva sua resposta...";
-        let b = document.createElement("button"); b.innerText="Ver Gabarito";
-        b.onclick=() => {
-            document.getElementById("feedback").innerHTML = `<div id="feedback-area"><strong>GABARITO:</strong> <span class="res-oficial">${q.answer.replace(/\n/g, '<br>')}</span></div>`;
-            document.getElementById("nextBtn").style.display="inline-block";
-        };
-        document.getElementById("discursive").appendChild(inp); document.getElementById("discursive").appendChild(b);
-    }
+    document.getElementById("question-text").innerText = q.q;
+    document.getElementById("progress").innerText = "GESTÃO: " + (current+1) + " / " + questions.length;
+    
+    document.getElementById("discursive").innerHTML = `
+        <input type="text" id="userInput" placeholder="Digite sua resposta para treinar...">
+        <button onclick="revealFeedback()">Ver Gabarito</button>
+    `;
 }
 
-function nextQuestion(){ current++; if(current < shuffled.length) show(); else location.reload(); }
-start();
+function revealFeedback() {
+    let q = questions[current];
+    document.getElementById("feedback").innerHTML = `<div id="feedback-area"><strong>GABARITO OFICIAL:</strong> <span class="res-oficial">${q.answer.replace(/\n/g, '<br>')}</span></div>`;
+    document.getElementById("nextBtn").style.display="inline-block";
+}
+
+function nextQuestion(){ 
+    current++; 
+    if(current < questions.length) show(); 
+    else { current = 0; show(); } 
+}
+
+createNavBar();
+show();
 </script>
 </body>
 </html>
