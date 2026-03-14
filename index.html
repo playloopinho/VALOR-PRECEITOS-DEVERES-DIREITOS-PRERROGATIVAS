@@ -18,10 +18,10 @@
     
     .header-banner { 
         width: 100%; 
-        height: 140px; 
+        height: 120px; 
         background: var(--primary) url('https://upload.wikimedia.org/wikipedia/commons/0/0b/Brasão_do_Corpo_de_Fuzileiros_Navais.png') no-repeat center; 
         background-size: contain; 
-        margin: 20px 0;
+        margin: 10px 0;
         filter: drop-shadow(0 0 8px rgba(0,0,0,0.5));
     }
 
@@ -46,7 +46,7 @@
     #question-header { margin: 0; color: var(--accent); font-size: 16px; text-transform: uppercase; letter-spacing: 1px; }
     #question-text { margin: 20px 0; font-size: 14px; line-height: 1.6; text-align: left; border-left: 3px solid var(--accent); padding-left: 15px; min-height: 60px; }
 
-    input { 
+    textarea { 
         width: 100%; 
         box-sizing: border-box;
         padding: 15px; 
@@ -55,6 +55,8 @@
         background: #071426; 
         color: white; 
         font-size: 15px; 
+        font-family: inherit;
+        resize: none;
     }
 
     button { 
@@ -84,9 +86,8 @@
 
     .footer-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #071426; border-top: 2px solid #1c437a; padding: 10px 0; z-index: 100; }
     .scroll-wrapper { display: flex; overflow-x: auto; padding: 0 15px; gap: 10px; scrollbar-width: none; }
-    .nav-item { flex: 0 0 50px; height: 50px; background: var(--secondary); border: 2px solid #1c437a; border-radius: 10px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 12px; font-weight: bold; }
+    .nav-item { flex: 0 0 50px; height: 50px; background: var(--secondary); border: 2px solid #1c437a; border-radius: 10px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 12px; font-weight: bold; color: #4da6ff; }
 
-    /* Modal */
     .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85%; background: white; color: var(--primary); padding: 25px; border-radius: 15px; z-index: 200; box-shadow: 0 0 40px rgba(0,0,0,0.9); }
     .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 150; backdrop-filter: blur(3px); }
 </style>
@@ -98,29 +99,29 @@
 <div class="container">
     <div class="box">
         <div id="info-row">
-            <span id="counter">INICIANDO...</span>
+            <span id="counter">ESTUDANDO...</span>
             <span id="score">ACERTOS: 0</span>
         </div>
         <div id="progress-container"><div id="progress-bar"></div></div>
         
         <h4 id="question-header">PERGUNTA</h4>
-        <div id="question-text">Carregando conteúdo...</div>
+        <div id="question-text">Carregando...</div>
         
         <div id="quiz-controls">
-            <input type="text" id="userInput" placeholder="Digite sua resposta aqui..." autocomplete="off">
+            <textarea id="userInput" rows="3" placeholder="Escreva sua resposta aqui para memorizar..."></textarea>
             <button id="checkBtn" onclick="checkAnswer()">Validar Resposta</button>
         </div>
         
         <div id="feedback-area">
             <strong id="status-label">GABARITO:</strong>
             <span class="res-oficial" id="correct-answer"></span>
-            <button id="nextBtn" onclick="confirmNext()" style="background: var(--success); color: white; margin-top: 15px;">Ir para Próxima Questão</button>
+            <button id="nextBtn" onclick="confirmNext()" style="background: var(--success); color: white; margin-top: 15px;">Próxima Questão (Aleatória)</button>
         </div>
     </div>
 </div>
 
 <div class="footer-nav">
-    <div style="text-align: center; font-size: 9px; color: #4da6ff; margin-bottom: 5px; font-weight: bold;">MAPA DE QUESTÕES (GABARITO RÁPIDO)</div>
+    <div style="text-align: center; font-size: 9px; color: #4da6ff; margin-bottom: 5px; font-weight: bold;">GABARITO RÁPIDO (ORDEM DO PDF)</div>
     <div class="scroll-wrapper" id="navBar"></div>
 </div>
 
@@ -159,18 +160,33 @@ const questions = [
     {id:"22", q:"A Marinha do Brasil possui sete órgãos de Direção Setorial. Cite-os.", answer:"ComOpNav, SGM, DGMM, DGPM, DGN, DGDNTM e CGCFN.", keys:["comopnav", "sgm", "dgmm", "dgpm", "dgn", "dgdntm", "cgcfn"]}
 ];
 
-let currentIndex = 0;
-let questionsAnsweredCount = 0; // Nova variável para rastrear o progresso real
+let shuffledQuestions = [];
+let currentShuffledIdx = 0;
+let answeredCount = 0;
 let correctCount = 0;
 
 function init() {
     createNavBar();
-    updateQuestionDisplay();
+    
+    // Carrega progresso salvo (Item 3)
+    const savedIdx = localStorage.getItem('gestao_idx');
+    const savedAnswered = localStorage.getItem('gestao_answered');
+    const savedCorrect = localStorage.getItem('gestao_correct');
+    
+    if(savedIdx) currentShuffledIdx = parseInt(savedIdx);
+    if(savedAnswered) answeredCount = parseInt(savedAnswered);
+    if(savedCorrect) correctCount = parseInt(savedCorrect);
+
+    // Gera ordem randômica mas fixa para a sessão
+    shuffledQuestions = [...questions].sort(() => 0.5 - Math.random());
+    
+    updateDisplay();
 }
 
 function createNavBar() {
     const navBar = document.getElementById("navBar");
     navBar.innerHTML = "";
+    // O Mapa SEMPRE segue a ordem do PDF (1 a 22)
     questions.forEach((q, idx) => {
         let div = document.createElement("div");
         div.className = "nav-item";
@@ -180,19 +196,31 @@ function createNavBar() {
     });
 }
 
-function updateQuestionDisplay() {
-    let q = questions[currentIndex];
+function updateDisplay() {
+    if(currentShuffledIdx >= questions.length) {
+        currentShuffledIdx = 0;
+        answeredCount = 0;
+        shuffledQuestions = [...questions].sort(() => 0.5 - Math.random());
+    }
+
+    let q = shuffledQuestions[currentShuffledIdx];
     document.getElementById("feedback-area").style.display = "none";
     document.getElementById("userInput").value = "";
     document.getElementById("quiz-controls").style.display = "block";
     
+    // Mantém o número original do PDF no título
     document.getElementById("question-header").innerText = "QUESTÃO " + q.id;
     document.getElementById("question-text").innerText = q.q;
-    document.getElementById("counter").innerText = `QUESTÃO ${currentIndex + 1} DE ${questions.length}`;
+    
+    document.getElementById("counter").innerText = `QUESTÃO ${answeredCount + 1} DE ${questions.length}`;
+    document.getElementById("score").innerText = "ACERTOS: " + correctCount;
+    
+    let progress = (answeredCount / questions.length) * 100;
+    document.getElementById("progress-bar").style.width = progress + "%";
 }
 
 function checkAnswer() {
-    let q = questions[currentIndex];
+    let q = shuffledQuestions[currentShuffledIdx];
     let userVal = document.getElementById("userInput").value.toLowerCase();
     let matches = q.keys.filter(key => userVal.includes(key.toLowerCase()));
     
@@ -200,43 +228,42 @@ function checkAnswer() {
     document.getElementById("feedback-area").style.display = "block";
     document.getElementById("correct-answer").innerText = q.answer;
 
-    if(matches.length >= 1 || userVal.length > 5) {
-        document.getElementById("status-label").innerText = "MUITO BEM! GABARITO:";
+    if(matches.length >= 1 || userVal.length > 10) {
+        document.getElementById("status-label").innerText = "MUITO BEM! VEJA O GABARITO:";
         document.getElementById("status-label").style.color = "var(--success)";
         correctCount++;
-        document.getElementById("score").innerText = "ACERTOS: " + correctCount;
     } else {
-        document.getElementById("status-label").innerText = "CONFIRA O GABARITO:";
+        document.getElementById("status-label").innerText = "ATENÇÃO AO GABARITO:";
         document.getElementById("status-label").style.color = "var(--accent)";
     }
 }
 
 function confirmNext() {
-    // Aumenta o contador de questões finalizadas
-    questionsAnsweredCount++;
+    answeredCount++;
+    currentShuffledIdx++;
     
-    // Atualiza a BARRA DE PROGRESSO baseada em questões REALMENTE respondidas
-    let progressPercent = (questionsAnsweredCount / questions.length) * 100;
-    document.getElementById("progress-bar").style.width = progressPercent + "%";
+    // Salva progresso no navegador (Item 3)
+    localStorage.setItem('gestao_idx', currentShuffledIdx);
+    localStorage.setItem('gestao_answered', answeredCount);
+    localStorage.setItem('gestao_correct', correctCount);
 
-    // Vai para a próxima pergunta
-    currentIndex++;
-    if(currentIndex < questions.length) {
-        updateQuestionDisplay();
+    if(answeredCount < questions.length) {
+        updateDisplay();
     } else {
-        alert("Excelente! Você finalizou todas as questões do simulado.");
-        location.reload(); // Reinicia o estudo
+        alert("Simulado Finalizado! Você revisou as 22 questões.");
+        localStorage.clear();
+        location.reload();
     }
 }
 
 function openModal(idx) {
-    const q = questions[idx];
+    const q = questions[idx]; // Usa a lista original do PDF
     document.getElementById("modal-title").innerText = "GABARITO - QUESTÃO " + q.id;
     document.getElementById("modal-body").innerHTML = `
         <div style="font-weight:bold; color:#0b1e3d; margin-bottom:5px;">PERGUNTA:</div>
-        <div style="background:#f0f4f8; padding:12px; border-radius:8px; margin-bottom:20px; font-size:13px;">${q.q}</div>
-        <div style="font-weight:bold; color:#d35400; margin-bottom:5px;">RESPOSTA OFICIAL:</div>
-        <div style="background:#fff3e0; padding:12px; border-radius:8px; line-height:1.6; color:#333; font-size:13px; border-left:4px solid #ff9800;">${q.answer}</div>
+        <div style="background:#f0f4f8; padding:12px; border-radius:8px; margin-bottom:20px;">${q.q}</div>
+        <div style="font-weight:bold; color:#d35400; margin-bottom:5px;">RESPOSTA DO PDF:</div>
+        <div style="background:#fff3e0; padding:12px; border-radius:8px; line-height:1.6; color:#333; border-left:4px solid #ff9800;">${q.answer}</div>
     `;
     document.getElementById("modal").style.display = "block";
     document.getElementById("overlay").style.display = "block";
